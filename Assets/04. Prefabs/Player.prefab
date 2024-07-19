@@ -185,7 +185,6 @@ MonoBehaviour:
   jumpForce: 5
   isGround: 0
   slideCollider: {fileID: 3323184941708508654}
-  catchPoint: {fileID: 0}
 --- !u!136 &3323184941572198166
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -234,6 +233,30 @@ PrefabInstance:
     - target: {fileID: 596312464, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
       propertyPath: m_Center.y
       value: 0.7903862
+      objectReference: {fileID: 0}
+    - target: {fileID: 574676693102015977, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574676693102015977, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574676693102015977, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 574676693102015977, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574676693102015977, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 574676693102015977, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2722003363435442735, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
       propertyPath: m_IsActive
