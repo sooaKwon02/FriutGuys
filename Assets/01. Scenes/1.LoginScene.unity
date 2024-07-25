@@ -796,7 +796,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6715556547640447321}
         m_TargetAssemblyTypeName: DatabaseManager, Assembly-CSharp
         m_MethodName: SignUpButton
         m_Mode: 1
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6715556547640447321}
         m_TargetAssemblyTypeName: DatabaseManager, Assembly-CSharp
         m_MethodName: GameLogin
         m_Mode: 1
@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6715556547640447321}
         m_TargetAssemblyTypeName: DatabaseManager, Assembly-CSharp
         m_MethodName: LoginMain
         m_Mode: 3
@@ -1744,7 +1744,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6715556547640447321}
         m_TargetAssemblyTypeName: DatabaseManager, Assembly-CSharp
         m_MethodName: LoginMain
         m_Mode: 3
@@ -2819,7 +2819,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6715556547640447321}
         m_TargetAssemblyTypeName: DatabaseManager, Assembly-CSharp
         m_MethodName: LoginMain
         m_Mode: 3
@@ -3176,3 +3176,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6715556547640447142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6715556547640447320}
+  - component: {fileID: 6715556547640447321}
+  m_Layer: 0
+  m_Name: DatabaseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6715556547640447320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6715556547640447142}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 953.67035, y: 639.9565, z: -210.13817}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6715556547640447321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6715556547640447142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6ed9ac27f9d6e48b0ba8c1545744f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: {fileID: 438150183}
+  password: {fileID: 1307015715}
+  nickname: {fileID: 3092036}
+  SignUpComplete: {fileID: 820887722}
+  SignUpPanel: {fileID: 1859387487}
+  loginIdInput: {fileID: 1025859427}
+  loginPasswordInput: {fileID: 1998439349}

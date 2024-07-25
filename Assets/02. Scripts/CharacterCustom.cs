@@ -19,7 +19,10 @@ public class CharacterCustom : MonoBehaviour
             }
             else
             {
-                idleParts[i].enabled = false;
+                idleParts[i].enabled = false; 
+                bodyParts[i].transform.position = Vector3.zero;
+                bodyParts[i].transform.rotation = Quaternion.identity;
+                bodyParts[i].transform.localScale =new  Vector3(1,1,1);
             }                
         }
     }
