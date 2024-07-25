@@ -67,11 +67,12 @@ public class DatabaseManager : MonoBehaviour
             // 각 JSON 객체에서 필드 추출
             foreach (JObject json in jsonArray)
             {
+                int no = (int)json["no"];
                 string id = (string)json["id"];
                 string password = (string)json["password"];
                 string nickname = (string)json["nickname"];
 
-                Debug.Log($", id: {id}, password: {password}, nickname: {nickname}");
+                Debug.Log($"no: {no}, id: {id}, password: {password}, nickname: {nickname}");
             }
         }
     }
