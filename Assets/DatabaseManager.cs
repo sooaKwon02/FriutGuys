@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using myDll;
+using IPMINE;
 
 public class DatabaseManager : MonoBehaviour
 {
-    MyDll dll = new MyDll();
+    IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
     private void Awake()
     {
