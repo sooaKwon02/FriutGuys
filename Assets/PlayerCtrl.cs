@@ -7,7 +7,6 @@ public class PlayerCtrl : MonoBehaviour
 {
     private Rigidbody rb;
     private Animator anim;
-    private CapsuleCollider coll;
 
     [SerializeField]
     private Transform cam;
@@ -24,21 +23,16 @@ public class PlayerCtrl : MonoBehaviour
     private float cooltimeTimer = 0.0f;
 
     public float jumpForce = 5.0f;
-
     [SerializeField]
     bool isGround = false;
     bool isJump = false;
 
     public GameObject slideCollider;
 
-    public Transform catchPoint;
-    private GameObject catchObject = null;
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        coll = GetComponent<CapsuleCollider>();
     }
 
     void Update()
@@ -50,7 +44,6 @@ public class PlayerCtrl : MonoBehaviour
             isJump = true;
         }
         Slide();
-        //Catch();
     }
 
     void FixedUpdate()
@@ -62,7 +55,7 @@ public class PlayerCtrl : MonoBehaviour
 
     void PlayerMove()
     {
-        Debug.DrawRay(cam.position,
+        Debug.DrawRay(cam.position, 
             new Vector3(cam.forward.x, 0f, cam.forward.z).normalized, Color.red);
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -70,7 +63,7 @@ public class PlayerCtrl : MonoBehaviour
         //카메라가 보는 앞 방향 
         Vector3 moveInput = new Vector2(h, v);
         bool isMove = moveInput.magnitude != 0;
-
+        
         anim.SetBool("isMove", isMove);
         anim.SetFloat("MoveX", h);
         anim.SetFloat("MoveY", v);
@@ -100,15 +93,12 @@ public class PlayerCtrl : MonoBehaviour
 
         float x = camAngle.x - mouseDelta.y;
 
-        //카메라의 범위가 180도 이하라면
-        if (x < 180f)
+        if(x < 180f)
         {
-            //0과 70사이의 값으로 조정
             x = Mathf.Clamp(x, 0f, 70f);
         }
         else
         {
-            //180도 이상이라면 
             x = Mathf.Clamp(x, 335f, 361f);
         }
         cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
@@ -127,24 +117,10 @@ public class PlayerCtrl : MonoBehaviour
     void CheckGround()
     {
         RaycastHit hit;
-        Debug.DrawRay(rb.position, Vector3.down * 0.1f, Color.red);
+        Debug.DrawRay(rb.position, Vector3.down * 0.1f ,Color.red);
         if (Physics.Raycast(rb.position, Vector3.down, out hit, 0.1f))
         {
-            //추후 태그 달아서 그라운드 체크 예정
-            //if (hit.transform.CompareTag("Ground"))
-            //{
-            //    isGround = true;
-            //    coll.material.dynamicFriction = 0.1f;
-            //    coll.material.frictionCombine = PhysicMaterialCombine.Minimum;
-            //    return;
-            //}
-            //if (hit.transform.CompareTag("SlimeLoad"))
-            //{
-            //    coll.material.dynamicFriction = 0.1f;
-            //    coll.material.frictionCombine = PhysicMaterialCombine.Minimum;
-            //    Debug.Log(coll.material.dynamicFriction + " " + coll.material.frictionCombine);
-            //}
-            if (hit.collider != null)
+            if (hit.transform.tag != null)
             {
                 isGround = true;
                 return;
@@ -161,7 +137,7 @@ public class PlayerCtrl : MonoBehaviour
             cooltimeTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && cooltimeTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && cooltimeTimer <= 0)
         {
             isSliding = true;
             slideTimer = 1.0f;
@@ -169,7 +145,7 @@ public class PlayerCtrl : MonoBehaviour
             //슬라이딩 콜라이더 키고
             slideCollider.SetActive(true);
             //원래콜라이더 꺼주기
-            coll.enabled = false;
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
             anim.SetTrigger("slide");
         }
     }
@@ -195,61 +171,8 @@ public class PlayerCtrl : MonoBehaviour
                 //슬라이딩 콜라이더 끄고
                 slideCollider.SetActive(false);
                 //원래 콜라이더 킴
-                coll.enabled = true;
+                gameObject.GetComponent<CapsuleCollider>().enabled = true;
             }
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(catchObject == null)
-    //    {
-    //        catchObject = other.gameObject;
-    //        catchObject.GetComponent<Rigidbody>().isKinematic = true;
-    //    }
-    //}
-
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if(catchObject == other.gameObject)
-    //    {
-    //        ReleaseCatch();
-    //    }
-    //}
-
-    //void Catch()
-    //{
-    //    if (Input.GetKey(KeyCode.LeftShift))
-    //    {
-    //        if(catchObject == null)
-    //        {
-    //            TryCatch();
-    //        }
-    //        else
-    //        {
-    //            ReleaseCatch();
-    //        }
-    //    }
-    //    //if(catchObject != null)
-    //    //{
-    //    //    catchObject.transform.position = catchPoint.position;
-    //    //}
-    //}
-
-    //void TryCatch()
-    //{
-    //    if(catchObject != null)
-    //    {
-    //        catchObject.GetComponent<Rigidbody>().isKinematic = true;
-    //    }
-    //}
-
-    //void ReleaseCatch()
-    //{
-    //    if(catchObject != null)
-    //    {
-    //        catchObject.GetComponent<Rigidbody>().isKinematic = false;
-    //        catchObject = null; 
-    //    }
-    //}
 }

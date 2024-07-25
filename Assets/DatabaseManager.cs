@@ -9,12 +9,42 @@ using UnityEngine.SceneManagement;
 
 public class DatabaseManager : MonoBehaviour
 {
+    private static DatabaseManager _instance;
+    public static DatabaseManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<DatabaseManager>();
+                if (_instance == null)
+                {
+                    GameObject singletonObject = new GameObject("DatabaseManager");
+                    _instance = singletonObject.AddComponent<DatabaseManager>();
+                    DontDestroyOnLoad(singletonObject);
+                }
+            }
+            return _instance;
+        }
+    }
     string secretKey = "1q2w3e4r!@#$";
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-        SignUpComplete.SetActive(false);
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        if(SignUpComplete!=null)
+        {
+            SignUpComplete.SetActive(false);
+        }
     }
+   
     IEnumerator Start()
     {
         string url = "http://192.168.35.229/fruitsGuys/LoginUnity.php"; // PHP 스크립트의 URL을 입력하세요

@@ -5,6 +5,24 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameManager>();
+                if (_instance == null)
+                {
+                    GameObject singletonObject = new GameObject("GameManager");
+                    _instance = singletonObject.AddComponent<GameManager>();
+                    DontDestroyOnLoad(singletonObject);
+                }
+            }
+            return _instance;
+        }
+    }
     public Transform Player;
     public GameObject store;
     public GameObject inventoryPanel;
@@ -23,12 +41,20 @@ public class GameManager : MonoBehaviour
     public GameObject keyboardPanel;
     public GameObject settingExit;
 
-
-
-
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
-        Screen.SetResolution(1920, 1080, true);
         store.SetActive(false);
         inventoryPanel.SetActive(false);
         createRoom.SetActive(false);
@@ -36,6 +62,7 @@ public class GameManager : MonoBehaviour
         CustomPanel.SetActive(false);
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
+        ActiveMenu(true);
     }
  
     void ActiveMenu(bool active)
@@ -131,15 +158,5 @@ public class GameManager : MonoBehaviour
     {
         profilePanel.SetActive(check);
         ActiveMenu(!check);
-    }  
-    
-    public void CreateRoom()
-    {
-        
-    }
-    public void CreateRandomRoom()
-    {
-
-    }
-
+    }    
 }
