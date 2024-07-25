@@ -17,7 +17,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator Start()
     {
-        string url = "http://192.168.35.229/fruitsGuys/LoginUnity.php"; // PHP 스크립트의 URL을 입력하세요
+        string url = "http://61.99.10.173/fruitsGuys/LoginUnity.php"; // PHP 스크립트의 URL을 입력하세요
 
         WWW www = new WWW(url);
         yield return www;
@@ -105,7 +105,7 @@ public class DatabaseManager : MonoBehaviour
 
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = "http://192.168.35.229/fruitsGuys/SignUp.php";
+        string serverURL = "http://61.99.10.173/fruitsGuys/SignUp.php";
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
@@ -157,7 +157,7 @@ public class DatabaseManager : MonoBehaviour
     }    
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = "http://192.168.35.229/fruitsGuys/GameLogin.php";
+        string serverURL = "http://61.99.10.173/fruitsGuys/GameLogin.php";
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
