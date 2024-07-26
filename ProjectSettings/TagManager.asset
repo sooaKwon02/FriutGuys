@@ -10,6 +10,9 @@ TagManager:
   - Canvas
   - SlideCollider
   - Holder
+  - Bullet
+  - DeadZone
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

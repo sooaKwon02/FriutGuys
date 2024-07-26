@@ -40,7 +40,6 @@ public class ObstacleScript : MonoBehaviour
             collision.gameObject.GetComponentInChildren<Animator>().SetTrigger("Die");
         }
     }
-
     //자식오브젝트에 Rigidbody가 없고 Collider만 추가해서 사용할 경우,
     //부모와자식을 하나로 인식함
 }

@@ -16,15 +16,20 @@ public class GroundCtrl : MonoBehaviour
 
     IEnumerator FallFloor()
     {
-        yield return new WaitForSeconds(5.0f);
-
         if (groundPrefabs.Count > 2)
         {
+            yield return new WaitForSeconds(10.0f);
             int num = Random.Range(0, groundPrefabs.Count);
-            Rigidbody rb = groundPrefabs[num].GetComponent<Rigidbody>();
 
+            Rigidbody rb = groundPrefabs[num].GetComponentInChildren<Rigidbody>();
+            Animator anim = groundPrefabs[num].GetComponent<Animator>();
+
+            anim.SetBool("isShake", true);
+
+            yield return new WaitForSeconds(5.0f);
             if (rb != null)
             {
+                anim.SetBool("isShake", false);
                 rb.useGravity = true;
                 rb.isKinematic = false;
             }
