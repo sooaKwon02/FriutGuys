@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - FashionItem
+  - Inventory
+  - CursorItem
+  - Canvas
+  - SlideCollider
+  - Holder
   layers:
   - Default
   - TransparentFX

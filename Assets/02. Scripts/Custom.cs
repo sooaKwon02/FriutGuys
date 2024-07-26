@@ -11,7 +11,7 @@ public class Custom : MonoBehaviour
     public Text styleName;
     CharacterCustom player;
     Item item;
-    string StyleCheck = "Position";
+    string StyleCheck ;
     int num = 0;
     public float min = 1;
     public float max = 3;
@@ -42,11 +42,11 @@ public class Custom : MonoBehaviour
     {
         slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
 
-        if (StyleCheck == "Position")
-        {
-            player.bodyParts[num].transform.localPosition = slideSet;
-        }
-        else if (StyleCheck == "Rotation")
+        //if (StyleCheck == "Position")
+        //{
+        //    player.bodyParts[num].transform.localPosition = slideSet;
+        //}
+        if (StyleCheck == "Rotation")
         {
             player.bodyParts[num].transform.localRotation = Quaternion.Euler(slideSet);
         }
@@ -60,17 +60,17 @@ public class Custom : MonoBehaviour
     {
         num = _num;
         FixedPartName.text = player.bodyParts[num].name;
-        if (StyleCheck == "Position")
-        {
-            min = -0.5f; max = 0.5f;
-            ValueSet();
-            Vector3 pos= player.bodyParts[num].transform.localPosition;
-            sliderX.value = pos.x;
-            sliderY.value = pos.y;
-            sliderZ.value = pos.z;
-            slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
-        }
-        else if (StyleCheck == "Rotation")
+        //if (StyleCheck == "Position")
+        //{
+        //    min = -0.5f; max = 0.5f;
+        //    ValueSet();
+        //    Vector3 pos= player.bodyParts[num].transform.localPosition;
+        //    sliderX.value = pos.x;
+        //    sliderY.value = pos.y;
+        //    sliderZ.value = pos.z;
+        //    slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
+        //}
+        if (StyleCheck == "Rotation")
         {
             min = -180f; max = 180;
             ValueSet();

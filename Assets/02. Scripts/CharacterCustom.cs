@@ -24,8 +24,13 @@ public class CharacterCustom : MonoBehaviour
                 bodyParts[i].transform.rotation = Quaternion.identity;
                 bodyParts[i].transform.localScale =new  Vector3(1,1,1);
             }                
-        }
+        }   
+        if(FindObjectOfType<Custom>())      
+            enabled = true;      
+        else
+            enabled = false;
     }
+   
     private void Update()
     {
         if (Input.GetKey(KeyCode.RightArrow))
@@ -50,5 +55,12 @@ public class CharacterCustom : MonoBehaviour
                 
         }
     }
-
+    public void Hold()
+    {
+        if (GetComponentInChildren<PlayerCtrl>() && GetComponentInChildren<Rigidbody>())
+        {
+            GetComponentInChildren<PlayerCtrl>().enabled = false;
+            GetComponentInChildren<Rigidbody>().isKinematic = true;
+        }
+    }
 }
