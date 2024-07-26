@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Screen.SetResolution(1920, 1080, true);
         store.SetActive(false);
         inventoryPanel.SetActive(false);
         createRoom.SetActive(false);
@@ -36,6 +35,7 @@ public class GameManager : MonoBehaviour
         CustomPanel.SetActive(false);
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
+        ActiveMenu(true);
     }
  
     void ActiveMenu(bool active)
@@ -113,10 +113,7 @@ public class GameManager : MonoBehaviour
     public void CustomPanelOnOff(bool check)
     {
         CustomPanel.SetActive(check);
-        inventoryPanel.SetActive(check);
-        Player.GetComponent<CharacterCustom>().enabled = check;
-        Player.GetComponentInChildren<Animator>().enabled = !check;
-        Player.GetComponentInChildren<PlayerCtrl>().enabled = !check;    
+        inventoryPanel.SetActive(check);  
         if (check)
         {
             Player.position = new Vector2(2, 0);

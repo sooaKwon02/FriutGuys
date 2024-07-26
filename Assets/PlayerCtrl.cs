@@ -41,8 +41,12 @@ public class PlayerCtrl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
-
         //failedText.SetActive(false);
+        if(GameObject.FindGameObjectWithTag("Holder"))
+        {
+            transform.SetParent( GameObject.FindGameObjectWithTag("Holder").transform);
+            GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
+        }
     }
 
     void Update()

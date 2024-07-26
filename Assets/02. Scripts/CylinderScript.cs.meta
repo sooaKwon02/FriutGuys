@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: ee6f5d677c8166542941268dcdc69127
+<<<<<<<< HEAD:Assets/02. Scripts/CylinderScript.cs.meta
+guid: 0ca180ab70234394daf54f014f60189b
+========
+guid: 3bc85c42fd7eabd45a11dcc6fa0c0e20
+>>>>>>>> asd:Assets/CharacterPre.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
