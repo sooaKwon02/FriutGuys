@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Screen.SetResolution(1920, 1080, true);
         store.SetActive(false);
         inventoryPanel.SetActive(false);
         createRoom.SetActive(false);
@@ -36,6 +35,7 @@ public class GameManager : MonoBehaviour
         CustomPanel.SetActive(false);
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
+        ActiveMenu(true);
     }
  
     void ActiveMenu(bool active)

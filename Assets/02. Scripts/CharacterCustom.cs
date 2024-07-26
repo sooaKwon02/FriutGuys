@@ -42,7 +42,7 @@ public class CharacterCustom : MonoBehaviour
                 bodyParts[i].mesh = CustomInventory[i].item.mesh;
                 idleParts[i].enabled = false;
             }
-            else 
+            else
             {
                 bodyParts[i].mesh = null;
                 idleParts[i].enabled = true;
