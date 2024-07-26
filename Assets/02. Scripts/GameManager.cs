@@ -9,10 +9,8 @@ public class GameManager : MonoBehaviour
     public GameObject store;
     public GameObject inventoryPanel;
     public GameObject inventory;   
-    public GameObject createRoom;
     public GameObject rankPanel;
     public GameObject rankbuttonPanel;
-    public GameObject playButtonPanel;
     public GameObject menuPanel;
     public GameObject idPanel;
     public GameObject settingMenuPanel;
@@ -24,13 +22,20 @@ public class GameManager : MonoBehaviour
     public GameObject settingExit;
 
 
+    public GameObject roomListPanel;
+    public GameObject playButtonPanel;
+    public GameObject SearchRoomPanel;
+    public GameObject createRoomPanel;
+
+
 
 
     private void Start()
     {
         store.SetActive(false);
         inventoryPanel.SetActive(false);
-        createRoom.SetActive(false);
+        SearchRoomPanel.SetActive(false);
+        createRoomPanel.SetActive(false);
         rankPanel.SetActive(false);
         CustomPanel.SetActive(false);
         profilePanel.SetActive(false);
@@ -46,9 +51,7 @@ public class GameManager : MonoBehaviour
         idPanel.SetActive(active);
     }
     public void InventoryOnOff(bool check)
-    {
-                
-        
+    {     
         if (!store.activeSelf&& !CustomPanel.activeSelf)
         {
             inventoryPanel.SetActive(check);
@@ -100,10 +103,30 @@ public class GameManager : MonoBehaviour
         }            
     }
    
-    public void CreateRoomOnOff(bool check)
+    public void CreateRoomOnOff(int num)
     {
-        createRoom.SetActive(check);
-        ActiveMenu(!check);
+        if (num == 0)
+        {
+            SearchRoomPanel.SetActive(true);
+            ActiveMenu(false);
+        }
+        else if (num == 1)
+        {
+            createRoomPanel.SetActive(true);
+            ActiveMenu(false);
+        }
+        else if (num == 2)
+        {
+            roomListPanel.SetActive(true);
+            ActiveMenu(false);
+        }      
+        else
+        {
+            ActiveMenu(true);
+            roomListPanel.SetActive(false);
+            createRoomPanel.SetActive(false);
+            SearchRoomPanel.SetActive(false);
+        }
     }      
     public void RankPanelOnOff(bool check)
     {
@@ -128,15 +151,5 @@ public class GameManager : MonoBehaviour
     {
         profilePanel.SetActive(check);
         ActiveMenu(!check);
-    }  
-    
-    public void CreateRoom()
-    {
-        
-    }
-    public void CreateRandomRoom()
-    {
-
-    }
-
+    }    
 }

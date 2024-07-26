@@ -5,77 +5,131 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
-
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    public GameManager GameManager;
     public InputField roomNameInput;
     public InputField fullRoomInput;
     public InputField passwordInput;
-    bool secretCheck;
-    public GameObject createRoomPanel;
-    public GameObject createRoomDataPanel;
-    //===================================================================
+    public bool secretCheck;
+    public Toggle toggle;
+    public Transform roomListPanel;
+    public GameObject roomListButtonPrefabs;
+    public GameObject createRoomFailPanel;
     public string version = "Ver 0.1.0";
-    public PunLogLevel LogLevel = PunLogLevel.Full;
-   
+
     void Awake()
     {
+        DontDestroyOnLoad(this);
         PhotonNetwork.ConnectUsingSettings();
         secretCheck = false;
-        if(passwordInput != null)
-        passwordInput.enabled= !secretCheck;
+        toggle.isOn = false;
+        if (passwordInput != null)
+            passwordInput.enabled = !secretCheck;
+        createRoomFailPanel.SetActive(false);
     }
-    public void SecretCheck()
+
+    public void SecretCheckButton()
     {
         secretCheck = !secretCheck;
-        passwordInput.text = null;
+        passwordInput.text = string.Empty;
         passwordInput.enabled = !secretCheck;
-    }    public void CreateRoom(bool check)
-    {
-        createRoomPanel.SetActive(!check);
-        createRoomDataPanel.SetActive(check);
-        GameManager.CreateRoomOnOff(check);
-    }  
-    //=======================================================================================
+    }
+
     public override void OnConnectedToMaster()
     {
-        Debug.Log("마스터로 접속");
+        PhotonNetwork.JoinLobby();
         base.OnConnectedToMaster();
     }
+
     public void OnClickCreateRoom()
     {
-        // 방 설정 옵션 생성
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.IsOpen = true;  // 방이 열려 있는지 여부
-        roomOptions.IsVisible = true;  // 방이 로비에 보이는지 여부
-        if(Convert.ToByte(fullRoomInput.text) > 1&& Convert.ToByte(fullRoomInput.text) < 17)
+        RoomOptions roomOptions = new RoomOptions
         {
-            roomOptions.MaxPlayers = Convert.ToByte(fullRoomInput.text);
-        }  
-        if (!string.IsNullOrEmpty(passwordInput.text))
+            IsVisible = true,
+            IsOpen = true
+        };
+
+        byte maxPlayers;
+        if (byte.TryParse(fullRoomInput.text, out maxPlayers) && maxPlayers > 1 && maxPlayers < 17)
         {
-            roomOptions.CustomRoomPropertiesForLobby = new string[] { "pwd" }; // 로비에 비밀번호 속성 표시
-            roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable(); // Hashtable 초기화
-            roomOptions.CustomRoomProperties["pwd"] = passwordInput.text; // "pwd"라는 키로 비밀번호 설정
+            roomOptions.MaxPlayers = maxPlayers;
+            PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions, TypedLobby.Default);
         }
-        // 방 생성 요청
-        PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions, TypedLobby.Default);
-        Debug.Log("방 생성 완료");
-        StartCoroutine(LoadStage());
+        else
+        {
+            StartCoroutine(CreateRoomFail());
+        }
     }
+
+    IEnumerator CreateRoomFail()
+    {
+        createRoomFailPanel.SetActive(true);
+        yield return new WaitForSeconds(2);
+        createRoomFailPanel.SetActive(false);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        // 방 생성 성공 후 처리할 내용 추가
+    }
+
+    public override void OnJoinedRoom()
+    {
+        // 방 입장 성공 후 처리할 내용 추가
+    }
+
     IEnumerator LoadStage()
     {
         PhotonNetwork.IsMessageQueueRunning = false;
         AsyncOperation ao = SceneManager.LoadSceneAsync(3);
         yield return ao;
-        Debug.Log("로딩 완료");
     }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        // 기존 UI 업데이트를 먼저 지우기
+        foreach (Transform child in roomListPanel)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (RoomInfo _room in roomList)
+        {
+            GameObject list = Instantiate(roomListButtonPrefabs);
+            list.GetComponent<RoomList>().CreateRoomInfo(_room.Name, _room.PlayerCount, _room.MaxPlayers, secretCheck, passwordInput.text);
+            list.transform.SetParent(roomListPanel, false);
+        }
+    }
+
     public void OnClickJoinRandomRoom()
     {
         PhotonNetwork.JoinRandomRoom();
     }
-  
+
+    public override void OnJoinedLobby()
+    {
+        // 로비 입장 성공 후 처리할 내용 추가
+    }
+
+    public override void OnLeftLobby()
+    {
+        // 로비 퇴장 성공 후 처리할 내용 추가
+    }
+
+    public override void OnFriendListUpdate(List<FriendInfo> friendList)
+    {
+        foreach (FriendInfo friend in friendList)
+        {
+            if (friend.IsInRoom)
+            {
+                Debug.Log($"친구가 방에 있음: {friend.UserId}");
+            }
+        }
+    }
+
+    public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
+    {
+        // 로비 통계 업데이트 후 처리할 내용 추가
+    }
 }
