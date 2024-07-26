@@ -113,10 +113,7 @@ public class GameManager : MonoBehaviour
     public void CustomPanelOnOff(bool check)
     {
         CustomPanel.SetActive(check);
-        inventoryPanel.SetActive(check);
-        Player.GetComponent<CharacterCustom>().enabled = check;
-        Player.GetComponentInChildren<Animator>().enabled = !check;
-        Player.GetComponentInChildren<PlayerCtrl>().enabled = !check;    
+        inventoryPanel.SetActive(check);  
         if (check)
         {
             Player.position = new Vector2(2, 0);

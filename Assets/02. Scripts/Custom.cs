@@ -23,7 +23,6 @@ public class Custom : MonoBehaviour
     private void Awake()
     {
         player = FindObjectOfType<CharacterCustom>();
-
     }
     public void Choice(string str)
     {
