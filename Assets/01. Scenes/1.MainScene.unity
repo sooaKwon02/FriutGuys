@@ -427,7 +427,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 223841948}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &223841948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,7 +649,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 800785532}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2036775620}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
+        m_MethodName: OnClickCreateRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &800785532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2445,11 +2469,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
-  roomNameInput: {fileID: 0}
-  fullRoomInput: {fileID: 0}
-  passwordInput: {fileID: 0}
-  createRoomPanel: {fileID: 0}
-  createRoom: {fileID: 0}
+  roomNameInput: {fileID: 822651562}
+  fullRoomInput: {fileID: 1768143235}
+  passwordInput: {fileID: 94512765}
+  createRoomPanel: {fileID: 5964603374612287380}
+  createRoomDataPanel: {fileID: 1463990560}
   version: Ver 0.1.0
   LogLevel: 2
 --- !u!1 &2056564389

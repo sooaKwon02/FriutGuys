@@ -16,7 +16,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public InputField passwordInput;
     bool secretCheck;
     public GameObject createRoomPanel;
-    public GameObject createRoom;
+    public GameObject createRoomDataPanel;
     //===================================================================
     public string version = "Ver 0.1.0";
     public PunLogLevel LogLevel = PunLogLevel.Full;
@@ -36,7 +36,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }    public void CreateRoom(bool check)
     {
         createRoomPanel.SetActive(!check);
-        createRoom.SetActive(check);
+        createRoomDataPanel.SetActive(check);
         GameManager.CreateRoomOnOff(check);
     }  
     //=======================================================================================
@@ -51,8 +51,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsOpen = true;  // 방이 열려 있는지 여부
         roomOptions.IsVisible = true;  // 방이 로비에 보이는지 여부
-        roomOptions.MaxPlayers = Convert.ToByte(fullRoomInput.text);  // 최대 플레이어 수 설정
-
+        if(Convert.ToByte(fullRoomInput.text) > 1&& Convert.ToByte(fullRoomInput.text) < 17)
+        {
+            roomOptions.MaxPlayers = Convert.ToByte(fullRoomInput.text);
+        }  
         if (!string.IsNullOrEmpty(passwordInput.text))
         {
             roomOptions.CustomRoomPropertiesForLobby = new string[] { "pwd" }; // 로비에 비밀번호 속성 표시

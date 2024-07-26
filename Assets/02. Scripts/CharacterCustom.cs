@@ -10,8 +10,15 @@ public class CharacterCustom : MonoBehaviour
     public float rotationSpeed;
     public int customCheck;
     private void Awake()
-    {        
-        for(int i=0;i< bodyParts.Length;i++)
+    {              
+        if(FindObjectOfType<Custom>())      
+            enabled = true;      
+        else
+            enabled = false;
+    }
+    private void Start()
+    {
+        for (int i = 0; i < bodyParts.Length; i++)
         {
             if (bodyParts[i].name == bodyParts[i].mesh.name)
             {
@@ -19,18 +26,14 @@ public class CharacterCustom : MonoBehaviour
             }
             else
             {
-                idleParts[i].enabled = false; 
+                idleParts[i].enabled = false;
                 bodyParts[i].transform.position = Vector3.zero;
                 bodyParts[i].transform.rotation = Quaternion.identity;
-                bodyParts[i].transform.localScale =new  Vector3(1,1,1);
-            }                
-        }   
-        if(FindObjectOfType<Custom>())      
-            enabled = true;      
-        else
-            enabled = false;
+                bodyParts[i].transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
     }
-   
+
     private void Update()
     {
         if (Input.GetKey(KeyCode.RightArrow))
