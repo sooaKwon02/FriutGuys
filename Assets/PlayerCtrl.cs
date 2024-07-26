@@ -205,14 +205,14 @@ public class PlayerCtrl : MonoBehaviour
     }
 
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("DeadZone"))
-    //    {
-    //        //failedText.SetActive(true);
-    //        Time.timeScale = 0;
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("DeadZone"))
+        {
+            //failedText.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
     //private void OnTriggerEnter(Collider other)
     //{
     //    if(catchObject == null)
