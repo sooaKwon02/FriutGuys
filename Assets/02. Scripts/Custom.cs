@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class Custom : MonoBehaviour
 {
@@ -45,40 +44,18 @@ public class Custom : MonoBehaviour
 
         if (StyleCheck == "Position")
         {
-
-            if (num == 2 || num == 1)
-            {
-                player.bodyParts[1].transform.localPosition = slideSet;
-                player.bodyParts[2].transform.localPosition = slideSet;
-            }
-            else
-                player.bodyParts[num].transform.localPosition = slideSet;
+            player.bodyParts[num].transform.localPosition = slideSet;
         }
         else if (StyleCheck == "Rotation")
         {
-            if (num == 2 || num == 1)
-            {
-                player.bodyParts[1].transform.localRotation=Quaternion.Euler(slideSet);
-                player.bodyParts[2].transform.localRotation = Quaternion.Euler(slideSet);
-            }
-            else
-                player.bodyParts[num].transform.localRotation = Quaternion.Euler(slideSet);
+            player.bodyParts[num].transform.localRotation = Quaternion.Euler(slideSet);
         }
         else if (StyleCheck == "Scale")
         {
-            if (num == 2 || num == 1)
-            {
-                player.bodyParts[1].transform.localScale = slideSet;
-                player.bodyParts[2].transform.localScale = slideSet;
-            }
-            else
-                player.bodyParts[num].transform.localScale = slideSet;
+            player.bodyParts[num].transform.localScale = slideSet;
         }
     }
-    //public void StyleSet(string str)
-    //{
-    //    StyleCheck = str;  
-    //}
+  
     public void PartSelect(int _num)
     {
         num = _num;

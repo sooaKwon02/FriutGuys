@@ -5,10 +5,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using UnityEngine.SceneManagement;
-
+using IPMINE;
 
 public class DatabaseManager : MonoBehaviour
 {
+    IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator Start()
     {
-        string url = "http://61.99.10.173/fruitsGuys/LoginUnity.php"; // PHP 스크립트의 URL을 입력하세요
+        string url = dll.LoginUnity; // PHP 스크립트의 URL을 입력하세요
 
         WWW www = new WWW(url);
         yield return www;
@@ -105,7 +106,7 @@ public class DatabaseManager : MonoBehaviour
 
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = "http://61.99.10.173/fruitsGuys/SignUp.php";
+        string serverURL = "dll.SignUp";
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
@@ -157,7 +158,7 @@ public class DatabaseManager : MonoBehaviour
     }    
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = "http://61.99.10.173/fruitsGuys/GameLogin.php";
+        string serverURL = dll.GameLogin;
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
