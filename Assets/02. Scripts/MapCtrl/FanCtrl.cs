@@ -5,6 +5,7 @@ using UnityEngine;
 public class FanCtrl : MonoBehaviour
 {
     float flyForce;
+    public Vector3 vec = Vector3.zero;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,9 +15,9 @@ public class FanCtrl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log(flyForce);
             Rigidbody rb = other.GetComponent<Rigidbody>();
-            Vector3 flyVel = Vector3.up * flyForce;
+            Vector3 flyVel = vec * flyForce;
+            Debug.Log(flyVel);
             rb.AddForce(flyVel, ForceMode.Impulse);
         }
     }

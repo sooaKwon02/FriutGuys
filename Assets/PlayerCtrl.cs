@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviour
 {
@@ -34,11 +34,15 @@ public class PlayerCtrl : MonoBehaviour
     public Transform catchPoint;
     private GameObject catchObject = null;
 
+    //public GameObject failedText;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
+
+        //failedText.SetActive(false);
     }
 
     void Update()
@@ -62,7 +66,7 @@ public class PlayerCtrl : MonoBehaviour
 
     void PlayerMove()
     {
-        Debug.DrawRay(cam.position,
+        Debug.DrawRay(cam.position, 
             new Vector3(cam.forward.x, 0f, cam.forward.z).normalized, Color.red);
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -70,7 +74,7 @@ public class PlayerCtrl : MonoBehaviour
         //카메라가 보는 앞 방향 
         Vector3 moveInput = new Vector2(h, v);
         bool isMove = moveInput.magnitude != 0;
-
+        
         anim.SetBool("isMove", isMove);
         anim.SetFloat("MoveX", h);
         anim.SetFloat("MoveY", v);
@@ -101,7 +105,7 @@ public class PlayerCtrl : MonoBehaviour
         float x = camAngle.x - mouseDelta.y;
 
         //카메라의 범위가 180도 이하라면
-        if (x < 180f)
+        if(x < 180f)
         {
             //0과 70사이의 값으로 조정
             x = Mathf.Clamp(x, 0f, 70f);
@@ -127,7 +131,7 @@ public class PlayerCtrl : MonoBehaviour
     void CheckGround()
     {
         RaycastHit hit;
-        Debug.DrawRay(rb.position, Vector3.down * 0.1f, Color.red);
+        Debug.DrawRay(rb.position, Vector3.down * 0.1f ,Color.red);
         if (Physics.Raycast(rb.position, Vector3.down, out hit, 0.1f))
         {
             //추후 태그 달아서 그라운드 체크 예정
@@ -200,6 +204,15 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("DeadZone"))
+        {
+            //failedText.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
     //private void OnTriggerEnter(Collider other)
     //{
     //    if(catchObject == null)
