@@ -8,6 +8,7 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public GameObject player;
     public InputField roomNameInput;
     public InputField fullRoomInput;
     public InputField passwordInput;
@@ -49,7 +50,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             IsVisible = true,
             IsOpen = true
         };
-
         byte maxPlayers;
         if (byte.TryParse(fullRoomInput.text, out maxPlayers) && maxPlayers > 1 && maxPlayers < 17)
         {
@@ -76,14 +76,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        // 방 입장 성공 후 처리할 내용 추가
+        PhotonNetwork.LoadLevel(3);
+        
     }
 
-    IEnumerator LoadStage()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        PhotonNetwork.IsMessageQueueRunning = false;
-        AsyncOperation ao = SceneManager.LoadSceneAsync(3);
-        yield return ao;
+        // 씬이 로드된 후에 호출되는 메서드입니다.
+        Debug.Log("씬 로드됨: " + scene.name);
+
+        if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.InRoom)
+        {
+            GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, new Quaternion(0,180,0,1));
+            player.transform.SetParent(FindObjectOfType<CharacterCustom>().transform);
+            Debug.Log(player.transform.position);
+        }
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

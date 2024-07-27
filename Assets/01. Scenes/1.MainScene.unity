@@ -2748,6 +2748,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7068979838084846393, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 339368097, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -3262,9 +3266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e782f9918abb34e8d6710be5258b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 3323184941572198164, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
   roomNameInput: {fileID: 822651562}
   fullRoomInput: {fileID: 1768143235}
   passwordInput: {fileID: 94512765}
+  secretCheck: 0
   toggle: {fileID: 46094661}
   roomListPanel: {fileID: 90024026}
   roomListButtonPrefabs: {fileID: 3634458963774014888, guid: db5ac8d5d3c6c8f4b800b28d0e147845, type: 3}
