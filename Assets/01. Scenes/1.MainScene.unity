@@ -979,6 +979,11 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 391528439, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
   m_PrefabInstance: {fileID: 1776207753}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &429164977 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3323184941572198165, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
+  m_PrefabInstance: {fileID: 1776207753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &747697998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,39 +2751,19 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 7938753317849231090}
     m_Modifications:
     - target: {fileID: -7068979838084846393, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 339368097, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
-    - target: {fileID: 391528438, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
-    - target: {fileID: 1101468475, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
-    - target: {fileID: 1787797384, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
-    - target: {fileID: 1936753580, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
     - target: {fileID: 3323184941572198164, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3323184941572198165, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3323184941572198165, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3252,7 +3237,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2036775620
 MonoBehaviour:
@@ -3266,7 +3251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e782f9918abb34e8d6710be5258b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3323184941572198164, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
   roomNameInput: {fileID: 822651562}
   fullRoomInput: {fileID: 1768143235}
   passwordInput: {fileID: 94512765}
@@ -13958,7 +13942,7 @@ RectTransform:
   - {fileID: 1421984158}
   - {fileID: 90024026}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -20154,10 +20138,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7311666950696290868}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: CreateRoomOnOff
-        m_Mode: 3
+      - m_Target: {fileID: 2036775620}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
+        m_MethodName: OnClickJoinRandomRoom
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20230,7 +20214,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &5964603374612287382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20407,7 +20391,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7938753317321209570
 MeshFilter:
@@ -20534,8 +20518,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7938753317321209580}
+  - {fileID: 429164977}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7938753317849231091
 GameObject:

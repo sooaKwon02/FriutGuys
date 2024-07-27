@@ -11,6 +11,11 @@ TagManager:
   - SlideCollider
   - Holder
   - Room
+  - DeadZone
+  - Ground
+  - PlayerCamera
+  - UserInfoPanel
+  - UseItem
   layers:
   - Default
   - TransparentFX

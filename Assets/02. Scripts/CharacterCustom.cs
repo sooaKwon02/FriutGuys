@@ -10,8 +10,8 @@ public class CharacterCustom : MonoBehaviour
     public float rotationSpeed;
     public int customCheck;
     private void Awake()
-    {              
-        if(FindObjectOfType<Custom>())      
+    {
+        if (FindObjectOfType<Custom>())      
             enabled = true;      
         else
             enabled = false;
