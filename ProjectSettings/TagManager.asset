@@ -16,6 +16,7 @@ TagManager:
   - PlayerCamera
   - UserInfoPanel
   - UseItem
+  - Info
   layers:
   - Default
   - TransparentFX

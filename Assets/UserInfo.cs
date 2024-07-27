@@ -11,6 +11,7 @@ public class UserInfo : MonoBehaviourPun
     public Text userName;
     public GameObject readyGame;
     public GameObject leaveGame;
+    public GameObject kickGame;
     bool readyCheck;
 
     private void Awake()
@@ -19,18 +20,17 @@ public class UserInfo : MonoBehaviourPun
         if (PhotonNetwork.IsMasterClient)
         {
             leaveGame.SetActive(true);
+            kickGame.SetActive(false);
         }
         else
         {
             leaveGame.SetActive(false);
+            kickGame.SetActive(true);
         }
     }
     public void KickOutButton()
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            FindObjectOfType<NetworkManager>().KickPlayerByNickname(userName.text.ToString());
-        }
+        FindObjectOfType<PlayerSettingManager>().KickPlayerByNickname(userName.text.ToString());
     }
     public void LeaveButton()
     {

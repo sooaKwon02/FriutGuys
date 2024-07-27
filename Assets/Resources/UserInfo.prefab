@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: -2441098515940256661}
   m_Layer: 5
   m_Name: UserInfo
-  m_TagString: Untagged
+  m_TagString: Info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -571,7 +571,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userName: {fileID: 9044178847385150672}
   readyGame: {fileID: 2095833135}
-  leaveGame: {fileID: 1341682194}
+  leaveGame: {fileID: 4903839891679980869}
+  kickGame: {fileID: 1341682194}
 --- !u!114 &-2441098515940256661
 MonoBehaviour:
   m_ObjectHideFlags: 0
