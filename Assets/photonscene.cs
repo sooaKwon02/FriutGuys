@@ -5,37 +5,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerSettingManager : MonoBehaviourPunCallbacks
+public class photonscene : MonoBehaviourPunCallbacks
 {
-    public static PlayerSettingManager Instance { get; private set; }
     string PlayerName;
     GameObject gamePlayer;
     private void Awake()
     {
-        //if (Instance == null)
-        //{
-        //    Instance = this;
-        //    DontDestroyOnLoad(gameObject); 
-        //}
-        //else
-        //{
-        //    Destroy(gameObject); 
-        //}
         if (FindObjectOfType<DatabaseManager>())
-        { 
-            PlayerName = FindObjectOfType<DatabaseManager>().nickname.text.ToString();
-        }
-        if (!PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.ConnectUsingSettings();
-        }
+            PlayerName = FindObjectOfType<DatabaseManager>().nickname.text.ToString();
+        }      
     }
-    public override void OnConnectedToMaster()
-    {
-        PhotonNetwork.JoinLobby();
-        base.OnConnectedToMaster();
-        Debug.Log("로비접속");
-    }
+  
     public override void OnJoinedRoom()
     {
         StartCoroutine(LoadSceneAsync(3));
@@ -67,7 +48,7 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
         }
     }
     public override void OnFriendListUpdate(List<FriendInfo> friendList)
-        {
+    {
         foreach (FriendInfo friend in friendList)
         {
             if (friend.IsInRoom)
@@ -100,11 +81,11 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("들어옴:"+ newPlayer.NickName);
+        Debug.Log("들어옴:" + newPlayer.NickName);
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log("나감:"+ otherPlayer.NickName);
+        Debug.Log("나감:" + otherPlayer.NickName);
     }
     public void KickPlayerByNickname(string playerNickname)
     {
@@ -113,7 +94,7 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
             if (player.NickName == playerNickname)
             {
                 PhotonNetwork.CloseConnection(player);
-                return; 
+                return;
             }
         }
     }
