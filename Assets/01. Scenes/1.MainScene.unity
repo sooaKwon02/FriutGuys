@@ -774,6 +774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544e093048b4691418305d8f7fa38d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  version: 0.1.0f
 --- !u!4 &231713279
 Transform:
   m_ObjectHideFlags: 0
@@ -3302,7 +3303,6 @@ MonoBehaviour:
   roomListPanel: {fileID: 90024026}
   roomListButtonPrefabs: {fileID: 3634458963774014888, guid: db5ac8d5d3c6c8f4b800b28d0e147845, type: 3}
   createRoomFailPanel: {fileID: 1421984157}
-  version: Ver 0.1.0
 --- !u!1 &2056564389
 GameObject:
   m_ObjectHideFlags: 0

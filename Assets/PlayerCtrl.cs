@@ -1,10 +1,12 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerCtrl : MonoBehaviour
+public class PlayerCtrl : MonoBehaviourPun
 {
+    PhotonView pv;
     private Rigidbody rb;
     private Animator anim;
     private CapsuleCollider coll;
@@ -38,31 +40,48 @@ public class PlayerCtrl : MonoBehaviour
 
     void Awake()
     {
+        pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
         //failedText.SetActive(false);
-        if(GameObject.FindGameObjectWithTag("Holder"))
+        if (GameObject.FindGameObjectWithTag("Holder"))
         {
-            transform.SetParent( GameObject.FindGameObjectWithTag("Holder").transform);
+            transform.SetParent(GameObject.FindGameObjectWithTag("Holder").transform);
             GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
         }
     }
-
+   
+  
     void Update()
+    {
+        if (pv.IsMine)
+        {
+            LookAround();
+            CheckGround();
+            if (Input.GetKeyDown(KeyCode.Space) && isGround)
+            {
+                isJump = true;
+            }
+            Slide();
+        }
+    }
+    void FixedUpdate()
+    {
+        if (pv.IsMine)
+        {
+            PlayerMove();
+            Sliding();
+            Jump();
+            photonView.RPC("PerformActionRPC", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    void PerformActionRPC()
     {
         LookAround();
         CheckGround();
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
-        {
-            isJump = true;
-        }
         Slide();
-        //Catch();
-    }
-
-    void FixedUpdate()
-    {
         PlayerMove();
         Sliding();
         Jump();

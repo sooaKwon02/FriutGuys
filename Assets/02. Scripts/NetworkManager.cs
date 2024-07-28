@@ -17,7 +17,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Transform roomListPanel;
     public GameObject roomListButtonPrefabs;
     public GameObject createRoomFailPanel;
-    public string version = "Ver 0.1.0";
 
     void Awake()
     {
@@ -31,7 +30,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             passwordInput.enabled = !secretCheck;
             createRoomFailPanel.SetActive(false);
         }
-       
+
+    }
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+        base.OnConnectedToMaster();
     }
     public void SecretCheckButton()
     {
@@ -76,9 +80,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 Destroy(child.gameObject);
             }
         }
-        else
-            return;
-        // 방 목록을 업데이트
         foreach (RoomInfo _room in roomList)
         {
             GameObject list = Instantiate(roomListButtonPrefabs);
@@ -95,6 +96,5 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }   
     public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
     {
-        // 로비 통계 업데이트 후 처리할 내용 추가
     }    
 }

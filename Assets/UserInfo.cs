@@ -9,8 +9,7 @@ public class UserInfo : MonoBehaviourPun
 {
     [HideInInspector]
     public Text userName;
-    public GameObject readyGame;
-    public GameObject leaveGame;
+    public Image readyGame;
     public GameObject kickGame;
     bool readyCheck;
 
@@ -19,44 +18,54 @@ public class UserInfo : MonoBehaviourPun
         readyCheck = false;
         if (PhotonNetwork.IsMasterClient)
         {
-            leaveGame.SetActive(true);
-            kickGame.SetActive(false);
-        }
+            if(!photonView.IsMine)
+            {
+                kickGame.SetActive(true);
+            }
+            else
+            {
+                kickGame.SetActive(false);
+            }
+        }              
         else
         {
-            leaveGame.SetActive(false);
-            kickGame.SetActive(true);
+            kickGame.SetActive(false);
         }
+        if (GameObject.FindGameObjectWithTag("UserInfoPanel"))
+        {
+            transform.SetParent(GameObject.FindGameObjectWithTag("UserInfoPanel").transform);   
+        }
+
     }
     public void KickOutButton()
     {
-        FindObjectOfType<PlayerSettingManager>().KickPlayerByNickname(userName.text.ToString());
-    }
-    public void LeaveButton()
-    {
-        if (photonView.IsMine)
+        if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LeaveRoom();
+            PhotonView pv = gameObject.GetComponent<PhotonView>();
+            photonView.RPC("TriggerPlayerKick",pv.Owner);
         }
     }
-    public void ReadyButton()
+    [PunRPC]
+    void TriggerPlayerKick()
     {
-        readyCheck=!readyCheck;
-        if (readyCheck)
+        PhotonNetwork.LeaveRoom();
+    }
+    public void Ready(bool check)
+    {
+        if (check)
         {
-            readyGame.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+            readyGame.color = new Color(0, 1, 0, 1);
+            readyCheck = true;
         }
         else
         {
-            readyGame.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+            readyGame.color = new Color(1, 1, 1, 0.5f);
+            readyCheck = false;
         }
     }
     public void SetUserInfo(string _name)
     {
-        if(photonView.IsMine)
-        {
-            userName.text = _name;
-            PhotonNetwork.NickName = _name;
-        }
+        userName.text = _name;
+        PhotonNetwork.NickName = _name;
     }
 }

@@ -39,6 +39,18 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - NotifyCharacterCreated
+  - CharacterCreated
+  - NotifyPlayerCreation
+  - SetupPlayerAndUI
+  - CreatePlayer
+  - SyncExistingPlayers
+  - CreatePlayerAndUI
+  - SyncPlayerAndUI
+  - OnCharacterCreated
+  - SyncUserInfo
+  - PerformActionRPC
+  - TriggerPlayerKick
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

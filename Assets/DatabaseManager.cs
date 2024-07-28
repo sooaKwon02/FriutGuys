@@ -52,9 +52,12 @@ public class DatabaseManager : MonoBehaviour
     public InputField nickname;
     public GameObject SignUpComplete;
     public GameObject SignUpPanel;
-    string idtext;
-    string passwordtext;
-    string nicknametext;
+    [HideInInspector]
+    public string idtext;
+    [HideInInspector]
+    public string passwordtext;
+    [HideInInspector]
+    public string nicknametext;
     //=============================================================회원가입==============
     public void SignUpButton()
     {
