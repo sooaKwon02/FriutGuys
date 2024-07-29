@@ -73,8 +73,8 @@ public class PlayerCtrl : MonoBehaviourPun
             PlayerMove();
             Sliding();
             Jump();
-            photonView.RPC("PerformActionRPC", RpcTarget.All);
         }
+        photonView.RPC("PerformActionRPC", RpcTarget.Others);
     }
     [PunRPC]
     void PerformActionRPC()

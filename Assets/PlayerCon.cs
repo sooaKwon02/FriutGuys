@@ -14,18 +14,18 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(CreatePlayer());
-        }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            readyText.text = "시작".ToString();
-        }
-        else if (!PhotonNetwork.IsMasterClient)
-        {
-            readyText.text = "준비".ToString();
-        }
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    StartCoroutine(CreatePlayer());
+        //}
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    readyText.text = "시작".ToString();
+        //}
+        //else if (!PhotonNetwork.IsMasterClient)
+        //{
+        //    readyText.text = "준비".ToString();
+        //}
     }
    
     public void LeaveGame()
