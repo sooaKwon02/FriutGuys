@@ -45,7 +45,8 @@ public class PlayerCtrl : MonoBehaviourPun
         DontDestroyOnLoad(this);
        
         pv = GetComponent<PhotonView>();
-        pv.Synchronization = ViewSynchronization.ReliableDeltaCompressed;
+        PhotonNetwork.SendRate = 60;
+        pv.Synchronization = ViewSynchronization.Unreliable;
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
