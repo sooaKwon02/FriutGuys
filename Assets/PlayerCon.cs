@@ -73,12 +73,28 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             readyText.text = "¡ÿ∫Ò";
         }
     }
+    //public override void OnPlayerEnteredRoom(Player newPlayer)
+    //{
+    //    Debug.Log("asd");
+    //    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+    //    foreach (GameObject player in players) 
+    //    {
+    //        PhotonView pv=GetComponent<PhotonView>();
+    //        if(pv.IsMine)
+    //            player.GetComponentInChildren<Camera>().enabled = true;
+    //        else
+    //            player.GetComponentInChildren<Camera>().enabled = false;
+    //    }
+      
+    //}
     IEnumerator CreatePlayer()
     {
         yield return new WaitForSeconds(1f);
         if (PhotonNetwork.IsConnectedAndReady)
         {
             GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+          
+            
             if (GameObject.FindGameObjectWithTag("UserInfoPanel"))
             {
                 GameObject obj = PhotonNetwork.Instantiate("UserInfo", Vector3.zero, Quaternion.identity);

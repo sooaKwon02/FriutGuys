@@ -53,7 +53,7 @@ public class PlayerCtrl : MonoBehaviourPun
         {
             transform.SetParent(GameObject.FindGameObjectWithTag("Holder").transform);
             GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
-        }
+        }    
     }
    
   
