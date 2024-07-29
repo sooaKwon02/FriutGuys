@@ -45,6 +45,7 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
             StartCoroutine(LoadSceneAsync(3));
         }
     }   
+    
     public override void OnLeftRoom()
     {
         StartCoroutine(LoadSceneAsync(2));

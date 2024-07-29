@@ -9,6 +9,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 {
     private string playerName;
     public GameObject userInfo;
+    public Button startButton;
     public Text readyText;
     bool ready;
 
@@ -25,7 +26,10 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
-   
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel(4);
+    }
     public void ReadyGame()
     {
         if (!PhotonNetwork.IsMasterClient)

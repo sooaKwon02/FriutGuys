@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviourPun
 {
+    private static PlayerCtrl _instance;
     PhotonView pv;
     private Rigidbody rb;
     private Animator anim;
@@ -40,6 +41,15 @@ public class PlayerCtrl : MonoBehaviourPun
 
     void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();

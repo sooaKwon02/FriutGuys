@@ -54,6 +54,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (byte.TryParse(fullRoomInput.text, out maxPlayers) && maxPlayers > 1 && maxPlayers < 17)
         {
             roomOptions.MaxPlayers = maxPlayers;
+            GameObject list = Instantiate(roomListButtonPrefabs);
             PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions, TypedLobby.Default);
         }
         else
@@ -69,6 +70,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public void OnClickJoinRandomRoom()
     {
+        PhotonNetwork.JoinRoom(roomNameInput.text);
         PhotonNetwork.JoinRandomRoom();
     }       
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
