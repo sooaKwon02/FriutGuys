@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerCtrl : MonoBehaviourPun
+public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
     PhotonView pv;
     private Rigidbody rb;
@@ -42,17 +42,18 @@ public class PlayerCtrl : MonoBehaviourPun
 
     Vector3 currPos = Vector3.zero;
     Quaternion currRot = Quaternion.identity;
+    float jumpY;
 
     void Awake()
     {
         myTr = GetComponent<Transform>();
 
         currPos = myTr.position;
-        currRot = myTr.rotation;
+        currRot = player.rotation;
 
         DontDestroyOnLoad(this);
         pv = GetComponent<PhotonView>();
-        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SendRate = 120;
         pv.Synchronization = ViewSynchronization.Unreliable;
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -72,11 +73,20 @@ public class PlayerCtrl : MonoBehaviourPun
         {
             LookAround();
             CheckGround();
-            if (Input.GetKeyDown(KeyCode.Space) && isGround)
+            if (Input.GetKeyDown(KeyCode.Space) && isGround && pv.IsMine)
             {
                 isJump = true;
             }
             Slide();
+        }
+        else
+        {
+            player.rotation = Quaternion.Slerp(player.rotation, currRot, Time.deltaTime * 3.0f);
+            myTr.position = Vector3.Lerp(myTr.position, currPos, Time.deltaTime * 3.0f);
+         
+            Vector3 velocity = rb.velocity;
+            velocity.y = Mathf.Lerp(velocity.y, jumpY, Time.deltaTime * 30.0f);
+            rb.velocity = velocity;
         }
     }
     void FixedUpdate()
@@ -88,14 +98,15 @@ public class PlayerCtrl : MonoBehaviourPun
             Jump();
         }
     }
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //로컬 플레이어의 위치 정보를 송신
         if (stream.IsWriting)
         {
             //박싱
             stream.SendNext(myTr.position);
-            stream.SendNext(myTr.rotation);
+            stream.SendNext(player.rotation);
+            stream.SendNext(rb.velocity.y);
         }
         //원격 플레이어의 위치 정보를 수신
         else
@@ -103,6 +114,7 @@ public class PlayerCtrl : MonoBehaviourPun
             //언박싱
             currPos = (Vector3)stream.ReceiveNext();
             currRot = (Quaternion)stream.ReceiveNext();
+            jumpY = (float)stream.ReceiveNext();
         }
 
     }
