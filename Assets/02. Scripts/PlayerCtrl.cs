@@ -33,6 +33,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     [SerializeField]
     bool isGround = false;
     bool isJump = false;
+    bool isMove = false;
 
     public GameObject slideCollider;
 
@@ -87,12 +88,17 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             velocity.y = Mathf.Lerp(velocity.y, jumpY, Time.deltaTime * 30.0f);
             rb.velocity = velocity;            
         }
+        Debug.Log(isMove);
     }
     void FixedUpdate()
     {
         if (pv.IsMine)
         {
-            PlayerMove();
+            if (!isSliding)
+            {
+                PlayerMove();
+            }
+            //PlayerMove();
             Sliding();
             Jump();
         }
@@ -127,7 +133,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         //ī�޶� ���� �� ���� 
         Vector3 moveInput = new Vector2(h, v);
-        bool isMove = moveInput.magnitude != 0;
+        //어느방향으로든 움직이면 true
+        isMove = moveInput.magnitude != 0;
         
         anim.SetBool("isMove", isMove);
         anim.SetFloat("MoveX", h);
@@ -170,13 +177,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             x = Mathf.Clamp(x, 335f, 361f);
         }
         cam.transform.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
-    }
-    void JumpStart()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && jumpCooltimeTimer <= 0)
-        {
-            isJump = true;
-        }
     }
 
     void Jump()
@@ -222,6 +222,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && cooltimeTimer <= 0)
         {
+            isMove = false;
             isSliding = true;
             slideTimer = 1.0f;
             cooltimeTimer = 1.0f;
@@ -250,6 +251,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             {
                 //�����̵� Ÿ�̸Ӱ� 0�̸� �����̵� ����
                 isSliding = false;
+                isMove = true;
 
                 //�����̵� �ݶ��̴� ����
                 slideCollider.SetActive(false);
@@ -263,6 +265,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     {
         if (coll.gameObject.CompareTag("Obstacle"))
         {
+            Debug.Log("@@");
             anim.SetTrigger("Die");
         }
         if (coll.transform.tag == "Bullet")

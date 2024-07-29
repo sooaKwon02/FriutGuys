@@ -7,7 +7,7 @@ public class FanCtrl : MonoBehaviour
     float flyForce;
     public Vector3 vec = Vector3.zero;
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
         flyForce = Random.Range(0.5f, 1.0f);
     }
