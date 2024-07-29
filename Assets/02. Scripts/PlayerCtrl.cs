@@ -213,7 +213,6 @@ public class PlayerCtrl : MonoBehaviour
         if (coll.gameObject.CompareTag("Obstacle"))
         {
             anim.SetTrigger("Die");
-
         }
     }
 }
