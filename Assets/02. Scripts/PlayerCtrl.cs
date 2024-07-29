@@ -53,18 +53,7 @@ public class PlayerCtrl : MonoBehaviourPun
         {
             transform.SetParent(GameObject.FindGameObjectWithTag("Holder").transform);
             GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
-        }
-        if (pv.IsMine)
-        {
-            if(cam != null)
-            {
-                cam.gameObject.SetActive(true);
-            }
-            else
-            {
-                cam.gameObject.SetActive(false); 
-            }
-        }
+        }      
     }
    
   
