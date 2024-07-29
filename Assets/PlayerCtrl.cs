@@ -41,6 +41,7 @@ public class PlayerCtrl : MonoBehaviourPun
     void Awake()
     {
         DontDestroyOnLoad(this);
+       
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -85,7 +86,7 @@ public class PlayerCtrl : MonoBehaviourPun
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        //Ä«¸Þ¶ó°¡ º¸´Â ¾Õ ¹æÇâ 
+        //Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         Vector3 moveInput = new Vector2(h, v);
         bool isMove = moveInput.magnitude != 0;
         
@@ -101,11 +102,11 @@ public class PlayerCtrl : MonoBehaviourPun
 
             float rotSpeed = 10f;
 
-            // ÇÃ·¹ÀÌ¾î°¡ ¹Ù¶óº¼ ¸ñÇ¥ ¹æÇâ
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ù¶ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
             Quaternion targetRot = Quaternion.LookRotation(moveDir);
-            //playerÈ¸Àü
+            //playerÈ¸ï¿½ï¿½
             player.rotation = Quaternion.Slerp(player.rotation, targetRot, Time.deltaTime * rotSpeed);
-            //¿òÁ÷ÀÓ
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             rb.position += moveDir * Time.deltaTime * 5.0f;
         }
     }
@@ -118,15 +119,15 @@ public class PlayerCtrl : MonoBehaviourPun
 
         float x = camAngle.x - mouseDelta.y;
 
-        //Ä«¸Þ¶óÀÇ ¹üÀ§°¡ 180µµ ÀÌÇÏ¶ó¸é
+        //Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 180ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½
         if(x < 180f)
         {
-            //0°ú 70»çÀÌÀÇ °ªÀ¸·Î Á¶Á¤
+            //0ï¿½ï¿½ 70ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             x = Mathf.Clamp(x, 0f, 70f);
         }
         else
         {
-            //180µµ ÀÌ»óÀÌ¶ó¸é 
+            //180ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì¶ï¿½ï¿½ 
             x = Mathf.Clamp(x, 335f, 361f);
         }
         cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
@@ -148,7 +149,7 @@ public class PlayerCtrl : MonoBehaviourPun
         Debug.DrawRay(rb.position, Vector3.down * 0.1f ,Color.red);
         if (Physics.Raycast(rb.position, Vector3.down, out hit, 0.1f))
         {
-            //ÃßÈÄ ÅÂ±× ´Þ¾Æ¼­ ±×¶ó¿îµå Ã¼Å© ¿¹Á¤
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½Â±ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½×¶ï¿½ï¿½ï¿½ Ã¼Å© ï¿½ï¿½ï¿½ï¿½
             //if (hit.transform.CompareTag("Ground"))
             //{
             //    isGround = true;
@@ -173,7 +174,7 @@ public class PlayerCtrl : MonoBehaviourPun
 
     void Slide()
     {
-        //Àç½ÃÀÛ½Ã°£ÀÌ 0º¸´Ù Å©¸é »©ÁÖ±â
+        //ï¿½ï¿½ï¿½ï¿½Û½Ã°ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½
         if (cooltimeTimer > 0)
         {
             cooltimeTimer -= Time.deltaTime;
@@ -184,9 +185,9 @@ public class PlayerCtrl : MonoBehaviourPun
             isSliding = true;
             slideTimer = 1.0f;
             cooltimeTimer = 1.0f;
-            //½½¶óÀÌµù ÄÝ¶óÀÌ´õ Å°°í
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ Å°ï¿½ï¿½
             slideCollider.SetActive(true);
-            //¿ø·¡ÄÝ¶óÀÌ´õ ²¨ÁÖ±â
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½
             coll.enabled = false;
             anim.SetTrigger("slide");
         }
@@ -198,21 +199,21 @@ public class PlayerCtrl : MonoBehaviourPun
         {
             if (slideTimer > 0)
             {
-                //½½¶óÀÌµù ¹æÇâ Á¤ÇÏ°í ½½¶óÀÌµù
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
                 Vector3 slideDir = player.transform.forward;
-                //rbÀÇ ¹æÇâÀ» ÀÐ¾î¿Í ÀÏÁ¤ÇÑ ¼Óµµ·Î ¿òÁ÷ÀÓ
+                //rbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 rb.MovePosition(rb.position + slideDir * slideSpeed * Time.deltaTime);
-                //½½¶óÀÌµù ½Ã°£ ÁÙÀÌ±â
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
                 slideTimer -= Time.deltaTime;
             }
             else
             {
-                //½½¶óÀÌµù Å¸ÀÌ¸Ó°¡ 0ÀÌ¸é ½½¶óÀÌµù Á¾·á
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ Å¸ï¿½Ì¸Ó°ï¿½ 0ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
                 isSliding = false;
 
-                //½½¶óÀÌµù ÄÝ¶óÀÌ´õ ²ô°í
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½
                 slideCollider.SetActive(false);
-                //¿ø·¡ ÄÝ¶óÀÌ´õ Å´
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ Å´
                 coll.enabled = true;
             }
         }
