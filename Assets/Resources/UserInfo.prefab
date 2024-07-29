@@ -302,6 +302,7 @@ MonoBehaviour:
   userName: {fileID: 9044178847385150672}
   readyGame: {fileID: 2095833138}
   kickGame: {fileID: 1341682194}
+  readyCheck: 0
 --- !u!114 &-5866844719891817619
 MonoBehaviour:
   m_ObjectHideFlags: 0
