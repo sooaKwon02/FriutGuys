@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviourPun
 {
-    private static PlayerCtrl _instance;
     PhotonView pv;
     private Rigidbody rb;
     private Animator anim;
@@ -41,15 +40,7 @@ public class PlayerCtrl : MonoBehaviourPun
 
     void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(this);
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -84,18 +75,8 @@ public class PlayerCtrl : MonoBehaviourPun
             Sliding();
             Jump();
         }
-        photonView.RPC("PerformActionRPC", RpcTarget.Others);
     }
-    [PunRPC]
-    void PerformActionRPC()
-    {
-        LookAround();
-        CheckGround();
-        Slide();
-        PlayerMove();
-        Sliding();
-        Jump();
-    }
+
 
     void PlayerMove()
     {
