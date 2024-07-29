@@ -9,8 +9,8 @@ public class RespawnManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Instantiate(other.gameObject, respawnArea.position, Quaternion.identity);
-            Destroy(other.gameObject);
+            other.gameObject.transform.position = respawnArea.position;
+            //Destroy(other.gameObject);
         }
     }
 
