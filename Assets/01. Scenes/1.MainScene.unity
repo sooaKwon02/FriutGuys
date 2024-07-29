@@ -2849,6 +2849,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3323184941572198168, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 2129267349}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
 --- !u!137 &1776207759 stripped
@@ -3457,6 +3461,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125825332}
   m_CullTransparentMesh: 1
+--- !u!1 &2129267349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3323184939866538751, guid: 256b66e1a75d5414f9c66f288f96c72a, type: 3}
+  m_PrefabInstance: {fileID: 1776207753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &838545579883576112
 RectTransform:
   m_ObjectHideFlags: 0

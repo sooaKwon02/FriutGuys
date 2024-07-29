@@ -752,7 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674b1cb0488cc6a4e9f2b02536fc997b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 3323184940998535191}
+  cam: {fileID: 3323184940998535190}
   player: {fileID: 7054785656221380520}
   camSpeed: 3
   slideSpeed: 5
