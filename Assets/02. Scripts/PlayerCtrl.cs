@@ -265,5 +265,15 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             anim.SetTrigger("Die");
         }
+        if(coll.transform.tag=="Bullet")
+        {
+            Destroy(coll.gameObject);
+            pv.RPC("Des", RpcTarget.Others, coll);
+        }
+    }
+    [PunRPC]
+    void Des(GameObject obj)
+    {
+        Destroy(obj);
     }
 }

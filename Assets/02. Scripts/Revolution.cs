@@ -16,4 +16,12 @@ public class Revolution : MonoBehaviour
     {
         rb.MovePosition(transform.position + Vector3.forward * 5.0f * Time.deltaTime);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag=="Player")
+        {
+            Destroy(gameObject);
+        }
+    }
+   
 }
