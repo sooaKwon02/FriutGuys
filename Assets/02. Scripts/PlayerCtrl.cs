@@ -27,6 +27,8 @@ public class PlayerCtrl : MonoBehaviourPun
 
     public float jumpForce = 5.0f;
 
+    private float jumpCooltimeTimer = 0.0f;
+
     [SerializeField]
     bool isGround = false;
     bool isJump = false;
@@ -132,37 +134,38 @@ public class PlayerCtrl : MonoBehaviourPun
         }
         cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
     }
+    void JumpStart()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGround && jumpCooltimeTimer <= 0)
+        {
+            isJump = true;
+        }
+    }
 
     void Jump()
     {
+        if (jumpCooltimeTimer > 0)
+        {
+            jumpCooltimeTimer -= Time.deltaTime;
+        }
+
         if (isJump)
         {
+            jumpCooltimeTimer = 1.0f;
             Vector3 jumpVel = Vector3.up * jumpForce;//Mathf.Sqrt(jumpForce * -Physics.gravity.y);
             rb.AddForce(jumpVel, ForceMode.Impulse);
             anim.SetTrigger("Jump");
             isJump = false;
         }
     }
+
     void CheckGround()
     {
         RaycastHit hit;
         Debug.DrawRay(rb.position, Vector3.down * 0.1f ,Color.red);
+
         if (Physics.Raycast(rb.position, Vector3.down, out hit, 0.1f))
         {
-            //���� �±� �޾Ƽ� �׶��� üũ ����
-            //if (hit.transform.CompareTag("Ground"))
-            //{
-            //    isGround = true;
-            //    coll.material.dynamicFriction = 0.1f;
-            //    coll.material.frictionCombine = PhysicMaterialCombine.Minimum;
-            //    return;
-            //}
-            //if (hit.transform.CompareTag("SlimeLoad"))
-            //{
-            //    coll.material.dynamicFriction = 0.1f;
-            //    coll.material.frictionCombine = PhysicMaterialCombine.Minimum;
-            //    Debug.Log(coll.material.dynamicFriction + " " + coll.material.frictionCombine);
-            //}
             if (hit.collider != null)
             {
                 isGround = true;
@@ -219,65 +222,11 @@ public class PlayerCtrl : MonoBehaviourPun
         }
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision coll)
     {
-        if (other.gameObject.CompareTag("DeadZone"))
+        if (coll.gameObject.CompareTag("Obstacle"))
         {
-            //failedText.SetActive(true);
-            Time.timeScale = 0;
+            anim.SetTrigger("Die");
         }
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(catchObject == null)
-    //    {
-    //        catchObject = other.gameObject;
-    //        catchObject.GetComponent<Rigidbody>().isKinematic = true;
-    //    }
-    //}
-
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if(catchObject == other.gameObject)
-    //    {
-    //        ReleaseCatch();
-    //    }
-    //}
-
-    //void Catch()
-    //{
-    //    if (Input.GetKey(KeyCode.LeftShift))
-    //    {
-    //        if(catchObject == null)
-    //        {
-    //            TryCatch();
-    //        }
-    //        else
-    //        {
-    //            ReleaseCatch();
-    //        }
-    //    }
-    //    //if(catchObject != null)
-    //    //{
-    //    //    catchObject.transform.position = catchPoint.position;
-    //    //}
-    //}
-
-    //void TryCatch()
-    //{
-    //    if(catchObject != null)
-    //    {
-    //        catchObject.GetComponent<Rigidbody>().isKinematic = true;
-    //    }
-    //}
-
-    //void ReleaseCatch()
-    //{
-    //    if(catchObject != null)
-    //    {
-    //        catchObject.GetComponent<Rigidbody>().isKinematic = false;
-    //        catchObject = null; 
-    //    }
-    //}
 }
