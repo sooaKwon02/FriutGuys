@@ -13,6 +13,7 @@ TagManager:
   - Bullet
   - DeadZone
   - Ground
+  - Obstacle
   layers:
   - Default
   - TransparentFX

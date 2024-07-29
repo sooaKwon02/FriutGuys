@@ -207,4 +207,13 @@ public class PlayerCtrl : MonoBehaviour
             }
         }
     }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        if (coll.gameObject.CompareTag("Obstacle"))
+        {
+            anim.SetTrigger("Die");
+
+        }
+    }
 }

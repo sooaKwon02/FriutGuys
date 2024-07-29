@@ -27,6 +27,11 @@ public class ObstacleScript : MonoBehaviour
 
     private void Update()
     {
+        Move();
+    }
+
+    private void Move()
+    {
         transform.Rotate(new Vector3(0, 1, 0) * speed * Time.deltaTime);
     }
 
@@ -37,7 +42,7 @@ public class ObstacleScript : MonoBehaviour
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 dir = transform.forward.normalized;
             rb.AddForce(rb.position + dir * force);
-            collision.gameObject.GetComponentInChildren<Animator>().SetTrigger("Die");
+            //collision.gameObject.GetComponentInChildren<Animator>().SetTrigger("Die");
         }
     }
     //자식오브젝트에 Rigidbody가 없고 Collider만 추가해서 사용할 경우,
