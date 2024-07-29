@@ -54,7 +54,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         DontDestroyOnLoad(this);
         pv = GetComponent<PhotonView>();
-        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SendRate = 120;
         pv.Synchronization = ViewSynchronization.Unreliable;
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -74,7 +74,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             LookAround();
             CheckGround();
-            if (Input.GetKeyDown(KeyCode.Space) && isGround)
+            if (Input.GetKeyDown(KeyCode.Space) && isGround && pv.IsMine)
             {
                 isJump = true;
             }
@@ -87,7 +87,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             velocity.y = Mathf.Lerp(velocity.y, jumpY, Time.deltaTime * 30.0f);
             rb.velocity = velocity;            
         }
-      
     }
     void FixedUpdate()
     {
