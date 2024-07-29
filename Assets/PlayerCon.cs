@@ -14,18 +14,11 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    StartCoroutine(CreatePlayer());
-        //}
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    readyText.text = "시작".ToString();
-        //}
-        //else if (!PhotonNetwork.IsMasterClient)
-        //{
-        //    readyText.text = "준비".ToString();
-        //}
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(CreatePlayer());
+            readyText.text = "시작";
+        }           
     }
    
     public void LeaveGame()
@@ -73,6 +66,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(CreatePlayer());
+            readyText.text = "준비";
         }
     }
     IEnumerator CreatePlayer()

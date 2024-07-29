@@ -1124,3 +1124,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userInfo: {fileID: 9044178846522517379, guid: 8ff5dc5b9bf98514e8eab3b73aeae0ae, type: 3}
+  readyText: {fileID: 1476567755}
