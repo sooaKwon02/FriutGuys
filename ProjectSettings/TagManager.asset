@@ -17,6 +17,8 @@ TagManager:
   - UserInfoPanel
   - UseItem
   - Info
+  - Bullet
+  - Obstacle
   layers:
   - Default
   - TransparentFX

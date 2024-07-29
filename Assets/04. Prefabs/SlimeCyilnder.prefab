@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7267733459998278534}
-  - component: {fileID: 8451160696085889653}
   - component: {fileID: 1473973016392177120}
+  - component: {fileID: 1426777637377203048}
   m_Layer: 0
   m_Name: SlimeCyilnder
   m_TagString: Untagged
@@ -33,19 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8451160696085889653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7267733459998278537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557ccad06d0e69c448923255f3a44339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounceForce: 5
 --- !u!136 &1473973016392177120
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -60,6 +47,19 @@ CapsuleCollider:
   m_Height: 2.4822557
   m_Direction: 1
   m_Center: {x: 0.00000010430813, y: 1.2411278, z: -0.000000059604645}
+--- !u!114 &1426777637377203048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267733459998278537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca180ab70234394daf54f014f60189b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceForce: 10
 --- !u!1001 &3500273143336102262
 PrefabInstance:
   m_ObjectHideFlags: 0

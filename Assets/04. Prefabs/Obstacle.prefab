@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1093065092}
   m_Layer: 0
   m_Name: Cylinder (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 3688005885656858900}
   m_Layer: 0
   m_Name: Cylinder (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,7 +207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   force: 5
-  obstacleParent: {fileID: 3688005886301496019}
 --- !u!1 &3688005886301496018
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +337,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 25
   force: 200
-  obstacleParent: {fileID: 0}
 --- !u!1 &3688005886411438680
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +348,7 @@ GameObject:
   - component: {fileID: 3688005886411438681}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
