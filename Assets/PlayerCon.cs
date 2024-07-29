@@ -28,7 +28,10 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     }
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(4);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(4);
+        }
     }
     public void ReadyGame()
     {

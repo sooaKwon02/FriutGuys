@@ -14,7 +14,7 @@ public class RespawnManager : MonoBehaviour
         }
     }
 
-   public IEnumerator RespawnInfo(Transform respawnInfo)
+   public IEnumerator RespawnInfo(Vector3 respawnInfo)
     {
         yield return new WaitForSeconds(0.5f);
         respawnArea = respawnInfo;
