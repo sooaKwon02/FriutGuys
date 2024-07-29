@@ -14,9 +14,7 @@ public class RespawnPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Vector3 pos = new Vector3(transform.position.x + rand, transform.position.y, transform.position.z);
-            Debug.Log(pos);
-            RespawnManager.RespawnInfo(pos);
+          StartCoroutine(RespawnManager.RespawnInfo(transform));
         }
     }
 }

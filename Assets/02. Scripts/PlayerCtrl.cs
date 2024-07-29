@@ -15,7 +15,7 @@ public class PlayerCtrl : MonoBehaviourPun
     private GameObject cam;
     [SerializeField]
     private Transform player;
-
+    private Transform myTr;
     public float camSpeed = 4.0f;
 
     public float slideSpeed = 5.0f;
@@ -40,12 +40,20 @@ public class PlayerCtrl : MonoBehaviourPun
 
     //public GameObject failedText;
 
+    Vector3 currPos = Vector3.zero;
+    Quaternion currRot = Quaternion.identity;
+
     void Awake()
     {
+        myTr = GetComponent<Transform>();
+
+        currPos = myTr.position;
+        currRot = myTr.rotation;
+
         DontDestroyOnLoad(this);
-       
         pv = GetComponent<PhotonView>();
-        pv.Synchronization = ViewSynchronization.ReliableDeltaCompressed;
+        PhotonNetwork.SendRate = 60;
+        pv.Synchronization = ViewSynchronization.Unreliable;
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
@@ -80,7 +88,24 @@ public class PlayerCtrl : MonoBehaviourPun
             Jump();
         }
     }
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //로컬 플레이어의 위치 정보를 송신
+        if (stream.IsWriting)
+        {
+            //박싱
+            stream.SendNext(myTr.position);
+            stream.SendNext(myTr.rotation);
+        }
+        //원격 플레이어의 위치 정보를 수신
+        else
+        {
+            //언박싱
+            currPos = (Vector3)stream.ReceiveNext();
+            currRot = (Quaternion)stream.ReceiveNext();
+        }
 
+    }
 
     void PlayerMove()
     {
