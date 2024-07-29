@@ -10,7 +10,7 @@ public class RespawnPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            RespawnManager.RespawnInfo(transform);
+          StartCoroutine(RespawnManager.RespawnInfo(transform));
         }
     }
 }
