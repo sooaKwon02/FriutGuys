@@ -86,7 +86,7 @@ public class CatchScript : MonoBehaviour
                 Debug.Log("@@@");
                 FixedJoint fj = target.GetComponent<FixedJoint>();
                 Rigidbody targetRb = target.GetComponent<Rigidbody>();
-                //targetRb.isKinematic = true;
+                targetRb.isKinematic = true;
                 fj.connectedBody = rb;
 
                 Debug.Log(fj.connectedBody);
