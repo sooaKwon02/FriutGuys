@@ -1,14 +1,15 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerCon : MonoBehaviourPunCallbacks
 {
     private string playerName;
     public GameObject userInfo;
+    public Text readyText;
     bool ready;
 
     private void Awake()
@@ -16,6 +17,14 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(CreatePlayer());
+        }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            readyText.text = "시작".ToString();
+        }
+        else if (!PhotonNetwork.IsMasterClient)
+        {
+            readyText.text = "준비".ToString();
         }
     }
    
@@ -26,19 +35,45 @@ public class PlayerCon : MonoBehaviourPunCallbacks
    
     public void ReadyGame()
     {
-        ready = !ready;
-        UserInfo[] infos= FindObjectsOfType<UserInfo>();
-        foreach(UserInfo info in infos)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            if(info.userName.text== playerName)
+            if (FindObjectOfType<UserInfo>())
             {
-                info.Ready(true);
+                UserInfo[] _infos = FindObjectsOfType<UserInfo>();
+                foreach (UserInfo _info in _infos)
+                {
+                    if(_info.userName.text== playerName)
+                    {
+                        if(_info.readyCheck==false)
+                            _info.Ready(true);
+                        else
+                            _info.Ready(false); 
+                    }
+                }
             }
         }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (FindObjectOfType<UserInfo>())
+            {
+                UserInfo[] _infos = FindObjectsOfType<UserInfo>();
+                foreach (UserInfo _info in _infos)
+                {
+                    if (_info.readyCheck == true)
+                    {
+                        _info.Ready(true);
+                    }
+                }
+            }
+        }
+
     }
     public override void OnJoinedRoom()
     {
-        StartCoroutine(CreatePlayer());
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(CreatePlayer());
+        }
     }
     IEnumerator CreatePlayer()
     {

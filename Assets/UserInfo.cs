@@ -11,7 +11,8 @@ public class UserInfo : MonoBehaviourPun
     public Text userName;
     public Image readyGame;
     public GameObject kickGame;
-    bool readyCheck;
+    [HideInInspector]
+    public bool readyCheck;
 
     private void Awake()
     {
