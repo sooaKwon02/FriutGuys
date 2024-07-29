@@ -12,7 +12,7 @@ public class PlayerCtrl : MonoBehaviourPun
     private CapsuleCollider coll;
 
     [SerializeField]
-    private Transform cam;
+    private GameObject cam;
     [SerializeField]
     private Transform player;
 
@@ -54,6 +54,17 @@ public class PlayerCtrl : MonoBehaviourPun
             transform.SetParent(GameObject.FindGameObjectWithTag("Holder").transform);
             GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
         }
+        if (pv.IsMine)
+        {
+            if(cam != null)
+            {
+                cam.gameObject.SetActive(true);
+            }
+            else
+            {
+                cam.gameObject.SetActive(false); 
+            }
+        }
     }
    
   
@@ -83,8 +94,8 @@ public class PlayerCtrl : MonoBehaviourPun
 
     void PlayerMove()
     {
-        Debug.DrawRay(cam.position, 
-            new Vector3(cam.forward.x, 0f, cam.forward.z).normalized, Color.red);
+        Debug.DrawRay(cam.transform.position, 
+            new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z).normalized, Color.red);
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -98,8 +109,8 @@ public class PlayerCtrl : MonoBehaviourPun
 
         if (isMove)
         {
-            Vector3 lookForward = new Vector3(cam.forward.x, 0f, cam.forward.z).normalized;
-            Vector3 lookRight = new Vector3(cam.right.x, 0f, cam.right.z).normalized;
+            Vector3 lookForward = new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z).normalized;
+            Vector3 lookRight = new Vector3(cam.transform.right.x, 0f, cam.transform.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
             float rotSpeed = 10f;
@@ -117,7 +128,7 @@ public class PlayerCtrl : MonoBehaviourPun
     {
 
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * camSpeed);
-        Vector3 camAngle = cam.rotation.eulerAngles;
+        Vector3 camAngle = cam.transform.rotation.eulerAngles;
 
         float x = camAngle.x - mouseDelta.y;
 
@@ -132,7 +143,7 @@ public class PlayerCtrl : MonoBehaviourPun
             //180�� �̻��̶�� 
             x = Mathf.Clamp(x, 335f, 361f);
         }
-        cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
+        cam.transform.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
     }
     void JumpStart()
     {
