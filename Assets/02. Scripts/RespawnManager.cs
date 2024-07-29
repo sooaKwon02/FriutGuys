@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
 {
-    Transform respawnArea;
+    Vector3 respawnArea;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.transform.position = respawnArea.position;
+            other.gameObject.transform.position = respawnArea;
             //Destroy(other.gameObject);
         }
     }
 
-    public void RespawnInfo(Transform respawnInfo)
+    public void RespawnInfo(Vector3 respawnInfo)
     {
         respawnArea = respawnInfo;
     }

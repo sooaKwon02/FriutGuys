@@ -1562,18 +1562,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 622755744311916810, guid: f17f373c5fa36c84c82565c6088de105, type: 3}
-      propertyPath: vec.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 622755744311916810, guid: f17f373c5fa36c84c82565c6088de105, type: 3}
-      propertyPath: vec.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 622755744311916810, guid: f17f373c5fa36c84c82565c6088de105, type: 3}
-      propertyPath: vec.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6851018258332885991, guid: f17f373c5fa36c84c82565c6088de105, type: 3}
       propertyPath: m_Size.y
       value: 13.203416
