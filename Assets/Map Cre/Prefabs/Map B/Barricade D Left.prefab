@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1496024504096060546}
   - component: {fileID: 974186761339104051}
   m_Layer: 0
-  m_Name: Barricade
+  m_Name: Barricade Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.82, y: 6, z: 0.3}
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Size: {x: 1.82, y: 1.6, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &346359409032516428
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 448010496274394266}
   - component: {fileID: 448010496274394267}
   m_Layer: 0
-  m_Name: Barricade
+  m_Name: Barricade Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,8 +229,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.82, y: 6, z: 0.3}
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Size: {x: 1.82, y: 1.6, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &448010496581932210
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 1619972003289419037}
   - component: {fileID: 1619972003289419106}
   m_Layer: 0
-  m_Name: Barricade
+  m_Name: Barricade Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -569,8 +569,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.82, y: 6, z: 0.3}
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Size: {x: 1.82, y: 1.6, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &1619972003744392829
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 152874737764351694}
   - component: {fileID: 2844934774783021792}
   m_Layer: 0
-  m_Name: Barricade
+  m_Name: Barricade Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -909,8 +909,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.82, y: 6, z: 0.3}
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Size: {x: 1.82, y: 1.6, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &5612715805167942779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,7 +1248,7 @@ GameObject:
   - component: {fileID: 5612715806591968498}
   - component: {fileID: 5612715806591968497}
   m_Layer: 0
-  m_Name: Barricade
+  m_Name: Barricade Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1330,8 +1330,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.82, y: 6, z: 0.3}
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Size: {x: 1.82, y: 1.6, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &5612715806860989992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,7 +1345,7 @@ GameObject:
   - component: {fileID: 5612715806860989995}
   - component: {fileID: 5612715806860989994}
   m_Layer: 0
-  m_Name: Barricade
+  m_Name: Barricade Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1427,8 +1427,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.82, y: 6, z: 0.3}
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Size: {x: 1.82, y: 1.6, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &5761163100755193345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,7 +1766,7 @@ GameObject:
   - component: {fileID: 6785713413712506236}
   - component: {fileID: 1746846425641551239}
   m_Layer: 0
-  m_Name: Barricade
+  m_Name: Barricade Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1848,5 +1848,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.82, y: 6, z: 0.3}
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Size: {x: 1.82, y: 1.6, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
