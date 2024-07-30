@@ -289,11 +289,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     {
         Destroy(obj);
     }
-    [PunRPC]
-    void Des(GameObject obj)
-    {
-        Destroy(obj);
-    }
 
     IEnumerator ReMove()
     {
