@@ -5,31 +5,67 @@ using UnityEngine.UI;
 
 public class MusicSet : MonoBehaviour
 {
-    AudioSetting setting;
-    AudioSource musicSource;
-    AudioClip musicClip;
-    Text text;
-    Button button;
+    public Slider musicVolume;
+    public Text musicName;
+    public Transform selectPanel;
+    public Transform musicContents;
+    public GameObject musicItem;
+    AudioSource audioSource;
+    public Toggle toggle;
+
     private void Awake()
     {
-        setting = FindFirstObjectByType<AudioSetting>();
-        text=GetComponentInChildren<Text>();
-        button=GetComponent<Button>();  
+        audioSource = FindObjectOfType<AudioSource>();
+        musicVolume.value = audioSource.volume;
+        toggle.isOn = audioSource.mute;
+        musicName.text = audioSource.clip.name;
+
+        for(int i=0;i< SoundManager.Instance.backgroundSound.Length;i++)
+        {
+            GameObject music = Instantiate(musicItem); 
+            music.transform.SetParent(musicContents, false);
+            music.GetComponent<MusicItem>().Setting(SoundManager.Instance.backgroundSound[i].name, i);
+        }
+        musicContents.GetComponent<RectTransform>().sizeDelta = new Vector2(FindObjectOfType<MusicItem>().GetComponent<RectTransform>().sizeDelta.x,
+                    FindObjectsOfType<MusicItem>().Length * FindObjectOfType<MusicItem>().GetComponent<RectTransform>().sizeDelta.y);
+        selectPanel.gameObject.SetActive(false);
+
     }
-    private void Start()
+  
+    public void SelectPanelOnOff()
     {
-        button.onClick.AddListener(OnClick);
+        if(selectPanel.gameObject.activeSelf)
+        {
+            selectPanel.gameObject.SetActive(false);
+        }
+        else 
+        {
+            selectPanel.gameObject.SetActive(true);           
+        }
     }
-    void OnClick()
+    public void SetBackgroundMusicVolume(Slider volume)
     {
-        musicSource.clip = musicClip;
-        musicSource.Play();
-        setting.musicName.text = text.text; 
+        SoundManager.Instance.backgroundVolume = volume.value;
+        audioSource.volume = volume.value   ;
     }
-    public void MusicSetting(AudioClip clip,AudioSource audio)
+    public void SetMuted(Toggle mute)
     {
-        musicSource = audio;
-        musicClip = clip;
-        text.text= musicClip.name; 
+       if(mute.isOn)
+        {
+            SoundManager.Instance.isMuted = true;
+            audioSource.mute = true;
+        }        
+        else
+        {
+            SoundManager.Instance.isMuted = false;
+            audioSource.mute = false;
+        }            
+    }  
+    public void SaveSetting()
+    {
+        SoundManager.Instance.SaveSettings();
+        GameManager gameManager=FindObjectOfType<GameManager>();
+        StartCoroutine(gameManager.ErrorSend("저장되었습니다."));
+        selectPanel.gameObject.SetActive(false);
     }
 }

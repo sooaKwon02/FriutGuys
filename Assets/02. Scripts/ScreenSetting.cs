@@ -1,76 +1,110 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class ScreenSetting : MonoBehaviour
 {
-    public int screen;
-    public Text screenXT;
-    public Text screenYT;
-    bool on=true;
     public Text screenModeText;
+    public GameObject sizePanel;
+    public Mask mask;
+    public Text sizeText;
+    public RectTransform uiElement;
 
-    
-       
-    
- 
-    public void InputScreenSize()
-    {       
-        screen = 0;
-        char[] ch1 = screenXT.text.ToCharArray();
-        int screenX = screenSize(ch1);
-        screen = 0;
-        char[] ch2 = screenYT.text.ToCharArray();
-        int screenY = screenSize(ch2);
-        if (screen ==0)
-        {
-            return;
-        }
-        RectSizeChange(screenX, screenY, on);
+    private int sizeX;
+    private int sizeY;
+    private bool on = true;
 
+    private const string ScreenSizeKey = "Screen";
+    private const string SizeXKey = "sizeX";
+    private const string SizeYKey = "sizeY";
 
-    }
-    int screenSize(char[] ch)
+    private void Start()
     {
-        for (int i = 0; i < ch.Length; i++)
-        {
-            if (ch[i] >= 48 && ch[i] <= 57)
-            {
-                if (ch[0] != 48)
-                {
-                    screen =screen*10+(ch[i]-48);                   
-                }
-            }           
-        }
-        if(screen>400&&screen<2500)
-        {
-            return screen;
-        }
-        else
-            return 0;
-    }    
-  
+        mask.enabled = false;
+        LoadSettings();
+        RectSizeChange(sizeX, sizeY, on);
+    }
+
     public void OnSize()
     {
         on = !on;
-        if(on)
-        screenModeText.text = "전체 화면";
-        else
-        screenModeText.text = "창 화면";
-        InputScreenSize();
+        screenModeText.text = on ? "전체 화면" : "창 화면";
+        RectSizeChange(sizeX, sizeY, on);
+        SaveSettings(); 
     }
-    void RectSizeChange(int screenX, int screenY, bool _on)
+
+    public void LoadSettings()
     {
-        GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
-        Camera.main.aspect = screenX / screenY;
-        Camera.main.ScreenToViewportPoint(new Vector2(screenX, screenY));
-        Screen.SetResolution(screenX, screenY, _on);
+        sizeX = PlayerPrefs.GetInt(SizeXKey, 1920); // Default to 1920 if not set
+        sizeY = PlayerPrefs.GetInt(SizeYKey, 1080); // Default to 1080 if not set
+        on = PlayerPrefs.GetInt(ScreenSizeKey, 1) == 1; // Default to fullscreen if not set
 
+        // Update UI elements to match loaded settings
+        screenModeText.text = on ? "전체 화면" : "창 화면";
+        sizeText.text = $"{sizeX} | {sizeY}";
+    }
 
+    void SaveSettings()
+    {
+        PlayerPrefs.SetInt(SizeXKey, sizeX);
+        PlayerPrefs.SetInt(SizeYKey, sizeY);
+        PlayerPrefs.SetInt(ScreenSizeKey, on ? 1 : 0);
+        PlayerPrefs.Save(); 
+    }
+    public void SaveSetting()
+    {
+        SaveSettings();
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        StartCoroutine(gameManager.ErrorSend("저장되었습니다."));
+    }
 
+    public void SizePanelOpen()
+    {
+        sizePanel.SetActive(!sizePanel.activeSelf);
+    }
+
+    private void RectSizeChange(int screenX, int screenY, bool fullscreen)
+    {
+        Screen.SetResolution(screenX, screenY, fullscreen);
+    }
+
+    public void MaskOnOff()
+    {
+        mask.enabled = !mask.enabled;
+    }
+
+    public void SizeButton(int num)
+    {
+        switch (num)
+        {
+            case 0:
+                RectSizeChange(1600, 900, on);
+                sizeX = 1600;
+                sizeY = 900;
+                sizeText.text = "1600 | 900";
+                break;
+            case 1:
+                RectSizeChange(1600, 1000, on);
+                sizeX = 1600;
+                sizeY = 1000;
+                sizeText.text = "1600 | 1000";
+                break;
+            case 2:
+                RectSizeChange(1920, 1080, on);
+                sizeX = 1920;
+                sizeY = 1080;
+                sizeText.text = "1920 | 1080";
+                break;
+            case 3:
+                RectSizeChange(2560, 1440, on);
+                sizeX = 2560;
+                sizeY = 1440;
+                sizeText.text = "2560 | 1440";
+                break;
+            default:
+                Debug.LogWarning("Unknown size button number: " + num);
+                break;
+        }
+        SaveSettings();
     }
 }
