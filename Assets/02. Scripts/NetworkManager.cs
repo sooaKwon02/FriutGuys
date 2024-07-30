@@ -18,6 +18,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public GameObject roomListButtonPrefabs;
     public GameObject createRoomFailPanel;
 
+    private DatabaseManager csDbManager;
+    public GameObject scrollContents;
+
     void Awake()
     {
         if (toggle != null)
@@ -31,6 +34,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             createRoomFailPanel.SetActive(false);
         }
 
+        roomListButtonPrefabs.GetComponent<RectTransform>().pivot = new Vector3(0.0f, 1.0f);
+    }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("Joinde Lobby");
+    }
+    string GetUserId()
+    {
+        string userId = PlayerPrefs.GetString("User_ID");
+
+        return userId;
     }
     public override void OnConnectedToMaster()
     {
@@ -55,7 +70,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             roomOptions.MaxPlayers = maxPlayers;
             GameObject list = Instantiate(roomListButtonPrefabs);
-            PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions, TypedLobby.Default);
+            bool isSucces = PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions, TypedLobby.Default);
+
+            Debug.Log("방 생성 완료 : " + isSucces);
         }
         else
         {
@@ -68,34 +85,87 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2);
         createRoomFailPanel.SetActive(false);
     }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("룸 입장");
+        //CheckRoomPlayerCount();
+    }
     public void OnClickJoinRandomRoom()
     {
         PhotonNetwork.JoinRoom(roomNameInput.text);
         PhotonNetwork.JoinRandomRoom();
-    }       
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("랜덤 방 입장 실패, 방 없음 " + message);
+        StartCoroutine(JoinRoomFail());
+    }
+
+    IEnumerator JoinRoomFail()
+    {
+        createRoomFailPanel.SetActive(true);
+        yield return new WaitForSeconds(2);
+        createRoomFailPanel.SetActive(false);
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("플레이어 입장 : " + newPlayer.NickName);
+        CheckRoomPlayerCount();
+    }
+
+    private void CheckRoomPlayerCount()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            Debug.Log("가득 참");
+            PhotonNetwork.LeaveRoom();
+            StartCoroutine(RoomFull());
+        }
+    }
+
+    IEnumerator RoomFull()
+    {
+        createRoomFailPanel.SetActive(true);
+        yield return new WaitForSeconds(2);
+        createRoomFailPanel.SetActive(false);
+    }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if (roomListPanel != null)
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("ROOM_ITEM"))
         {
-            foreach (Transform child in roomListPanel)
-            {
-                Destroy(child.gameObject);
-            }
+            Destroy(obj);
         }
-        foreach (RoomInfo _room in roomList)
+        int rowCount = 0;
+        scrollContents.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+
+       foreach(RoomInfo _room in roomList)
         {
-            GameObject list = Instantiate(roomListButtonPrefabs);
-            if (list != null)
-            {
-                RoomList roomListComponent = list.GetComponent<RoomList>();
-                if (roomListComponent != null)
-                {
-                    roomListComponent.CreateRoomInfo(_room.Name, _room.PlayerCount, _room.MaxPlayers, secretCheck, passwordInput.text);
-                    list.transform.SetParent(roomListPanel, false);
-                }
-            }
+            Debug.Log(_room.Name);
+            GameObject room = (GameObject)Instantiate(roomListButtonPrefabs);
+            room.transform.SetParent(scrollContents.transform, false);
+
+            RoomData roomData = room.GetComponent<RoomData>();
+            roomData.roomName = _room.Name;
+            roomData.connectPlayer = _room.PlayerCount;
+            roomData.maxPlayers = _room.MaxPlayers;
+
+            roomData.DisplayRoomData();
+
+            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(roomData.roomName); Debug.Log("Room Click " + roomData.roomName); });
+
+            scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
+            scrollContents.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20f);
         }
-    }   
+       
+    }
+
+    void OnClickRoomItem(string roomName)
+    {
+        PhotonNetwork.JoinRoom(roomName);
+    }
     public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
     {
     }    

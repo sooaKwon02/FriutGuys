@@ -1,12 +1,12 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
-   
     PhotonView pv;
     private Rigidbody rb;
     private Animator anim;
@@ -34,6 +34,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     bool isGround = false;
     bool isJump = false;
     bool isMove = false;
+    bool isColl = false;
 
     public GameObject slideCollider;
 
@@ -68,14 +69,13 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         }    
     }
    
-  
     void Update()
     {
         if (pv.IsMine)
         {
             LookAround();
             CheckGround();
-            if (Input.GetKeyDown(KeyCode.Space) && isGround && pv.IsMine)
+            if (Input.GetKeyDown(KeyCode.Space) && isGround && pv.IsMine && !isColl)
             {
                 isJump = true;
             }
@@ -88,7 +88,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             velocity.y = Mathf.Lerp(velocity.y, jumpY, Time.deltaTime * 30.0f);
             rb.velocity = velocity;            
         }
-        Debug.Log(isMove);
+        Debug.Log("ISMOVE : " + isMove);
     }
     void FixedUpdate()
     {
@@ -220,15 +220,15 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             cooltimeTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && cooltimeTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && cooltimeTimer <= 0 && !isColl)
         {
             isMove = false;
             isSliding = true;
             slideTimer = 1.0f;
             cooltimeTimer = 1.0f;
-            //�����̵� �ݶ��̴� Ű��
+            //slide콜라이더 켜주고
             slideCollider.SetActive(true);
-            //�����ݶ��̴� ���ֱ�
+            //원래 콜라이더 꺼주기
             coll.enabled = false;
             anim.SetTrigger("slide");
         }
@@ -240,11 +240,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             if (slideTimer > 0)
             {
-                //�����̵� ���� ���ϰ� �����̵�
+                //플레이어의 앞방향
                 Vector3 slideDir = player.transform.forward;
-                //rb�� ������ �о�� ������ �ӵ��� ������
                 rb.MovePosition(rb.position + slideDir * slideSpeed * Time.deltaTime);
-                //�����̵� �ð� ���̱�
+                //타이머
                 slideTimer -= Time.deltaTime;
             }
             else
@@ -253,9 +252,9 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 isSliding = false;
                 isMove = true;
 
-                //�����̵� �ݶ��̴� ����
+                //slide콜라이더 꺼주고
                 slideCollider.SetActive(false);
-                //���� �ݶ��̴� Ŵ
+                //원래 콜라이더 다시 켜기
                 coll.enabled = true;
             }
         }
@@ -265,8 +264,14 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     {
         if (coll.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("@@");
-            anim.SetTrigger("Die");
+            //장애물에 부딪혔을 시 슬라이딩과 점프를 하지 못하도록
+            isColl = true;
+
+            anim.SetTrigger("Dizzy");
+
+            //1초 뒤 다시 점프와 슬라이딩 가능
+            StartCoroutine(ReMove());
+
         }
         if (coll.transform.tag == "Bullet")
         {
@@ -278,5 +283,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     void Des(GameObject obj)
     {
         Destroy(obj);
+    }
+
+    IEnumerator ReMove()
+    {
+        yield return new WaitForSeconds(1f);
+       
+        isColl = false;
     }
 }

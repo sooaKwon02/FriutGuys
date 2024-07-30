@@ -42,9 +42,9 @@ public class PlayerCon : MonoBehaviourPunCallbacks
                 UserInfo[] _infos = FindObjectsOfType<UserInfo>();
                 foreach (UserInfo _info in _infos)
                 {
-                    if(_info.userName.text== playerName)
+                    if(_info.userName.text == playerName)
                     {
-                        if(_info.readyCheck==false)
+                        if(_info.readyCheck == false)
                             _info.Ready(true);
                         else
                             _info.Ready(false); 

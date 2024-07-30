@@ -19,6 +19,7 @@ TagManager:
   - Info
   - Bullet
   - Obstacle
+  - ROOM_ITEM
   layers:
   - Default
   - TransparentFX
