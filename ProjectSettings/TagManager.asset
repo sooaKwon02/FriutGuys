@@ -20,6 +20,7 @@ TagManager:
   - Bullet
   - Obstacle
   - ROOM_ITEM
+  - MusicPanel
   layers:
   - Default
   - TransparentFX

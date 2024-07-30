@@ -278,6 +278,16 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             Destroy(coll.gameObject);
             pv.RPC("Des", RpcTarget.Others, coll);
         }
+        if(coll.transform.tag=="Bullet")
+        {
+            Destroy(coll.gameObject);
+            pv.RPC("Des", RpcTarget.Others, coll);
+        }
+    }
+    [PunRPC]
+    void Des(GameObject obj)
+    {
+        Destroy(obj);
     }
     [PunRPC]
     void Des(GameObject obj)
