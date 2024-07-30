@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject errorBox;
     public Transform Player;
     public GameObject store;
     public GameObject inventoryPanel;
-    public GameObject inventory;   
+    public GameObject inventory;
     public GameObject rankPanel;
     public GameObject rankbuttonPanel;
     public GameObject menuPanel;
@@ -17,9 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject CustomPanel;
     public GameObject profilePanel;
     public GameObject settingPanel;
-    public GameObject audioPanl;
+    public GameObject audioPanel;
     public GameObject keyboardPanel;
-    public GameObject settingExit;
 
 
     public GameObject roomListPanel;
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        errorBox.SetActive(false);
         store.SetActive(false);
         inventoryPanel.SetActive(false);
         SearchRoomPanel.SetActive(false);
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
         settingMenuPanel.SetActive(false);
         ActiveMenu(true);
     }
- 
+
     void ActiveMenu(bool active)
     {
         rankbuttonPanel.SetActive(active);
@@ -51,8 +52,8 @@ public class GameManager : MonoBehaviour
         idPanel.SetActive(active);
     }
     public void InventoryOnOff(bool check)
-    {     
-        if (!store.activeSelf&& !CustomPanel.activeSelf)
+    {
+        if (!store.activeSelf && !CustomPanel.activeSelf)
         {
             inventoryPanel.SetActive(check);
             ActiveMenu(!check);
@@ -61,17 +62,17 @@ public class GameManager : MonoBehaviour
             else
                 Player.position = new Vector2(0, 0);
         }
-      
 
 
-    }      
+
+    }
     public void StoreOnOff(bool check)
     {
         store.SetActive(check);
         inventoryPanel.SetActive(check);
         ActiveMenu(!check);
-        if(!check)
-            Player.position = new Vector2(0,0);
+        if (!check)
+            Player.position = new Vector2(0, 0);
 
     }
     public void SettingOnOff(bool check)
@@ -81,14 +82,13 @@ public class GameManager : MonoBehaviour
     }
     public void SetMenu(int num)
     {
-        settingExit.SetActive(true);
         if (num == 0)
         {
             settingPanel.SetActive(true);
         }
-        else if(num == 1)
+        else if (num == 1)
         {
-            audioPanl.SetActive(true);
+            audioPanel.SetActive(true);
         }
         else if (num == 2)
         {
@@ -96,13 +96,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            settingExit.SetActive(false);
             settingPanel.SetActive(false);
-            audioPanl.SetActive(false);
+            audioPanel.SetActive(false);
             keyboardPanel.SetActive(false);
-        }            
+        }
     }
-   
+
     public void CreateRoomOnOff(int num)
     {
         if (num == 0)
@@ -119,7 +118,7 @@ public class GameManager : MonoBehaviour
         {
             roomListPanel.SetActive(true);
             ActiveMenu(false);
-        }      
+        }
         else
         {
             ActiveMenu(true);
@@ -127,7 +126,7 @@ public class GameManager : MonoBehaviour
             createRoomPanel.SetActive(false);
             SearchRoomPanel.SetActive(false);
         }
-    }      
+    }
     public void RankPanelOnOff(bool check)
     {
         rankPanel.SetActive(check);
@@ -136,7 +135,7 @@ public class GameManager : MonoBehaviour
     public void CustomPanelOnOff(bool check)
     {
         CustomPanel.SetActive(check);
-        inventoryPanel.SetActive(check);  
+        inventoryPanel.SetActive(check);
         if (check)
         {
             Player.position = new Vector2(2, 0);
@@ -144,12 +143,20 @@ public class GameManager : MonoBehaviour
         else
         {
             Player.position = new Vector2(0, 0);
-        }                  
-            ActiveMenu(!check);
+        }
+        ActiveMenu(!check);
     }
     public void ProfilePanelOnOff(bool check)
     {
         profilePanel.SetActive(check);
         ActiveMenu(!check);
-    }    
+    }
+    public IEnumerator ErrorSend(string str)
+    {
+        errorBox.SetActive(true);
+        errorBox.GetComponentInChildren<Text>().text = str;
+        yield return new WaitForSeconds(1f);
+        errorBox.GetComponentInChildren<Text>().text = null;
+        errorBox.SetActive(false);
+    }
 }
