@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 5536341305179856624}
   - component: {fileID: 271025519878186905}
   m_Layer: 0
-  m_Name: Start Arrow
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 3023323840477059981}
   - component: {fileID: 7413743368769643236}
   m_Layer: 0
-  m_Name: Start Arrow
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 3023323841210039789}
   - component: {fileID: 7413743368036795524}
   m_Layer: 0
-  m_Name: Start Arrow
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
