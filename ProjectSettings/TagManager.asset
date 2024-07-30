@@ -19,6 +19,7 @@ TagManager:
   - Info
   - Bullet
   - Obstacle
+  - MusicPanel
   layers:
   - Default
   - TransparentFX
