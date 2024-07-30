@@ -21,30 +21,26 @@ public class DatabaseManager : MonoBehaviour
     {
         string url = dll.LoginUnityMine; // PHP 스크립트의 URL을 입력하세요
 
-        WWW www = new WWW(url);
-        yield return www;
-
-        if (www.error != null)
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
-            Debug.LogError("Error: " + www.error);
-        }
-        else
-        {
-            string jsonString = www.text;
-            Debug.Log("Received JSON: " + jsonString);
+            yield return www.SendWebRequest();
 
-            // JSON 데이터 파싱
-            JArray jsonArray = JArray.Parse(jsonString);
-
-            // 각 JSON 객체에서 필드 추출
-            foreach (JObject json in jsonArray)
+            if (www.result != UnityWebRequest.Result.Success)
             {
-                string no = (string)json["no"];
-                string id = (string)json["id"];
-                string password = (string)json["password"];
-                string nickname = (string)json["nickname"];
+                Debug.LogError("Error: " + www.error);
+            }
+            else
+            {
+                string jsonString = www.downloadHandler.text;
+                Debug.Log("Received JSON: " + jsonString);
+                JArray jsonArray = JArray.Parse(jsonString); // JSON 데이터가 배열일 때
 
-                Debug.Log($",no:{no} id: {id}, password: {password}, nickname: {nickname}");
+                foreach (JObject json in jsonArray)
+                {
+                    string id = (string)json["id"];
+                    string nickname = (string)json["nickname"];
+                    Debug.Log($"ID: {id}, Nickname: {nickname}");
+                }
             }
         }
     }
