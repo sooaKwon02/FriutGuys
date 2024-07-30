@@ -19,8 +19,11 @@ TagManager:
   - Info
   - Bullet
   - Obstacle
+<<<<<<< HEAD
   - ROOM_ITEM
   - MusicPanel
+=======
+>>>>>>> parent of b37a113 (123123)
   layers:
   - Default
   - TransparentFX

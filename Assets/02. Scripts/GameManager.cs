@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject errorBox;
     public Transform Player;
     public GameObject store;
     public GameObject inventoryPanel;
@@ -33,7 +32,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        errorBox.SetActive(false);
         store.SetActive(false);
         inventoryPanel.SetActive(false);
         SearchRoomPanel.SetActive(false);
@@ -83,6 +81,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetMenu(int num)
     {
+        settingExit.SetActive(true);
         if (num == 0)
         {
             settingPanel.SetActive(true);
@@ -97,6 +96,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            settingExit.SetActive(false);
             settingPanel.SetActive(false);
             audioPanl.SetActive(false);
             keyboardPanel.SetActive(false);
@@ -151,13 +151,5 @@ public class GameManager : MonoBehaviour
     {
         profilePanel.SetActive(check);
         ActiveMenu(!check);
-    }
-    public IEnumerator ErrorSend(string str)
-    {
-        errorBox.SetActive(true);
-        errorBox.GetComponentInChildren<Text>().text = str;
-        yield return new WaitForSeconds(1f);
-        errorBox.GetComponentInChildren<Text>().text = null;
-        errorBox.SetActive(false);
-    }
+    }    
 }

@@ -2111,7 +2111,7 @@ GameObject:
   - component: {fileID: 1099233793}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Canvas
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3226,8 +3226,5 @@ MonoBehaviour:
   nickname: {fileID: 3092036}
   SignUpComplete: {fileID: 820887722}
   SignUpPanel: {fileID: 1859387487}
-  idtext: 
-  passwordtext: 
-  nicknametext: 
   loginIdInput: {fileID: 1025859427}
   loginPasswordInput: {fileID: 1998439349}
