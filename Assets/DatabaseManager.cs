@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using IPMINE;
+using System.Text.RegularExpressions;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator Start()
     {
-        string url = dll.LoginUnity; // PHP ½ºÅ©¸³Æ®ÀÇ URLÀ» ÀÔ·ÂÇÏ¼¼¿ä
+        string url = dll.LoginUnityMine; // PHP ½ºÅ©¸³Æ®ÀÇ URLÀ» ÀÔ·ÂÇÏ¼¼¿ä
 
         WWW www = new WWW(url);
         yield return www;
@@ -38,11 +39,12 @@ public class DatabaseManager : MonoBehaviour
             // °¢ JSON °´Ã¼¿¡¼­ ÇÊµå ÃßÃâ
             foreach (JObject json in jsonArray)
             {
+                string no = (string)json["no"];
                 string id = (string)json["id"];
                 string password = (string)json["password"];
                 string nickname = (string)json["nickname"];
 
-                Debug.Log($", id: {id}, password: {password}, nickname: {nickname}");
+                Debug.Log($",no:{no} id: {id}, password: {password}, nickname: {nickname}");
             }
         }
     }
@@ -61,43 +63,10 @@ public class DatabaseManager : MonoBehaviour
     //=============================================================È¸¿ø°¡ÀÔ==============
     public void SignUpButton()
     {
-        foreach(char i in id.text)
-        {
-            if ((i >= 48 && i <= 57) || (i >= 65 && i <= 90) || (i >= 97 && i <= 122))
-            {
-                idtext += i;
-            }
-            else
-            {
-                idtext = null;
-                break;
-            }    
-        }
-        foreach (char i in password.text)
-        {
-            if ((i >= 48 && i <= 57) || (i >= 65 && i <= 90) || (i >= 97 && i <= 122))
-            {
-                passwordtext += i;
-            }
-            else
-            {
-                passwordtext = null;
-                break;
-            }
-        }
-        foreach (char i in nickname.text)
-        {
-            if ((i >= 48 && i <= 57) || (i >= 65 && i <= 90) || (i >= 97 && i <= 122))
-            {
-                nicknametext += i;
-            }
-            else
-            {
-                nicknametext = null;
-                break;
-            }
-        }
-        if (idtext != null&& passwordtext != null&& nicknametext != null)
+        bool isIdValid = IdPassword(id.text);
+        bool isPasswordValid = IdPassword(password.text);
+        bool isNicknameValid = NickName(nickname.text);
+        if (isIdValid && isPasswordValid && isNicknameValid)
             StartCoroutine(SignUp(id.text, password.text, nickname.text));
         else
         {
@@ -106,10 +75,19 @@ public class DatabaseManager : MonoBehaviour
         }            
 
     }
-
+    private bool IdPassword(string input)
+    {
+        string pattern = @"^[a-zA-Z0-9°¡-ÆR\p{P}\p{S}]*$";
+        return Regex.IsMatch(input, pattern);
+    }
+    bool NickName(string input)
+    {
+        string pattern = @"^[a-zA-Z0-9°¡-ÆR]*$";
+        return Regex.IsMatch(input, pattern);
+    }
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = dll.SignUp;
+        string serverURL = dll.SignUpMine;
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
@@ -161,7 +139,7 @@ public class DatabaseManager : MonoBehaviour
     }    
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLogin;
+        string serverURL = dll.GameLoginMine;
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);

@@ -2721,7 +2721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1463990561
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11026,7 +11026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1747197395240894324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11768,6 +11768,7 @@ GameObject:
   - component: {fileID: 2582682346601455735}
   - component: {fileID: 2582682346601455734}
   - component: {fileID: 771254639474026737}
+  - component: {fileID: 2582682346601455736}
   m_Layer: 5
   m_Name: ErrorBox
   m_TagString: Untagged
@@ -11833,6 +11834,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2582682346601455732}
   m_CullTransparentMesh: 1
+--- !u!210 &2582682346601455736
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2582682346601455732}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!222 &2720869796430298744
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22074,7 +22086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &5964603374612287382
 MonoBehaviour:
   m_ObjectHideFlags: 0
