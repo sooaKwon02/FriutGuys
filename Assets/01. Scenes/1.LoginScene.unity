@@ -3226,5 +3226,8 @@ MonoBehaviour:
   nickname: {fileID: 3092036}
   SignUpComplete: {fileID: 820887722}
   SignUpPanel: {fileID: 1859387487}
+  idtext: 
+  passwordtext: 
+  nicknametext: 
   loginIdInput: {fileID: 1025859427}
   loginPasswordInput: {fileID: 1998439349}

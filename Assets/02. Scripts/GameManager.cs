@@ -147,4 +147,9 @@ public class GameManager : MonoBehaviour
         errorBox.GetComponentInChildren<Text>().text = null;
         errorBox.SetActive(false);
     }
+    public void SaveServerData()
+    {
+        SaveLoad.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
+        SaveLoadInven.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
+    }
 }

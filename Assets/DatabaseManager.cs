@@ -10,11 +10,20 @@ using System.Text.RegularExpressions;
 
 public class DatabaseManager : MonoBehaviour
 {
+    public static DatabaseManager Instance { get; private set; }
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
         SignUpComplete.SetActive(false);
     }
     IEnumerator Start()
@@ -119,23 +128,28 @@ public class DatabaseManager : MonoBehaviour
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
             for (int i = 0; i < hashBytes.Length; i++)
             {
-                builder.Append(hashBytes[i].ToString("x2")); // "x2"는 16진수로 출력하기 위해 사용
+                builder.Append(hashBytes[i].ToString("x2"));
             }
             return builder.ToString();
         }
     }
-
     //===============================================로그인=======================
     public InputField loginIdInput;
     public InputField loginPasswordInput;
-
     public void GameLogin()
     {
         StartCoroutine(LoginRequest(loginIdInput.text.ToString(), loginPasswordInput.text.ToString()));
-    }    
+    }
+    [System.Serializable]
+    public class LoginResponse
+    {
+        public bool success;
+        public string nickname;
+        public string error;
+    }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLoginMine;
+        string serverURL = dll.GameLoginMine; // 서버 URL을 설정
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
@@ -152,18 +166,34 @@ public class DatabaseManager : MonoBehaviour
             else
             {
                 string responseText = www.downloadHandler.text;
-                if(responseText== "로그인성공")
+                Debug.Log("Response Text: " + responseText);
+
+                try
                 {
-                    SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = responseText;
+                    LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
+
+                    if (response.success)
+                    {
+                        SaveLoadInven.Instance.LoadData(id);
+                        SaveLoad.Instance.LoadData(id);
+                        SaveLoad.Instance.player.ID = id;
+                        SaveLoad.Instance.NickNameSet(response.nickname); // 닉네임을 전달
+
+                        SignUpComplete.SetActive(true);
+                        SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";
+                    }
+                    else
+                    {
+                        SignUpComplete.SetActive(true);
+                        SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패: " + response.error;
+                    }
                 }
-                
-                else
+                catch (System.Exception ex)
                 {
+                    Debug.LogError("Error parsing JSON: " + ex.Message);
                     SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = responseText;
+                    SignUpComplete.GetComponentInChildren<Text>().text = "응답 파싱 오류";
                 }
-                    
             }
         }
     }

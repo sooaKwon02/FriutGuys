@@ -39,7 +39,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Joinde Lobby");
+        Debug.Log("Join Lobby");
     }
     string GetUserId()
     {
