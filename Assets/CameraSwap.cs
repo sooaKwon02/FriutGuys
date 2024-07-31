@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class CameraSwap : MonoBehaviour
 {
-   
-
     private void Awake()
     {
         PhotonView pv=GetComponentInParent<PhotonView>();
         if(pv.IsMine)
         {
-            gameObject.AddComponent<Camera>();
+           GameObject obj= GameObject.FindGameObjectWithTag("MainCamera");
+            obj.transform.SetParent(transform);
             gameObject.AddComponent<AudioListener>();
         }
     }   
