@@ -1,18 +1,16 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraSwap : MonoBehaviour
 {
     private void Awake()
     {
-        PhotonView pv=GetComponentInParent<PhotonView>();
-        if(pv.IsMine)
+        if (gameObject.GetComponent<PhotonView>() != null && gameObject.GetComponent<PhotonView>().IsMine)
         {
-           GameObject obj= GameObject.FindGameObjectWithTag("MainCamera");
-            obj.transform.SetParent(transform);
-            obj.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
+            Camera.main.transform.SetParent(gameObject.GetComponent<PlayerCtrl>().cam.transform);
+            Camera.main.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
         }
-    }   
+    }  
 }
+

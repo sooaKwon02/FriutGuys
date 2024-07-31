@@ -12,8 +12,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     private Animator anim;
     private CapsuleCollider coll;
 
-    [SerializeField]
-    private GameObject cam;
+
+    public GameObject cam;
     [SerializeField]
     private Transform player;
     private Transform myTr;

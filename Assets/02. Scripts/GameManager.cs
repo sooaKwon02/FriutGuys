@@ -51,7 +51,21 @@ public class GameManager : MonoBehaviour
         menuPanel.SetActive(active);
         idPanel.SetActive(active);
     }
-    public void InventoryOnOff(bool check)
+    public void CustomItemOnOff(bool check)
+    {
+        CustomPanel.SetActive(check);
+        inventoryPanel.SetActive(check);
+        if (check)
+        {
+            Player.position = new Vector2(2, 0);
+        }
+        else
+        {
+            Player.position = new Vector2(0, 0);
+        }
+        ActiveMenu(!check);
+    }
+    public void UseItemOnOff(bool check)
     {
         if (!store.activeSelf && !CustomPanel.activeSelf)
         {
@@ -62,9 +76,6 @@ public class GameManager : MonoBehaviour
             else
                 Player.position = new Vector2(0, 0);
         }
-
-
-
     }
     public void StoreOnOff(bool check)
     {
@@ -132,20 +143,7 @@ public class GameManager : MonoBehaviour
         rankPanel.SetActive(check);
         ActiveMenu(!check);
     }
-    public void CustomPanelOnOff(bool check)
-    {
-        CustomPanel.SetActive(check);
-        inventoryPanel.SetActive(check);
-        if (check)
-        {
-            Player.position = new Vector2(2, 0);
-        }
-        else
-        {
-            Player.position = new Vector2(0, 0);
-        }
-        ActiveMenu(!check);
-    }
+    
     public void ProfilePanelOnOff(bool check)
     {
         profilePanel.SetActive(check);
