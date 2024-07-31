@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Apple
   sprite: {fileID: 21300000, guid: 2aa6ab62866ce4439ab7303f7da55e51, type: 3}
+  mesh: {fileID: -472147775963580301, guid: 12bf7c0de8c3b5b4bb67f4f585d5a093, type: 3}
   prefab: {fileID: 919132149155446097, guid: 12bf7c0de8c3b5b4bb67f4f585d5a093, type: 3}
   itemType: 0
   price: 10000

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Avocado
   sprite: {fileID: 21300000, guid: 0b97d02305ef74e7ea0cb413d9cc158a, type: 3}
+  mesh: {fileID: -830171768015006411, guid: 19f66ff944e6f3f428a16e5210fddaea, type: 3}
   prefab: {fileID: 919132149155446097, guid: 19f66ff944e6f3f428a16e5210fddaea, type: 3}
   itemType: 0
   price: 10000

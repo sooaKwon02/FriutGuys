@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Custom : MonoBehaviour
 {
-    enum KEYGET { UP, DOWN, RIGHT, LEFT }
     public Text FixedPartName;
     public Text styleName;
     CharacterCustom player;
@@ -53,17 +52,7 @@ public class Custom : MonoBehaviour
     public void PartSelect(int _num)
     {
         num = _num;
-        FixedPartName.text = player.bodyParts[num].name;
-        //if (StyleCheck == "Position")
-        //{
-        //    min = -0.5f; max = 0.5f;
-        //    ValueSet();
-        //    Vector3 pos= player.bodyParts[num].transform.localPosition;
-        //    sliderX.value = pos.x;
-        //    sliderY.value = pos.y;
-        //    sliderZ.value = pos.z;
-        //    slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
-        //}
+        FixedPartName.text = player.bodyParts[num].name;       
         if (StyleCheck == "Rotation")
         {
             min = -180f; max = 180;
@@ -77,8 +66,7 @@ public class Custom : MonoBehaviour
         else if (StyleCheck == "Scale")
         {
             min = 1; max = 4;
-            ValueSet();
-            
+            ValueSet();            
             Vector3 scale = player.bodyParts[num].transform.localScale;
             sliderX.value = scale.x;
             sliderY.value = scale.y;

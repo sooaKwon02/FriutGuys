@@ -26,6 +26,8 @@ TagManager:
   - GLOVER
   - TAIL
   - HEAD
+  - USEITEM1
+  - USEITEM2
   layers:
   - Default
   - TransparentFX

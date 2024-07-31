@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject menuPanel;
     public GameObject idPanel;
     public GameObject settingMenuPanel;
+    public GameObject useItemPanel;
     public GameObject CustomPanel;
     public GameObject profilePanel;
     public GameObject settingPanel;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         createRoomPanel.SetActive(false);
         rankPanel.SetActive(false);
         CustomPanel.SetActive(false);
+        useItemPanel.SetActive(false);
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
         ActiveMenu(true);
@@ -55,35 +57,23 @@ public class GameManager : MonoBehaviour
     {
         CustomPanel.SetActive(check);
         inventoryPanel.SetActive(check);
-        if (check)
-        {
-            Player.position = new Vector2(2, 0);
-        }
-        else
-        {
-            Player.position = new Vector2(0, 0);
-        }
+        if (check) { Player.position = new Vector2(2, 0); }
+        else { Player.position = new Vector2(0, 0); }
         ActiveMenu(!check);
     }
     public void UseItemOnOff(bool check)
     {
-        if (!store.activeSelf && !CustomPanel.activeSelf)
-        {
-            inventoryPanel.SetActive(check);
-            ActiveMenu(!check);
-            if (check)
-                Player.position = new Vector2(2, 0);
-            else
-                Player.position = new Vector2(0, 0);
-        }
+        useItemPanel.SetActive(check);
+        inventoryPanel.SetActive(check);
+        if (check) { Player.position = new Vector2(2, 0); }
+        else { Player.position = new Vector2(0, 0); }
+        ActiveMenu(!check);
     }
     public void StoreOnOff(bool check)
     {
         store.SetActive(check);
         inventoryPanel.SetActive(check);
         ActiveMenu(!check);
-        if (!check)
-            Player.position = new Vector2(0, 0);
 
     }
     public void SettingOnOff(bool check)

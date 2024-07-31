@@ -10,21 +10,14 @@ public class ItemData : MonoBehaviour
     Button button;
     public bool isEmpty;
     ItemData itemdata;
-    bool custom;
+    public bool custom;
     
 
 
     private void Awake()
     {
         image = GetComponent<Image>();
-        button = GetComponent<Button>();
-        if (GetComponentInParent<Custom>() == true)
-        {
-            custom = true;
-        } 
-        else
-            custom = false;
-        
+        button = GetComponent<Button>();      
     }
     private void Start()
     {

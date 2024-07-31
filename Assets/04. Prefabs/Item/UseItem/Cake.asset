@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Cake
   sprite: {fileID: 21300000, guid: 2cc4c147b6b7649d6ac98a928018c544, type: 3}
+  mesh: {fileID: 2047228424725224544, guid: 6524c1de4d7db9e44ac6ab511a6ced7f, type: 3}
   prefab: {fileID: 919132149155446097, guid: 6524c1de4d7db9e44ac6ab511a6ced7f, type: 3}
   itemType: 0
   price: 10000
