@@ -12,7 +12,7 @@ public class CameraSwap : MonoBehaviour
         {
            GameObject obj= GameObject.FindGameObjectWithTag("MainCamera");
             obj.transform.SetParent(transform);
-            gameObject.AddComponent<AudioListener>();
+            obj.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
         }
     }   
 }
