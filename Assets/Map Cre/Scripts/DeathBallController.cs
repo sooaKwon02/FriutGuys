@@ -14,7 +14,7 @@ public class DeathBallController : MonoBehaviour
 
     private void Start()
     {
-        CreateDeathBalls(5);
+        CreateDeathBalls(3);
     }
 
     private void Update()
