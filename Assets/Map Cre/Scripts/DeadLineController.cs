@@ -12,6 +12,7 @@ public class DeadLineController : MonoBehaviour
         {
             int index = Random.Range(0, spawnPositions.Length);
             other.transform.SetPositionAndRotation(spawnPositions[index].position, spawnPositions[index].rotation);
+            other.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
         }
     }
 
@@ -21,6 +22,7 @@ public class DeadLineController : MonoBehaviour
         {
             int index = Random.Range(0, spawnPositions.Length);
             other.transform.SetPositionAndRotation(spawnPositions[index].position, spawnPositions[index].rotation);
+            other.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
         }
     }
 
@@ -30,6 +32,7 @@ public class DeadLineController : MonoBehaviour
         {
             int index = Random.Range(0, spawnPositions.Length);
             other.transform.SetPositionAndRotation(spawnPositions[index].position, spawnPositions[index].rotation);
+            other.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
         }
     }
 }
