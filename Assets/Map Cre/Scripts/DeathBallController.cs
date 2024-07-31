@@ -67,7 +67,7 @@ public class DeathBallController : MonoBehaviour
 
             GameObject deathBall = GetDeathBall();
             deathBall.transform.SetPositionAndRotation(randomSpawnPoint.position, randomSpawnPoint.rotation);
-            deathBall.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 2.5f, 0.0f);
+            deathBall.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
 
             spawnTimer = 0.0f;
         }

@@ -105,7 +105,7 @@ public class MiniMapController : MonoBehaviour
         Debug.Log(minimapSize);
         Debug.Log(worldSize);
 
-        var translation = -minimapSize / 2.0f;
+        var translation = minimapSize / 2.0f;
         var scaleRatio = minimapSize / worldSize;
 
         Debug.Log(translation);
