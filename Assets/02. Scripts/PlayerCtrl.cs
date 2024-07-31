@@ -61,12 +61,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
-        //failedText.SetActive(false);
-        if (GameObject.FindGameObjectWithTag("Holder"))
-        {
-            transform.SetParent(GameObject.FindGameObjectWithTag("Holder").transform);
-            GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
-        }    
+        //failedText.SetActive(false);    
     }
    
     void Update()

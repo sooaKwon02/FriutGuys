@@ -21,6 +21,11 @@ TagManager:
   - Bullet
   - Obstacle
   - MusicPanel
+  - BODY
+  - GLOVEL
+  - GLOVER
+  - TAIL
+  - HEAD
   layers:
   - Default
   - TransparentFX

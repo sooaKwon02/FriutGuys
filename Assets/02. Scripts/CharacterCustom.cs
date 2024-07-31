@@ -5,35 +5,8 @@ using UnityEngine;
 public class CharacterCustom : MonoBehaviour
 {
     public MeshFilter[] bodyParts;
-    public SkinnedMeshRenderer[] idleParts;
     public ItemData[] CustomInventory; 
     public float rotationSpeed;
-    public int customCheck;
-    private void Awake()
-    {
-        if (FindObjectOfType<Custom>())      
-            enabled = true;      
-        else
-            enabled = false;
-    }
-    private void Start()
-    {
-        for (int i = 0; i < bodyParts.Length; i++)
-        {
-            if (bodyParts[i].name == bodyParts[i].mesh.name)
-            {
-                idleParts[i].enabled = true;
-            }
-            else
-            {
-                idleParts[i].enabled = false;
-                bodyParts[i].transform.position = Vector3.zero;
-                bodyParts[i].transform.rotation = Quaternion.identity;
-                bodyParts[i].transform.localScale = new Vector3(1, 1, 1);
-            }
-        }
-    }
-
     private void Update()
     {
         if (Input.GetKey(KeyCode.RightArrow))
@@ -48,12 +21,10 @@ public class CharacterCustom : MonoBehaviour
             if (CustomInventory[i].item)
             {
                 bodyParts[i].mesh = CustomInventory[i].item.mesh;
-                idleParts[i].enabled = false;
             }
             else
             {
                 bodyParts[i].mesh = null;
-                idleParts[i].enabled = true;
             }
                 
         }

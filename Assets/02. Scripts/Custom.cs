@@ -40,11 +40,6 @@ public class Custom : MonoBehaviour
     public void SizeCustom()
     {
         slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
-
-        //if (StyleCheck == "Position")
-        //{
-        //    player.bodyParts[num].transform.localPosition = slideSet;
-        //}
         if (StyleCheck == "Rotation")
         {
             player.bodyParts[num].transform.localRotation = Quaternion.Euler(slideSet);
