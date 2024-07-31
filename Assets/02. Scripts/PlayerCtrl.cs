@@ -12,8 +12,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     private Animator anim;
     private CapsuleCollider coll;
 
-    [SerializeField]
-    private GameObject cam;
+    public GameObject cam;
     [SerializeField]
     private Transform player;
     private Transform myTr;
@@ -32,14 +31,19 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     [SerializeField]
     bool isGround = false;
+    [SerializeField]
     bool isJump = false;
+
     bool isMove = false;
     bool isColl = false;
 
     public GameObject slideCollider;
 
-    public Transform catchPoint;
-    private GameObject catchObject = null;
+    public float grabDistance = 2.0f;
+    private GameObject grabTarget;
+    //private SpringJoint springJoint;
+    private FixedJoint fixedJoint;
+    private bool isGrab = false;
 
     //public GameObject failedText;
 
@@ -68,7 +72,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
         }    
     }
-   
+
     void Update()
     {
         if (pv.IsMine)
@@ -80,16 +84,21 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 isJump = true;
             }
             Slide();
-        }else
+            Grab();
+            GrabEnd();
+            Debug.DrawRay(transform.position, player.transform.forward * grabDistance, Color.blue);
+        }
+        else
         {
             myTr.position = Vector3.Lerp(myTr.position, currPos, Time.deltaTime * 3.0f);
             player.rotation = Quaternion.Slerp(player.rotation, currRot, Time.deltaTime * 3.0f);
             Vector3 velocity = rb.velocity;
             velocity.y = Mathf.Lerp(velocity.y, jumpY, Time.deltaTime * 30.0f);
-            rb.velocity = velocity;            
+            rb.velocity = velocity;
         }
         Debug.Log("ISMOVE : " + isMove);
     }
+
     void FixedUpdate()
     {
         if (pv.IsMine)
@@ -122,14 +131,14 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             jumpY=(float)stream.ReceiveNext();
         }
     }
-   
+    float v;
 
     void PlayerMove()
     {
         Debug.DrawRay(cam.transform.position, 
             new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z).normalized, Color.red);
         float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+         v = Input.GetAxis("Vertical");
 
         //ī�޶� ���� �� ���� 
         Vector3 moveInput = new Vector2(h, v);
@@ -260,6 +269,60 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         }
     }
 
+    void Grab()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (isGrab) return;
+           
+            if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    Debug.Log(hit.collider.gameObject.name);
+                    grabTarget = hit.collider.gameObject;
+                    //springJoint = gameObject.AddComponent<SpringJoint>();
+                    //springJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
+                    //springJoint.spring = 1000.0f;
+                    //springJoint.damper = 0.0f;
+                    //springJoint.minDistance = 0.0f;
+                    //springJoint.maxDistance = 0.1f;
+                    fixedJoint = gameObject.AddComponent<FixedJoint>();
+                    fixedJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
+                    isGrab = true;
+
+
+                }
+            }
+        }
+    }
+
+    void GrabEnd()
+    {
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            if (!isGrab) return;
+
+            //if (springJoint != null)
+            //{
+            //    Destroy(springJoint);
+            //    springJoint = null;
+            //    grabTarget = null;
+            //    isGrab = false;
+            //}
+
+            if (fixedJoint != null)
+            {
+
+                Destroy(fixedJoint);
+                fixedJoint = null;
+                grabTarget = null;
+                isGrab = false;
+
+            }
+        }
+
+    }
     void OnCollisionEnter(Collision coll)
     {
         if (coll.gameObject.CompareTag("Obstacle"))
