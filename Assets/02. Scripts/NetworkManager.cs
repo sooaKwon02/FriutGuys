@@ -37,6 +37,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         roomListButtonPrefabs.GetComponent<RectTransform>().pivot = new Vector3(0.0f, 1.0f);
     }
 
+    private void Update()
+    {
+        if(toggle != null)
+        {
+            if (secretCheck)
+            {
+                passwordInput.enabled = secretCheck;
+            }
+        }
+    }
     public override void OnJoinedLobby()
     {
         Debug.Log("Joinde Lobby");
@@ -89,6 +99,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("∑Î ¿‘¿Â");
+        if(secretCheck)
+        {
+            //passwordInput.text
+        }
         //CheckRoomPlayerCount();
     }
     public void OnClickJoinRandomRoom()

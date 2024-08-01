@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
@@ -16,7 +17,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     [SerializeField]
     private Transform player;
     private Transform myTr;
+
     public float camSpeed = 4.0f;
+    public float moveSpeed = 5.0f;
+    float rotSpeed = 10f;
 
     public float slideSpeed = 5.0f;
     public float slideCooltime = 1.0f;
@@ -39,17 +43,25 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public GameObject slideCollider;
 
-    public float grabDistance = 2.0f;
-    private GameObject grabTarget;
-    //private SpringJoint springJoint;
-    private FixedJoint fixedJoint;
-    private bool isGrab = false;
+    //public float grabDistance = 2.0f;
+    //private GameObject grabTarget;
+    ////private SpringJoint springJoint;
+    //private FixedJoint fixedJoint;
+    //private bool isGrab = false;
 
     //public GameObject failedText;
 
     Vector3 currPos = Vector3.zero;
     Quaternion currRot = Quaternion.identity;
     float jumpY;
+
+    public bool pullForce;
+    public float pullStrength, pushStrength;
+    public float pullRange = 1.0f, pullRadius = 1.5f;
+
+    public Collider targetObject;
+
+    public Transform holdPosition;//, pushPosition;
 
     void Awake()
     {
@@ -66,11 +78,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
         //failedText.SetActive(false);
-        if (GameObject.FindGameObjectWithTag("Holder"))
-        {
-            transform.SetParent(GameObject.FindGameObjectWithTag("Holder").transform);
-            GameObject.FindGameObjectWithTag("Holder").GetComponent<CharacterCustom>().Hold();
-        }    
     }
 
     void Update()
@@ -84,9 +91,24 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 isJump = true;
             }
             Slide();
-            Grab();
-            GrabEnd();
-            Debug.DrawRay(transform.position, player.transform.forward * grabDistance, Color.blue);
+            //Grab();
+            //GrabEnd();
+            //Debug.DrawRay(transform.position, player.transform.forward * grabDistance, Color.blue);
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                pullForce = true;
+                GetPullObject();
+            }
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                PullForce();
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                anim.SetBool("isCatch", false);
+                moveSpeed = 5.0f;
+            }
+            Debug.DrawRay(holdPosition.transform.position, holdPosition.transform.forward * pullRange, Color.green);
         }
         else
         {
@@ -107,7 +129,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             {
                 PlayerMove();
             }
-            //PlayerMove();
             Sliding();
             Jump();
         }
@@ -155,14 +176,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             Vector3 lookRight = new Vector3(cam.transform.right.x, 0f, cam.transform.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
-            float rotSpeed = 10f;
-
             // �÷��̾ �ٶ� ��ǥ ����
             Quaternion targetRot = Quaternion.LookRotation(moveDir);
             //playerȸ��
             player.rotation = Quaternion.Slerp(player.rotation, targetRot, Time.deltaTime * rotSpeed);
             //������
-            rb.position += moveDir * Time.deltaTime * 5.0f;
+            rb.position += moveDir * Time.deltaTime * moveSpeed;
         }
     }
 
@@ -269,60 +288,41 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         }
     }
 
-    void Grab()
+    public void GetPullObject()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        targetObject = null;
+        RaycastHit hit;
+
+        if (Physics.Raycast(holdPosition.transform.position, holdPosition.transform.forward, out hit, pullRange))
         {
-            if (isGrab) return;
-           
-            if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
+            targetObject = hit.collider;
+            Debug.Log(targetObject);
+        }
+    }
+    public void PullForce()
+    {
+        if (targetObject != null)
+        {
+            anim.SetBool("isCatch", true);
+            if (targetObject.GetComponent<Rigidbody>() && v < 0)
             {
-                if (hit.collider.CompareTag("Player"))
-                {
-                    Debug.Log(hit.collider.gameObject.name);
-                    grabTarget = hit.collider.gameObject;
-                    //springJoint = gameObject.AddComponent<SpringJoint>();
-                    //springJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
-                    //springJoint.spring = 1000.0f;
-                    //springJoint.damper = 0.0f;
-                    //springJoint.minDistance = 0.0f;
-                    //springJoint.maxDistance = 0.1f;
-                    fixedJoint = gameObject.AddComponent<FixedJoint>();
-                    fixedJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
-                    isGrab = true;
-
-
-                }
+                Vector3 dir = holdPosition.position - targetObject.transform.position;
+                dir.y = 0;
+                //moveSpeed = moveSpeed / 2.0f;
+                //rotSpeed = 0;
+                targetObject.GetComponent<Rigidbody>().velocity = dir * pullStrength * Time.deltaTime;
+            }
+            else if(targetObject.GetComponent<Rigidbody>() && v > 0)
+            {
+                Vector3 dir = targetObject.transform.position - holdPosition.position;
+                dir.y = 0;
+                //moveSpeed = moveSpeed / 2.0f;
+                //rotSpeed = 0;
+                targetObject.GetComponent<Rigidbody>().velocity = dir * pullStrength * Time.deltaTime;
             }
         }
     }
 
-    void GrabEnd()
-    {
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            if (!isGrab) return;
-
-            //if (springJoint != null)
-            //{
-            //    Destroy(springJoint);
-            //    springJoint = null;
-            //    grabTarget = null;
-            //    isGrab = false;
-            //}
-
-            if (fixedJoint != null)
-            {
-
-                Destroy(fixedJoint);
-                fixedJoint = null;
-                grabTarget = null;
-                isGrab = false;
-
-            }
-        }
-
-    }
     void OnCollisionEnter(Collision coll)
     {
         if (coll.gameObject.CompareTag("Obstacle"))

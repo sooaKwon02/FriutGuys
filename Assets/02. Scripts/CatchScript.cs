@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CatchScript : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject target = null;
+    public float grabDistance = 2.0f;
+    private GameObject grabTarget;
+    //private SpringJoint springJoint;
+    private FixedJoint fixedJoint;
+    private bool isGrab = false;
     Animator anim;
     Rigidbody rb;
 
@@ -59,67 +62,136 @@ public class CatchScript : MonoBehaviour
     //        target = null;
     //    }
     //}
-    void Update()
-    {
-        //    if (Input.GetKeyDown(KeyCode.LeftShift))
-        //    {
-        //        if (target != null)
-        //        {
-        //            Debug.Log("!!!!!");
-        //            Rigidbody rb = target.GetComponent<Rigidbody>();
-        //            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY
-        //| RigidbodyConstraints.FreezePositionZ;
+    //void Update()
+    //{
 
-        //        }
-        //    }
+    //    Grab();
+    //    GrabEnd();
+    //}
 
-        //    if (Input.GetKeyUp(KeyCode.LeftShift))
-        //    {
-        //        Rigidbody rb = target.GetComponent<Rigidbody>();
-        //        rb.constraints = RigidbodyConstraints.None;
-        //    }
+    //void Grab()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.LeftShift))
+    //    {
+    //        if (isGrab) return;
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if(target != null)
-            {
-                Debug.Log("@@@");
-                FixedJoint fj = target.GetComponent<FixedJoint>();
-                Rigidbody targetRb = target.GetComponent<Rigidbody>();
-                targetRb.isKinematic = true;
-                fj.connectedBody = rb;
+    //        //if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
+    //        //{
+    //        //if (hit.collider.CompareTag("Player"))
+    //        //{
+    //        //Debug.Log(hit.collider.gameObject.name);
+    //        //grabTarget = hit.collider.gameObject;
 
-                Debug.Log(fj.connectedBody);
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            if (target != null)
-            {
-                Rigidbody targetRb = target.GetComponent<Rigidbody>();
-                FixedJoint fj = target.GetComponent<FixedJoint>();
-                fj.connectedBody = null;
-                targetRb.isKinematic = false;
-            }
-        }
-    }
+    //        //springJoint = gameObject.AddComponent<SpringJoint>();
+    //        //springJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
+    //        //springJoint.spring = 1000.0f;
+    //        //springJoint.damper = 0.0f;
+    //        //springJoint.minDistance = 0.0f;
+    //        //springJoint.maxDistance = 0.1f;
+    //        if (grabTarget != null)
+    //        {
+    //            fixedJoint = transform.parent.parent.gameObject.AddComponent<FixedJoint>();
+    //            fixedJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
+    //            isGrab = true;
+    //        }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Bullet"))
-        {
-            Debug.Log(other.name);
-            target = other.gameObject;
-        }
-    }
 
-    //아무때나 키 누르면 전의 오브젝트 물체가 플레이어를 따라옴
-    //null값으로 만들어줘야 함.
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == target)
-        {
-            target = null;
-        }
-    }
+    //        //}
+    //        //}
+    //    }
+    //}
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        grabTarget = other.gameObject;
+    //        Debug.Log(grabTarget);
+    //    }
+    //}
+
+    ////아무때나 키 누르면 전의 오브젝트 물체가 플레이어를 따라옴
+    ////null값으로 만들어줘야 함.
+    ////void OnTriggerExit(Collider other)
+    ////{
+    ////    if (other.gameObject == grabTarget)
+    ////    {
+    ////        target = null;
+    ////    }
+    ////}
+    //void GrabEnd()
+    //{
+    //    if (Input.GetKeyUp(KeyCode.LeftShift))
+    //    {
+    //        if (!isGrab) return;
+
+    //        //if (springJoint != null)
+    //        //{
+    //        //    Destroy(springJoint);
+    //        //    springJoint = null;
+    //        //    grabTarget = null;
+    //        //    isGrab = false;
+    //        //}
+
+    //        if (fixedJoint != null)
+    //        {
+
+    //            Destroy(fixedJoint);
+    //            fixedJoint = null;
+    //            grabTarget = null;
+    //            isGrab = false;
+
+    //        }
+    //    }
+
+    //}
+
+    //public bool pullForce;
+    //public float pullStrength, pushStrength;
+    //public float pullRange = 1.0f, pullRadius = 1.5f;
+
+    //public Collider targetObject;
+
+    //public Transform holdPosition;//, pushPosition;
+
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.LeftShift))
+    //    {
+    //        pullForce = true;
+    //        GetPullObject();
+    //    }
+    //    if (Input.GetKey(KeyCode.LeftShift))
+    //    {
+    //        PullForce();
+    //    }
+    //    if(Input.GetKeyUp(KeyCode.LeftShift))
+    //    {
+
+    //    }
+    //    Debug.DrawRay(transform.position, transform.forward*pullRange, Color.blue);
+    //}
+    //public void GetPullObject()
+    //{
+    //    targetObject = null;
+    //    RaycastHit hit;
+
+    //    if(Physics.Raycast(transform.position, transform.forward, out hit, pullRange))
+    //    {
+    //        targetObject = hit.collider;
+    //        Debug.Log(targetObject);
+    //    }
+    //}
+    //public void PullForce()
+    //{
+    //    if(targetObject != null)
+    //    {
+    //        if (targetObject.GetComponent<Rigidbody>())
+    //        {
+    //            Vector3 dir = holdPosition.position - targetObject.transform.position;
+    //            dir.y = 0;
+
+    //            targetObject.GetComponent<Rigidbody>().velocity = dir * pullStrength * Time.deltaTime;
+    //        }
+    //    }
+    //}
 }

@@ -19488,7 +19488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837786789a2da67459abc3086c02178c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  grabDistance: 2
 --- !u!1 &3323184940057850268
 GameObject:
   m_ObjectHideFlags: 0
@@ -19536,12 +19536,20 @@ MonoBehaviour:
   cam: {fileID: 0}
   player: {fileID: 7054785657103798147}
   camSpeed: 3
+  moveSpeed: 5
   slideSpeed: 5
   slideCooltime: 1
   jumpForce: 5
   isGround: 0
+  isJump: 0
   slideCollider: {fileID: 3323184940725542341}
-  catchPoint: {fileID: 0}
+  pullForce: 0
+  pullStrength: 0
+  pushStrength: 0
+  pullRange: 1
+  pullRadius: 1.5
+  targetObject: {fileID: 0}
+  holdPosition: {fileID: 0}
 --- !u!54 &3323184940324974396
 Rigidbody:
   m_ObjectHideFlags: 0
