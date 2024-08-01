@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 
 public class DatabaseManager : MonoBehaviour
 {
+    SaveLoad saveload;
     public static DatabaseManager Instance { get; private set; }
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
@@ -25,10 +26,11 @@ public class DatabaseManager : MonoBehaviour
             Destroy(gameObject);
         }
         SignUpComplete.SetActive(false);
+        saveload = FindObjectOfType<SaveLoad>();
     }
     IEnumerator Start()
     {
-        string url = dll.LoginUnity; // PHP 스크립트의 URL을 입력하세요
+        string url = dll.LoginUnityMine; // PHP 스크립트의 URL을 입력하세요
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
@@ -92,7 +94,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = dll.SignUp;
+        string serverURL = dll.SignUpMine;
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
@@ -149,7 +151,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLogin; // 서버 URL을 설정
+        string serverURL = dll.GameLoginMine; // 서버 URL을 설정
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
@@ -168,31 +170,21 @@ public class DatabaseManager : MonoBehaviour
                 string responseText = www.downloadHandler.text;
                 Debug.Log("Response Text: " + responseText);
 
-                try
-                {
-                    LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
+                // JSON 응답을 LoginResponse 객체로 변환
+                LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
 
-                    if (response.success)
-                    {
-                        //SaveLoadInven.Instance.LoadData(id);
-                        FindObjectOfType<SaveLoad>().LoadData(id);
-                        FindObjectOfType<SaveLoad>().player.ID = id;
-                        FindObjectOfType<SaveLoad>().NickNameSet(response.nickname); // 닉네임을 전달
-
-                        SignUpComplete.SetActive(true);
-                        SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";
-                    }
-                    else
-                    {
-                        SignUpComplete.SetActive(true);
-                        SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패: " + response.error;
-                    }
-                }
-                catch (System.Exception ex)
+                if (response.success)
                 {
-                    Debug.LogError("Error parsing JSON: " + ex.Message);
+                    saveload.LoadData(id); // 닉네임을 전달
+                    saveload.SetNickName(id, response.nickname);
+
                     SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "응답 파싱 오류";
+                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";
+                }
+                else
+                {
+                    SignUpComplete.SetActive(true);
+                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패: " + response.error;
                 }
             }
         }

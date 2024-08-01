@@ -26,10 +26,13 @@ public class GameManager : MonoBehaviour
     public GameObject playButtonPanel;
     public GameObject SearchRoomPanel;
     public GameObject createRoomPanel;
+    SaveLoad saveload;
 
 
-
-
+    private void Awake()
+    {
+        saveload = FindObjectOfType<SaveLoad>();
+    }
     private void Start()
     {
         errorBox.SetActive(false);
@@ -156,7 +159,6 @@ public class GameManager : MonoBehaviour
     }
     public void SaveServerData()
     {        
-        FindObjectOfType<SaveLoad>().OnDataChanged(FindObjectOfType<SaveLoad>().player.ID);
-        //SaveLoadInven.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
+       saveload.SaveData(saveload.ID);
     }
 }

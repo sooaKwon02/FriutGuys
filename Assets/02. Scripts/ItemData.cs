@@ -11,7 +11,18 @@ public class ItemData : MonoBehaviour
     public bool isEmpty;
     ItemData itemdata;
     public bool custom;
-    
+    public enum InvenSwap
+    {
+        Null,
+        BODY,
+        GLOVEL,
+        GLOVER,
+        HEAD,
+        TAIL,
+        USEITEM1,
+        USEITEM2
+    }
+    public InvenSwap inven;
 
 
     private void Awake()
@@ -39,13 +50,8 @@ public class ItemData : MonoBehaviour
     }
     public void ItemGET(Item _item)
     {
-        item = _item;
-        itemdata = GetComponent<ItemData>();
-        ItemSet();     
-        if(custom)
-        {
-            FindObjectOfType<Custom>().CharSet();
-        }
+        item = _item;         
+        ItemSet();      
     }
    
     void ItemSet()
@@ -54,17 +60,14 @@ public class ItemData : MonoBehaviour
         {
             isEmpty = true;
             image.sprite = item.sprite;
-            image.color = new Color(1, 1, 1, 1);
+            image.color = new Color(1, 1, 1, 1); 
+           
         }
         else
-        {
+        {            
             isEmpty = false;
             image.sprite = null;
-            image.color = new Color(1, 1, 1, 0);
-            if(custom)
-            {
-                FindObjectOfType<Custom>().CharSet();
-            }
+            image.color = new Color(1, 1, 1, 0); 
             
         }        
     }  

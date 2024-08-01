@@ -8,12 +8,11 @@ using static SaveLoad;
 
 public class Custom : MonoBehaviour
 {
-    public ItemData[] CustomInventory;
     public Text FixedPartName;
     public Text styleName;
     CharacterCustom player;
     Item item;
-    string StyleCheck ;
+    string StyleCheck;
     int num = 0;
     public float min = 1;
     public float max = 3;
@@ -21,7 +20,7 @@ public class Custom : MonoBehaviour
     public Slider sliderY;
     public Slider sliderZ;
     Vector3 slideSet;
-   
+
     private void Awake()
     {
         player = FindObjectOfType<CharacterCustom>();
@@ -51,11 +50,11 @@ public class Custom : MonoBehaviour
             player.bodyParts[num].transform.localScale = slideSet;
         }
     }
-  
+
     public void PartSelect(int _num)
     {
         num = _num;
-        FixedPartName.text = player.bodyParts[num].name;       
+        FixedPartName.text = player.bodyParts[num].name;
         if (StyleCheck == "Rotation")
         {
             min = -180f; max = 180;
@@ -69,19 +68,12 @@ public class Custom : MonoBehaviour
         else if (StyleCheck == "Scale")
         {
             min = 1; max = 4;
-            ValueSet();            
+            ValueSet();
             Vector3 scale = player.bodyParts[num].transform.localScale;
             sliderX.value = scale.x;
             sliderY.value = scale.y;
             sliderZ.value = scale.z;
-            slideSet= new Vector3(sliderX.value, sliderY.value, sliderZ.value);
-        }
-
-    }public void CharSet()
-    {
-        for (int i = 0; i < player.bodyParts.Length; i++)
-        {
-            player.bodyParts[i].mesh = CustomInventory[i].item != null ? CustomInventory[i].item.mesh : null;
+            slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
         }
     }
 }

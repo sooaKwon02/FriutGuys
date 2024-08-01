@@ -964,6 +964,7 @@ GameObject:
   - component: {fileID: 235860753}
   - component: {fileID: 235860759}
   - component: {fileID: 235860752}
+  - component: {fileID: 235860756}
   m_Layer: 0
   m_Name: Body
   m_TagString: BODY
@@ -971,6 +972,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &235860756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235860754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434288ee395b944da4dce258a1119e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 235860759}
+  mine: 0
 --- !u!33 &235860759
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1501,6 +1516,7 @@ GameObject:
   - component: {fileID: 623280044}
   - component: {fileID: 623280034}
   - component: {fileID: 623280035}
+  - component: {fileID: 623280046}
   m_Layer: 0
   m_Name: Head
   m_TagString: HEAD
@@ -1508,6 +1524,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &623280046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623280045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434288ee395b944da4dce258a1119e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  mine: 3
 --- !u!1 &627981766
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,6 +2155,7 @@ GameObject:
   - component: {fileID: 1020879744}
   - component: {fileID: 1020879750}
   - component: {fileID: 1020879751}
+  - component: {fileID: 1020879746}
   m_Layer: 0
   m_Name: GlovesL
   m_TagString: GLOVEL
@@ -2132,6 +2163,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1020879746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020879745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434288ee395b944da4dce258a1119e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  mine: 1
 --- !u!33 &1020879750
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2235,6 +2280,7 @@ MonoBehaviour:
   item: {fileID: 0}
   isEmpty: 0
   custom: 1
+  inven: 7
 --- !u!114 &1040002886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2806,6 +2852,7 @@ MonoBehaviour:
   item: {fileID: 0}
   isEmpty: 0
   custom: 1
+  inven: 6
 --- !u!114 &1302621789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3126,6 +3173,7 @@ GameObject:
   - component: {fileID: 1398878477}
   - component: {fileID: 1398878479}
   - component: {fileID: 1398878478}
+  - component: {fileID: 1398878480}
   m_Layer: 0
   m_Name: UseItem2
   m_TagString: USEITEM2
@@ -3196,6 +3244,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398878476}
   m_Mesh: {fileID: 0}
+--- !u!114 &1398878480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398878476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434288ee395b944da4dce258a1119e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  mine: 6
 --- !u!1 &1405984336
 GameObject:
   m_ObjectHideFlags: 0
@@ -3821,6 +3883,7 @@ GameObject:
   - component: {fileID: 1493163998}
   - component: {fileID: 1493163996}
   - component: {fileID: 1493163997}
+  - component: {fileID: 1493164000}
   m_Layer: 0
   m_Name: Tail
   m_TagString: TAIL
@@ -3828,6 +3891,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1493164000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493163999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434288ee395b944da4dce258a1119e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  mine: 4
 --- !u!33 &1536407689
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3902,6 +3979,7 @@ GameObject:
   - component: {fileID: 1536407691}
   - component: {fileID: 1536407689}
   - component: {fileID: 1536407690}
+  - component: {fileID: 1536407733}
   m_Layer: 0
   m_Name: GlovesR
   m_TagString: GLOVER
@@ -3909,6 +3987,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1536407733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536407732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434288ee395b944da4dce258a1119e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  mine: 2
 --- !u!1 &1675551317
 GameObject:
   m_ObjectHideFlags: 0
@@ -4239,6 +4331,7 @@ MonoBehaviour:
   item: {fileID: 0}
   isEmpty: 0
   custom: 1
+  inven: 3
 --- !u!114 &1802214349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20000,11 +20093,13 @@ MonoBehaviour:
   - {fileID: 5783119396395139777}
   - {fileID: 1398878479}
   rotationSpeed: 100
-  body: {fileID: 235860754}
-  glove1: {fileID: 1020879745}
-  glove2: {fileID: 1536407732}
-  head: {fileID: 623280045}
-  tail: {fileID: 1493163999}
+  body: {fileID: 235860756}
+  glove1: {fileID: 1020879746}
+  glove2: {fileID: 1536407733}
+  head: {fileID: 623280046}
+  tail: {fileID: 1493164000}
+  item1: {fileID: 5783119396395139778}
+  item2: {fileID: 1398878480}
 --- !u!1 &3575330421600808219
 GameObject:
   m_ObjectHideFlags: 0
@@ -22997,6 +23092,7 @@ GameObject:
   - component: {fileID: 6123908194070196368}
   - component: {fileID: 5783119396395139777}
   - component: {fileID: 5783119396395139776}
+  - component: {fileID: 5783119396395139778}
   m_Layer: 0
   m_Name: UseItem1
   m_TagString: USEITEM1
@@ -23053,6 +23149,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5783119396395139775}
   m_Mesh: {fileID: 0}
+--- !u!114 &5783119396395139778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783119396395139775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434288ee395b944da4dce258a1119e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  mine: 5
 --- !u!114 &5964603373574941384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23279,6 +23389,7 @@ MonoBehaviour:
   item: {fileID: 0}
   isEmpty: 0
   custom: 1
+  inven: 4
 --- !u!114 &6095888511122999588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23294,6 +23405,7 @@ MonoBehaviour:
   item: {fileID: 0}
   isEmpty: 0
   custom: 1
+  inven: 5
 --- !u!114 &6095888511646789049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23309,6 +23421,7 @@ MonoBehaviour:
   item: {fileID: 0}
   isEmpty: 0
   custom: 1
+  inven: 1
 --- !u!114 &6095888512081769765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23324,6 +23437,7 @@ MonoBehaviour:
   item: {fileID: 0}
   isEmpty: 0
   custom: 1
+  inven: 2
 --- !u!4 &6123908194070196368
 Transform:
   m_ObjectHideFlags: 0
@@ -25674,14 +25788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92665be4923615847a387ef74a482c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CustomInventory:
-  - {fileID: 6095888511646789049}
-  - {fileID: 1802214348}
-  - {fileID: 6095888512081769765}
-  - {fileID: 6095888511091356157}
-  - {fileID: 6095888511122999588}
-  - {fileID: 1302621788}
-  - {fileID: 1040002885}
   FixedPartName: {fileID: 1362706224507723083}
   styleName: {fileID: 1362706223178039555}
   min: 1

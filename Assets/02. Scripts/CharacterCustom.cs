@@ -2,7 +2,6 @@ using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static SaveLoad;
 
 public class CharacterCustom : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class CharacterCustom : MonoBehaviour
 
     
 
-    public GameObject body;
+    public PlayerItem body;
     float body_x;
     float body_y;
     float body_z;
@@ -19,7 +18,7 @@ public class CharacterCustom : MonoBehaviour
     float body_rotY;
     float body_rotZ;
 
-    public GameObject glove1;
+    public PlayerItem glove1;
     float glove1_x;
     float glove1_y;
     float glove1_z;
@@ -27,7 +26,7 @@ public class CharacterCustom : MonoBehaviour
     float glove1_rotY;
     float glove1_rotZ;
 
-    public GameObject glove2;
+    public PlayerItem glove2;
     float glove2_x;
     float glove2_y;
     float glove2_z;
@@ -35,7 +34,7 @@ public class CharacterCustom : MonoBehaviour
     float glove2_rotY;
     float glove2_rotZ;
 
-    public GameObject head;
+    public PlayerItem head;
     float head_x;
     float head_y;
     float head_z;
@@ -43,7 +42,7 @@ public class CharacterCustom : MonoBehaviour
     float head_rotY;
     float head_rotZ;
 
-    public GameObject tail;
+    public PlayerItem tail;
     float tail_x;
     float tail_y;
     float tail_z;
@@ -51,23 +50,20 @@ public class CharacterCustom : MonoBehaviour
     float tail_rotY;
     float tail_rotZ;
 
-    string item1;
-    string item2;
+    public PlayerItem item1;
+    public PlayerItem item2;
     int gameMoney;
     int cashMoney;
     int score;
     //플레이어 정보
     SaveLoad.PLAYER p;
+
     private void Awake()
     {
+    //    p = FindObjectOfType<SaveLoad>().player;
     }
     private void Start()
-    {
-        if (FindObjectOfType<SaveLoad>())
-        {
-            p = FindObjectOfType<SaveLoad>().player;
-        }
-        StartCoroutine(CustomPlayer());
+    {       
         StartCoroutine(PlayerInfo());
     }
     private void Update()
@@ -80,16 +76,16 @@ public class CharacterCustom : MonoBehaviour
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        FindObjectOfType<SaveLoad>().OnDataChanged(p.ID);
+        FindObjectOfType<SaveLoad>().SaveData(FindObjectOfType<SaveLoad>().ID);
     }
 
     IEnumerator CustomPlayer()
     {
-            body.GetComponent<MeshFilter>().mesh = Resources.Load<Item>("Item/FashionItem"+p.body_name).mesh;
-            glove1.GetComponent<MeshFilter>().mesh = Resources.Load<Item>("Item/FashionItem" + p.glove1_name).mesh;
-            glove2.GetComponent<MeshFilter>().mesh = Resources.Load<Item>("Item/FashionItem" + p.glove2_name).mesh;
-            head.GetComponent<MeshFilter>().mesh = Resources.Load<Item>("Item/FashionItem" + p.head_name).mesh;
-            tail.GetComponent<MeshFilter>().mesh = Resources.Load<Item>("Item/FashionItem" + p.tail_name).mesh;
+        body.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.body_name));
+        glove1.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.glove1_name));
+        glove2.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.glove2_name));
+        head.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.head_name));
+        tail.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.tail_name));
         body.transform.localScale = new Vector3(p.body_x, p.body_y, p.body_z);
         glove1.transform.localScale = new Vector3(p.glove1_x, p.glove1_y, p.glove1_z);
         glove2.transform.localScale = new Vector3(p.glove2_x, p.glove2_y, p.glove2_z);
@@ -105,6 +101,10 @@ public class CharacterCustom : MonoBehaviour
     IEnumerator PlayerInfo()
     {
         yield return null;  
+    }
+    public void Cutsom(PlayerItem _item)
+    {
+
     }
 
 }
