@@ -3,65 +3,128 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CatchScript : MonoBehaviour
-{
-    public float grabDistance = 2.0f;
-    private GameObject grabTarget;
+{ }
+    //public float grabDistance = 2.0f;
+    //private GameObject grabTarget;
     //private SpringJoint springJoint;
-    private FixedJoint fixedJoint;
-    private bool isGrab = false;
-    Animator anim;
-    Rigidbody rb;
+    //private FixedJoint fixedJoint;
+    //[SerializeField]
+    //Transform GrabPoint = null;
+    //private bool isGrab = false;
+    //Animator anim;
+    //Rigidbody rb;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        anim = GetComponentInParent<Animator>();
-    }
-
-    //void Update()
+    //private void Awake()
     //{
-    //    // 키를 눌렀을 때 물체를 자식으로 만들기
-    //    if (Input.GetKeyDown(KeyCode.LeftControl))
-    //    {
-    //        if (target != null)
-    //        {
-    //            target.transform.SetParent(transform);
-    //            anim.SetBool("isCatch", true);
-    //        }
-    //        else
-    //        {
-    //            //물체가 null이면 못잡는 애니메이션
-    //            anim.SetTrigger("NonCatch");
-    //        }
-    //    }
-
-    //    // 키를 뗐을 때 자식에서 해제
-    //    if (Input.GetKeyUp(KeyCode.LeftControl))
-    //    {
-    //        if(target != null)
-    //            target.transform.SetParent(null);
-    //        anim.SetTrigger("Catch");
-    //        anim.SetBool("isCatch", false);
-    //    }
+    //    rb = GetComponent<Rigidbody>();
+    //    anim = GetComponentInParent<Animator>();
     //}
 
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if (other != null)//추후 맵에서 tag로 변경예정
-    //    {
-    //        target = other.gameObject;
-    //    }
-    //}
 
-    ////아무때나 키 누르면 전의 오브젝트 물체가 플레이어를 따라옴
-    ////null값으로 만들어줘야 함.
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject == target)
-    //    {
-    //        target = null;
-    //    }
-    //}
+
+    //[SerializeField] Transform GrabPoint = null;
+    //[SerializeField] private LayerMask AccesibleLayers = new LayerMask();
+//    [SerializeField] private static float breakForce = 10000, breakTorque = 10000;
+
+//    private Collider[] ObjectsInCloseProximity;
+//    [HideInInspector] public bool isGrabbing = false;
+//    //private SpringJoint springJoint;
+//    public GameObject GrabbedObj;
+
+//    private void FixedUpdate()
+//    {
+//        if ((springJoint != null && springJoint.connectedBody == null) || (springJoint == null && GrabbedObj != null))
+//        {
+//            ReleaseObj(GrabbedObj);
+//        }
+//    }
+//    private void Update()
+//    {
+//        TryGrabObj();
+//    }
+//    public void TryGrabObj()
+//    {
+//        ObjectsInCloseProximity = Physics.OverlapBox(GrabPoint.position, new Vector3(0.4f, 1, 0.6f), Quaternion.identity);
+
+//        if (ObjectsInCloseProximity.Length > 0)
+//        {
+//            int id = 0;
+//            while (id < ObjectsInCloseProximity.Length)
+//            {
+//                Collider obj = ObjectsInCloseProximity[id];
+//                if (obj.tag != "Bullet" && obj.attachedRigidbody == GetComponent<Rigidbody>())
+//                {
+//                    id++;
+//                    continue;
+//                }
+
+//                if (!isGrabbing && Input.GetKeyDown(KeyCode.LeftShift))
+//                {
+//                    GrabAndAssign(obj);
+//                }
+//                else if(isGrabbing && Input.GetKeyUp(KeyCode.LeftShift)) 
+//                {
+//                    ReleaseObj(GrabbedObj);
+//                }
+//                break;
+//            }
+//        }
+//    }
+
+//    private void GrabAndAssign(Collider obj)
+//    {
+//        var rb = obj.attachedRigidbody;
+//        GrabbedObj = obj.gameObject;
+
+//        if (obj.gameObject.tag == "Bullet")
+//        {
+//            Destroy(rb);
+//            obj.transform.parent.position = GrabPoint.position;
+//            obj.transform.parent.SetParent(GrabPoint);
+//        }
+//        else
+//{
+//    springJoint = gameObject.AddComponent<SpringJoint>();
+//    springJoint.autoConfigureConnectedAnchor = false;
+//    springJoint.connectedAnchor = GrabPoint.localPosition;
+//    springJoint.damper = 100000;
+//    springJoint.spring = 100000;
+//    springJoint.minDistance = 0.8f;
+//    springJoint.enableCollision = true;
+//    springJoint.breakForce = breakForce;
+//    springJoint.breakTorque = breakTorque;
+//    springJoint.connectedBody = rb;
+//}
+
+//isGrabbing = true;
+//GetComponent<PlayerCtrl>().anim.SetBool("isCatch", true);
+//    }
+
+//    private void ReleaseObj(GameObject obj)
+//{
+//    if (obj == null) return;
+
+//    if (obj.tag == "Bullet")
+//    {
+//        obj.transform.SetParent(null);
+//        Rigidbody rb = obj.AddComponent<Rigidbody>();
+//        rb.mass = 1;
+//        rb.drag = 1;
+//        rb.angularDrag = 1;
+//        rb.interpolation = RigidbodyInterpolation.Interpolate;
+//    }
+//    else
+//    {
+//        if (springJoint != null)
+//            Destroy(springJoint);
+//    }
+
+//    GrabbedObj = null;
+//    isGrabbing = false;
+//    GetComponent<PlayerCtrl>().anim.SetBool("isCatch", false);
+//}
+//}
+
     //void Update()
     //{
 
@@ -75,20 +138,29 @@ public class CatchScript : MonoBehaviour
     //    {
     //        if (isGrab) return;
 
-    //        //if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
-    //        //{
-    //        //if (hit.collider.CompareTag("Player"))
-    //        //{
-    //        //Debug.Log(hit.collider.gameObject.name);
-    //        //grabTarget = hit.collider.gameObject;
+    //        if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
+    //        {
+    //            if (hit.collider.CompareTag("Player"))
+    //            {
+    //                Debug.Log(hit.collider.gameObject.name);
+    //                grabTarget = hit.collider.gameObject;
 
-    //        //springJoint = gameObject.AddComponent<SpringJoint>();
-    //        //springJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
-    //        //springJoint.spring = 1000.0f;
-    //        //springJoint.damper = 0.0f;
-    //        //springJoint.minDistance = 0.0f;
-    //        //springJoint.maxDistance = 0.1f;
-    //        if (grabTarget != null)
+    //                springJoint = gameObject.AddComponent<SpringJoint>();
+    //                springJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
+    //                springJoint.spring = 1000.0f;
+    //                springJoint.damper = 0.0f;
+    //                springJoint.minDistance = 0.0f;
+    //                springJoint.maxDistance = 0.1f;
+    //                springJoint.autoConfigureConnectedAnchor = false;
+    //                springJoint.connectedAnchor = GrabPoint.localPosition;
+    //                springJoint.damper = 100000;
+    //                springJoint.spring = 100000;
+    //                springJoint.minDistance = 0.8f;
+    //                springJoint.enableCollision = true;
+    //                springJoint.breakForce = 10000;
+    //                springJoint.breakTorque = 10000;
+    //                springJoint.connectedBody = rb;
+    //                if (grabTarget != null)
     //        {
     //            fixedJoint = transform.parent.parent.gameObject.AddComponent<FixedJoint>();
     //            fixedJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
@@ -111,13 +183,13 @@ public class CatchScript : MonoBehaviour
 
     ////아무때나 키 누르면 전의 오브젝트 물체가 플레이어를 따라옴
     ////null값으로 만들어줘야 함.
-    ////void OnTriggerExit(Collider other)
-    ////{
-    ////    if (other.gameObject == grabTarget)
-    ////    {
-    ////        target = null;
-    ////    }
-    ////}
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject == grabTarget)
+    //    {
+    //        target = null;
+    //    }
+    //}
     //void GrabEnd()
     //{
     //    if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -194,4 +266,4 @@ public class CatchScript : MonoBehaviour
     //        }
     //    }
     //}
-}
+

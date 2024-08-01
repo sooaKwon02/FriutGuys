@@ -10,7 +10,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
     PhotonView pv;
     private Rigidbody rb;
-    private Animator anim;
+    public Animator anim;
     private CapsuleCollider coll;
 
     public GameObject cam;
@@ -91,24 +91,24 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 isJump = true;
             }
             Slide();
-            //Grab();
-            //GrabEnd();
-            //Debug.DrawRay(transform.position, player.transform.forward * grabDistance, Color.blue);
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                pullForce = true;
-                GetPullObject();
-            }
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                PullForce();
-            }
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                anim.SetBool("isCatch", false);
-                moveSpeed = 5.0f;
-            }
-            Debug.DrawRay(holdPosition.transform.position, holdPosition.transform.forward * pullRange, Color.green);
+            Grab();
+            GrabEnd();
+            Debug.DrawRay(transform.position, player.transform.forward * grabDistance, Color.blue);
+            //if (Input.GetKeyDown(KeyCode.LeftShift))
+            //{
+            //    pullForce = true;
+            //    GetPullObject();
+            //}
+            //if (Input.GetKey(KeyCode.LeftShift))
+            //{
+            //    PullForce();
+            //}
+            //if (Input.GetKeyUp(KeyCode.LeftShift))
+            //{
+            //    anim.SetBool("isCatch", false);
+            //    moveSpeed = 5.0f;
+            //}
+            //Debug.DrawRay(holdPosition.transform.position, holdPosition.transform.forward * pullRange, Color.green);
         }
         else
         {
@@ -149,23 +149,23 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             //언박싱
             currPos = (Vector3)stream.ReceiveNext();
             currRot = (Quaternion)stream.ReceiveNext();
-            jumpY=(float)stream.ReceiveNext();
+            jumpY = (float)stream.ReceiveNext();
         }
     }
     float v;
 
     void PlayerMove()
     {
-        Debug.DrawRay(cam.transform.position, 
+        Debug.DrawRay(cam.transform.position,
             new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z).normalized, Color.red);
         float h = Input.GetAxis("Horizontal");
-         v = Input.GetAxis("Vertical");
+        v = Input.GetAxis("Vertical");
 
         //ī�޶� ���� �� ���� 
         Vector3 moveInput = new Vector2(h, v);
         //어느방향으로든 움직이면 true
         isMove = moveInput.magnitude != 0;
-        
+
         anim.SetBool("isMove", isMove);
         anim.SetFloat("MoveX", h);
         anim.SetFloat("MoveY", v);
@@ -194,7 +194,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         float x = camAngle.x - mouseDelta.y;
 
         //ī�޶��� ������ 180�� ���϶��
-        if(x < 180f)
+        if (x < 180f)
         {
             //0�� 70������ ������ ����
             x = Mathf.Clamp(x, 0f, 70f);
@@ -227,7 +227,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     void CheckGround()
     {
         RaycastHit hit;
-        Debug.DrawRay(rb.position, Vector3.down * 0.1f ,Color.red);
+        Debug.DrawRay(rb.position, Vector3.down * 0.1f, Color.red);
 
         if (Physics.Raycast(rb.position, Vector3.down, out hit, 0.1f))
         {
@@ -312,7 +312,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 //rotSpeed = 0;
                 targetObject.GetComponent<Rigidbody>().velocity = dir * pullStrength * Time.deltaTime;
             }
-            else if(targetObject.GetComponent<Rigidbody>() && v > 0)
+            else if (targetObject.GetComponent<Rigidbody>() && v > 0)
             {
                 Vector3 dir = targetObject.transform.position - holdPosition.position;
                 dir.y = 0;
@@ -341,7 +341,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             Destroy(coll.gameObject);
             pv.RPC("Des", RpcTarget.Others, coll);
         }
-        if(coll.transform.tag=="Bullet")
+        if (coll.transform.tag == "Bullet")
         {
             Destroy(coll.gameObject);
             pv.RPC("Des", RpcTarget.Others, coll);
@@ -356,7 +356,104 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     IEnumerator ReMove()
     {
         yield return new WaitForSeconds(1f);
-       
+
         isColl = false;
     }
-}
+    public float grabDistance = 2.0f;
+    private GameObject grabTarget;
+    private SpringJoint springJoint;
+    private FixedJoint fixedJoint;
+    [SerializeField]
+    Transform GrabPoint = null;
+    private bool isGrab = false;
+    void Grab()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (isGrab) return;
+
+            if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    Debug.Log(hit.collider.gameObject.name);
+                    grabTarget = hit.collider.gameObject;
+
+                    springJoint = grabTarget.AddComponent<SpringJoint>();
+                    //springJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
+                    //springJoint.spring = 1000.0f;
+                    //springJoint.damper = 0.0f;
+                    //springJoint.minDistance = 0.0f;
+                    //springJoint.maxDistance = 0.1f;
+                    springJoint.autoConfigureConnectedAnchor = false;
+                    springJoint.connectedAnchor = GrabPoint.localPosition;
+                    springJoint.damper = 10000;
+                    springJoint.spring = 10000;
+                    springJoint.minDistance = 0.5f;
+                    springJoint.maxDistance = 1.0f;
+                    springJoint.enableCollision = true;
+                    springJoint.breakForce = 10000;
+                    springJoint.breakTorque = 10000;
+                    springJoint.connectedBody = rb;
+                    
+                    //if (grabTarget != null)
+                    //{
+                    //    fixedJoint = transform.parent.parent.gameObject.AddComponent<FixedJoint>();
+                    //    fixedJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
+                    //    isGrab = true;
+                    //}
+
+
+                    //}
+                    //}
+                }
+            }
+        }
+    }
+            void OnTriggerEnter(Collider other)
+            {
+                if (other.CompareTag("Player"))
+                {
+                    grabTarget = other.gameObject;
+                    Debug.Log(grabTarget);
+                }
+            }
+
+
+            //아무때나 키 누르면 전의 오브젝트 물체가 플레이어를 따라옴
+            //null값으로 만들어줘야 함.
+            //void OnTriggerExit(Collider other)
+            //{
+            //    if (other.gameObject == grabTarget)
+            //    {
+            //        target = null;
+            //    }
+            //}
+            void GrabEnd()
+            {
+                if (Input.GetKeyUp(KeyCode.LeftShift))
+                {
+                    if (!isGrab) return;
+
+                if (springJoint != null)
+                {
+                    Destroy(springJoint);
+                    springJoint = null;
+                    grabTarget = null;
+                    isGrab = false;
+                }
+
+            //if (fixedJoint != null)
+            //{
+
+            //    Destroy(fixedJoint);
+            //    fixedJoint = null;
+            //    grabTarget = null;
+            //    isGrab = false;
+
+            //}
+            }
+
+            }
+        }
+    
