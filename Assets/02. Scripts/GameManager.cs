@@ -57,7 +57,11 @@ public class GameManager : MonoBehaviour
         CustomPanel.SetActive(check);
         inventoryPanel.SetActive(check);
         if (check) { Player.position = new Vector2(2, 0); }
-        else { Player.position = new Vector2(0, 0); }
+        else
+        { 
+            Player.position = new Vector2(0, 0);
+            SaveServerData();
+        }
         ActiveMenu(!check);
     }
     public void UseItemOnOff(bool check)
@@ -65,7 +69,11 @@ public class GameManager : MonoBehaviour
         useItemPanel.SetActive(check);
         inventoryPanel.SetActive(check);
         if (check) { Player.position = new Vector2(2, 0); }
-        else { Player.position = new Vector2(0, 0); }
+        else
+        { 
+            Player.position = new Vector2(0, 0);
+            SaveServerData();
+        }
         ActiveMenu(!check);
     }
     public void StoreOnOff(bool check)
@@ -147,8 +155,8 @@ public class GameManager : MonoBehaviour
         errorBox.SetActive(false);
     }
     public void SaveServerData()
-    {
-        SaveLoad.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
-        SaveLoadInven.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
+    {        
+        FindObjectOfType<SaveLoad>().OnDataChanged(FindObjectOfType<SaveLoad>().player.ID);
+        //SaveLoadInven.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
     }
 }

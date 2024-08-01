@@ -1,11 +1,14 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static SaveLoad;
 
 public class Custom : MonoBehaviour
 {
+    public ItemData[] CustomInventory;
     public Text FixedPartName;
     public Text styleName;
     CharacterCustom player;
@@ -74,5 +77,11 @@ public class Custom : MonoBehaviour
             slideSet= new Vector3(sliderX.value, sliderY.value, sliderZ.value);
         }
 
+    }public void CharSet()
+    {
+        for (int i = 0; i < player.bodyParts.Length; i++)
+        {
+            player.bodyParts[i].mesh = CustomInventory[i].item != null ? CustomInventory[i].item.mesh : null;
+        }
     }
 }

@@ -174,10 +174,10 @@ public class DatabaseManager : MonoBehaviour
 
                     if (response.success)
                     {
-                        SaveLoadInven.Instance.LoadData(id);
-                        SaveLoad.Instance.LoadData(id);
-                        SaveLoad.Instance.player.ID = id;
-                        SaveLoad.Instance.NickNameSet(response.nickname); // 닉네임을 전달
+                        //SaveLoadInven.Instance.LoadData(id);
+                        FindObjectOfType<SaveLoad>().LoadData(id);
+                        FindObjectOfType<SaveLoad>().player.ID = id;
+                        FindObjectOfType<SaveLoad>().NickNameSet(response.nickname); // 닉네임을 전달
 
                         SignUpComplete.SetActive(true);
                         SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";

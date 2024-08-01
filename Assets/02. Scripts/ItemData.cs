@@ -44,7 +44,7 @@ public class ItemData : MonoBehaviour
         ItemSet();     
         if(custom)
         {
-            FindObjectOfType<CharacterCustom>().CharSet();
+            FindObjectOfType<Custom>().CharSet();
         }
     }
    
@@ -63,7 +63,7 @@ public class ItemData : MonoBehaviour
             image.color = new Color(1, 1, 1, 0);
             if(custom)
             {
-                FindObjectOfType<CharacterCustom>().CharSet();
+                FindObjectOfType<Custom>().CharSet();
             }
             
         }        

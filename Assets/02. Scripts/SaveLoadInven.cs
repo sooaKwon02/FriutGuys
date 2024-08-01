@@ -40,7 +40,7 @@ public class SaveLoadInven : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        OnDataChanged(SaveLoad.Instance.player.ID);
+        OnDataChanged(FindObjectOfType<SaveLoad>().player.ID);
     }
 
     // 데이터가 변경되면 호출되는 메소드
