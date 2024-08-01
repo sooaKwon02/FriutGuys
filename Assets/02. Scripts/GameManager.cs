@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     public GameObject audioPanel;
     public GameObject keyboardPanel;
 
-
     public GameObject roomListPanel;
     public GameObject playButtonPanel;
     public GameObject SearchRoomPanel;

@@ -28,7 +28,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator Start()
     {
-        string url = dll.LoginUnityMine; // PHP 스크립트의 URL을 입력하세요
+        string url = dll.LoginUnity; // PHP 스크립트의 URL을 입력하세요
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
@@ -92,7 +92,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = dll.SignUpMine;
+        string serverURL = dll.SignUp;
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
@@ -149,7 +149,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLoginMine; // 서버 URL을 설정
+        string serverURL = dll.GameLogin; // 서버 URL을 설정
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);

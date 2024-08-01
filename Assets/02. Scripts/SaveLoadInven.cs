@@ -21,8 +21,8 @@ public class SaveLoadInven : MonoBehaviour
     }
 
     public static SaveLoadInven Instance { get; private set; }
-    private string saveUrl = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
-    private string loadUrl = "http://192.168.35.229/fruitsGuys/PlayerInvenLoad.php";
+    private string saveUrl = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
+    private string loadUrl = "http://61.99.10.173/fruitsGuys/PlayerInvenLoad.php";
     public INVEN[] item;
 
     private void Awake()

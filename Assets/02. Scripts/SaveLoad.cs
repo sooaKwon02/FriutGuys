@@ -59,8 +59,8 @@ public class SaveLoad : MonoBehaviour
     public static SaveLoad Instance { get; private set; }
    
 
-    private string saveUrl = "http://192.168.35.229/fruitsGuys/PlayerItemSave.php";
-    private string loadUrl = "http://192.168.35.229/fruitsGuys/PlayerItemLoad.php";
+    private string saveUrl = "http://61.99.10.173/fruitsGuys/PlayerItemSave.php";
+    private string loadUrl = "http://61.99.10.173/fruitsGuys/PlayerItemLoad.php";
 
     private void Awake()
     {
