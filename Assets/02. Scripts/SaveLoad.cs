@@ -54,7 +54,7 @@ public class SaveLoad : MonoBehaviour
     {
         StartCoroutine(SaveDataCoroutine(id));
     }
- 
+
     private IEnumerator SaveDataCoroutine(string id)
     {
         CharacterCustom c = FindObjectOfType<CharacterCustom>();
@@ -66,53 +66,49 @@ public class SaveLoad : MonoBehaviour
 
         WWWForm form = new WWWForm();
         form.AddField("id", id);
+        // PlayerItem의 item 속성값을 직접 확인
+            form.AddField("body_name", c.body.GetComponent<PlayerItem>().item.name?? c.body.name);
+        form.AddField("body_x", c.body.transform.localScale.x.ToString());
+        form.AddField("body_y", c.body.transform.localScale.y.ToString());
+        form.AddField("body_z", c.body.transform.localScale.z.ToString());
+        form.AddField("body_rotX", c.body.transform.localRotation.x.ToString());
+        form.AddField("body_rotY", c.body.transform.localRotation.y.ToString());
+        form.AddField("body_rotZ", c.body.transform.localRotation.z.ToString());
 
-        // Ensure none of the following fields are null
-        form.AddField("body_name", c.body.GetComponent<PlayerItem>().mesh.name);
-        form.AddField("body_x", c.body.transform.localScale.x.ToString() ?? "0");
-        form.AddField("body_y", c.body.transform.localScale.y.ToString() ?? "0");
-        form.AddField("body_z", c.body.transform.localScale.z.ToString() ?? "0");
-        form.AddField("body_rotX", c.body.transform.localRotation.x.ToString() ?? "0");
-        form.AddField("body_rotY", c.body.transform.localRotation.y.ToString() ?? "0");
-        form.AddField("body_rotZ", c.body.transform.localRotation.z.ToString() ?? "0");
+            form.AddField("glove1_name", c.glove1.GetComponent<PlayerItem>().item.name?? c.body.name);
+        form.AddField("glove1_x", c.glove1.transform.localScale.x.ToString());
+        form.AddField("glove1_y", c.glove1.transform.localScale.y.ToString());
+        form.AddField("glove1_z", c.glove1.transform.localScale.z.ToString());
+        form.AddField("glove1_rotX", c.glove1.transform.localRotation.x.ToString());
+        form.AddField("glove1_rotY", c.glove1.transform.localRotation.y.ToString());
+        form.AddField("glove1_rotZ", c.glove1.transform.localRotation.z.ToString());
+            form.AddField("glove2_name", c.glove2.GetComponent<PlayerItem>().item.name?? c.body.name);
+        form.AddField("glove2_x", c.glove2.transform.localScale.x.ToString());
+        form.AddField("glove2_y", c.glove2.transform.localScale.y.ToString());
+        form.AddField("glove2_z", c.glove2.transform.localScale.z.ToString());
+        form.AddField("glove2_rotX", c.glove2.transform.localRotation.x.ToString());
+        form.AddField("glove2_rotY", c.glove2.transform.localRotation.y.ToString());
+        form.AddField("glove2_rotZ", c.glove2.transform.localRotation.z.ToString());
+            form.AddField("head_name", c.head.GetComponent<PlayerItem>().item.name?? c.body.name);
+        form.AddField("head_x", c.head.transform.localScale.x.ToString());
+        form.AddField("head_y", c.head.transform.localScale.y.ToString());
+        form.AddField("head_z", c.head.transform.localScale.z.ToString());
+        form.AddField("head_rotX", c.head.transform.localRotation.x.ToString());
+        form.AddField("head_rotY", c.head.transform.localRotation.y.ToString());
+        form.AddField("head_rotZ", c.head.transform.localRotation.z.ToString());
+            form.AddField("tail_name", c.tail.GetComponent<PlayerItem>().item.name ?? c.body.name);
+        form.AddField("tail_x", c.tail.transform.localScale.x.ToString());
+        form.AddField("tail_y", c.tail.transform.localScale.y.ToString());
+        form.AddField("tail_z", c.tail.transform.localScale.z.ToString());
+        form.AddField("tail_rotX", c.tail.transform.localRotation.x.ToString());
+        form.AddField("tail_rotY", c.tail.transform.localRotation.y.ToString());
+        form.AddField("tail_rotZ", c.tail.transform.localRotation.z.ToString());
 
-        form.AddField("glove1_name", c.glove1.GetComponent<PlayerItem>().mesh.name);
-        form.AddField("glove1_x", c.glove1.transform.localScale.x.ToString() ?? "0");
-        form.AddField("glove1_y", c.glove1.transform.localScale.y.ToString() ?? "0");
-        form.AddField("glove1_z", c.glove1.transform.localScale.z.ToString() ?? "0");
-        form.AddField("glove1_rotX", c.glove1.transform.localRotation.x.ToString() ?? "0");
-        form.AddField("glove1_rotY", c.glove1.transform.localRotation.y.ToString() ?? "0");
-        form.AddField("glove1_rotZ", c.glove1.transform.localRotation.z.ToString() ?? "0");
-
-        form.AddField("glove2_name", c.glove2.GetComponent<PlayerItem>().mesh.name);
-        form.AddField("glove2_x", c.glove2.transform.localScale.x.ToString() ?? "0");
-        form.AddField("glove2_y", c.glove2.transform.localScale.y.ToString() ?? "0");
-        form.AddField("glove2_z", c.glove2.transform.localScale.z.ToString() ?? "0");
-        form.AddField("glove2_rotX", c.glove2.transform.localRotation.x.ToString() ?? "0");
-        form.AddField("glove2_rotY", c.glove2.transform.localRotation.y.ToString() ?? "0");
-        form.AddField("glove2_rotZ", c.glove2.transform.localRotation.z.ToString() ?? "0");
-
-        form.AddField("head_name", c.head.GetComponent<PlayerItem>().mesh.name);
-        form.AddField("head_x", c.head.transform.localScale.x.ToString() ?? "0");
-        form.AddField("head_y", c.head.transform.localScale.y.ToString() ?? "0");
-        form.AddField("head_z", c.head.transform.localScale.z.ToString() ?? "0");
-        form.AddField("head_rotX", c.head.transform.localRotation.x.ToString() ?? "0");
-        form.AddField("head_rotY", c.head.transform.localRotation.y.ToString() ?? "0");
-        form.AddField("head_rotZ", c.head.transform.localRotation.z.ToString() ?? "0");
-
-        form.AddField("tail_name", c.tail.GetComponent<PlayerItem>().mesh.name);
-        form.AddField("tail_x", c.tail.transform.localScale.x.ToString() ?? "0");
-        form.AddField("tail_y", c.tail.transform.localScale.y.ToString() ?? "0");
-        form.AddField("tail_z", c.tail.transform.localScale.z.ToString() ?? "0");
-        form.AddField("tail_rotX", c.tail.transform.localRotation.x.ToString() ?? "0");
-        form.AddField("tail_rotY", c.tail.transform.localRotation.y.ToString() ?? "0");
-        form.AddField("tail_rotZ", c.tail.transform.localRotation.z.ToString() ?? "0");
-
-        form.AddField("item1", player.item1 ?? "");
-        form.AddField("item2", player.item2 ?? "");
-        form.AddField("gameMoney", player.gameMoney.ToString() ?? "0");
-        form.AddField("cashMoney", player.cashMoney.ToString() ?? "0");
-        form.AddField("score", player.score.ToString() ?? "0");
+        form.AddField("item1", c.item1.GetComponent<PlayerItem>().item.name);
+        form.AddField("item2", c.item2.GetComponent<PlayerItem>().item.name);
+        form.AddField("gameMoney", player.gameMoney.ToString());
+        form.AddField("cashMoney", player.cashMoney.ToString());
+        form.AddField("score", player.score.ToString());
 
         using (UnityWebRequest www = UnityWebRequest.Post(saveUrl, form))
         {
@@ -128,6 +124,8 @@ public class SaveLoad : MonoBehaviour
             }
         }
     }
+
+
 
 
     public void LoadData(string id)

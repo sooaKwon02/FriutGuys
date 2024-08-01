@@ -917,7 +917,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
+  - {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -985,7 +985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 235860759}
-  mine: 0
+  item: {fileID: 0}
 --- !u!33 &235860759
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1469,7 +1469,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
+  - {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1537,7 +1537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  mine: 3
+  item: {fileID: 0}
 --- !u!1 &627981766
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,7 +2176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  mine: 1
+  item: {fileID: 0}
 --- !u!33 &1020879750
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2204,7 +2204,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
+  - {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3190,7 +3190,7 @@ Transform:
   m_GameObject: {fileID: 1398878476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 879814408}
   m_RootOrder: 0
@@ -3214,7 +3214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
+  - {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3257,7 +3257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  mine: 6
+  item: {fileID: 0}
 --- !u!1 &1405984336
 GameObject:
   m_ObjectHideFlags: 0
@@ -3836,7 +3836,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
+  - {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3904,7 +3904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  mine: 4
+  item: {fileID: 0}
 --- !u!33 &1536407689
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3932,7 +3932,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
+  - {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4000,7 +4000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  mine: 2
+  item: {fileID: 0}
 --- !u!1 &1675551317
 GameObject:
   m_ObjectHideFlags: 0
@@ -4084,7 +4084,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7311666950696290870}
         m_TargetAssemblyTypeName: Custom, Assembly-CSharp
         m_MethodName: PartSelect
         m_Mode: 3
@@ -4844,8 +4844,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7311666950696290868}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SaveServerData
-        m_Mode: 1
+        m_MethodName: UseItemOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6315,7 +6315,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7311666950696290870}
         m_TargetAssemblyTypeName: Custom, Assembly-CSharp
         m_MethodName: PartSelect
         m_Mode: 3
@@ -6443,7 +6443,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7311666950696290870}
         m_TargetAssemblyTypeName: Custom, Assembly-CSharp
         m_MethodName: PartSelect
         m_Mode: 3
@@ -6653,7 +6653,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7311666950696290870}
         m_TargetAssemblyTypeName: Custom, Assembly-CSharp
         m_MethodName: Choice
         m_Mode: 5
@@ -7190,7 +7190,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7311666950696290870}
         m_TargetAssemblyTypeName: Custom, Assembly-CSharp
         m_MethodName: Choice
         m_Mode: 5
@@ -8726,7 +8726,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7311666950696290870}
         m_TargetAssemblyTypeName: Custom, Assembly-CSharp
         m_MethodName: PartSelect
         m_Mode: 3
@@ -9079,7 +9079,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7311666950696290870}
         m_TargetAssemblyTypeName: Custom, Assembly-CSharp
         m_MethodName: PartSelect
         m_Mode: 3
@@ -20084,15 +20084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9130801401853474382cd700febb2db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyParts:
-  - {fileID: 235860759}
-  - {fileID: 1536407689}
-  - {fileID: 1020879750}
-  - {fileID: 623280034}
-  - {fileID: 1493163996}
-  - {fileID: 5783119396395139777}
-  - {fileID: 1398878479}
-  rotationSpeed: 100
   body: {fileID: 235860756}
   glove1: {fileID: 1020879746}
   glove2: {fileID: 1536407733}
@@ -20100,6 +20091,9 @@ MonoBehaviour:
   tail: {fileID: 1493164000}
   item1: {fileID: 5783119396395139778}
   item2: {fileID: 1398878480}
+  gameMoney: 0
+  cashMoney: 0
+  score: 0
 --- !u!1 &3575330421600808219
 GameObject:
   m_ObjectHideFlags: 0
@@ -22518,8 +22512,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7311666950696290868}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SaveServerData
-        m_Mode: 1
+        m_MethodName: CustomItemOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -23119,7 +23113,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
+  - {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23162,7 +23156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  mine: 5
+  item: {fileID: 0}
 --- !u!114 &5964603373574941384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23447,7 +23441,7 @@ Transform:
   m_GameObject: {fileID: 5783119396395139775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 567138567034898970}
   m_RootOrder: 0

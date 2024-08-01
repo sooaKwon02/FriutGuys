@@ -52,6 +52,7 @@ MonoBehaviour:
   - PerformActionRPC
   - TriggerPlayerKick
   - Des
+  - CustomAtherPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

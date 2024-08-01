@@ -1,91 +1,58 @@
 using Photon.Realtime;
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterCustom : MonoBehaviour
+public class CharacterCustom : MonoBehaviourPunCallbacks
 {
-    public MeshFilter[] bodyParts;
-    public float rotationSpeed;
-
-    
-
     public PlayerItem body;
-    float body_x;
-    float body_y;
-    float body_z;
-    float body_rotX;
-    float body_rotY;
-    float body_rotZ;
 
-    public PlayerItem glove1;
-    float glove1_x;
-    float glove1_y;
-    float glove1_z;
-    float glove1_rotX;
-    float glove1_rotY;
-    float glove1_rotZ;
+    public PlayerItem glove1; 
 
     public PlayerItem glove2;
-    float glove2_x;
-    float glove2_y;
-    float glove2_z;
-    float glove2_rotX;
-    float glove2_rotY;
-    float glove2_rotZ;
 
     public PlayerItem head;
-    float head_x;
-    float head_y;
-    float head_z;
-    float head_rotX;
-    float head_rotY;
-    float head_rotZ;
 
     public PlayerItem tail;
-    float tail_x;
-    float tail_y;
-    float tail_z;
-    float tail_rotX;
-    float tail_rotY;
-    float tail_rotZ;
 
     public PlayerItem item1;
     public PlayerItem item2;
-    int gameMoney;
-    int cashMoney;
-    int score;
+    public int gameMoney;
+    public int cashMoney;
+    public int score;
     //플레이어 정보
     SaveLoad.PLAYER p;
+    PhotonView pv;
 
     private void Awake()
     {
-    //    p = FindObjectOfType<SaveLoad>().player;
+        if (GetComponent<PhotonView>()) { pv = GetComponent<PhotonView>(); }
+       
     }
     private void Start()
-    {       
-        StartCoroutine(PlayerInfo());
-    }
-    private void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
-        { transform.Rotate(new Vector3(0, 1, 0) * -rotationSpeed * Time.deltaTime); }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        { transform.Rotate(new Vector3(0, 1, 0) * rotationSpeed * Time.deltaTime); }
-    }
-    
+        if (FindObjectOfType<SaveLoad>())
+        {
+            p = FindObjectOfType<SaveLoad>().player;
+        }
+        StartCoroutine(CustomPlayer());
+    } 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        FindObjectOfType<SaveLoad>().SaveData(FindObjectOfType<SaveLoad>().ID);
+    {   
+        if(pv.IsMine)
+           FindObjectOfType<SaveLoad>().SaveData(FindObjectOfType<SaveLoad>().ID);
     }
-
+  
     IEnumerator CustomPlayer()
     {
-        body.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.body_name));
-        glove1.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.glove1_name));
-        glove2.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.glove2_name));
-        head.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.head_name));
-        tail.GetComponent<PlayerItem>().ItemSet(Resources.Load<Item>("Item/FashionItem" + p.tail_name));
+        body.ItemSet(Resources.Load<Item>("Item/FashionItem/"+p.body_name));
+        glove1.ItemSet(Resources.Load<Item>("Item/FashionItem/" + p.glove1_name));
+        glove2.ItemSet(Resources.Load<Item>("Item/FashionItem/" + p.glove2_name));
+        head.ItemSet(Resources.Load<Item>("Item/FashionItem/" + p.head_name));
+        tail.ItemSet(Resources.Load<Item>("Item/FashionItem/" + p.tail_name));
+        item1.ItemSet(Resources.Load<Item>("Item/UseItem/" + p.item1));
+        item2.ItemSet(Resources.Load<Item>("Item/UseItem/" + p.item2));
         body.transform.localScale = new Vector3(p.body_x, p.body_y, p.body_z);
         glove1.transform.localScale = new Vector3(p.glove1_x, p.glove1_y, p.glove1_z);
         glove2.transform.localScale = new Vector3(p.glove2_x, p.glove2_y, p.glove2_z);
@@ -96,15 +63,55 @@ public class CharacterCustom : MonoBehaviour
         glove2.transform.localRotation = new Quaternion(p.glove2_rotX, p.glove2_rotY, p.glove2_rotZ, 1);
         head.transform.localRotation = new Quaternion(p.head_rotX, p.head_rotY, p.head_rotZ, 1);
         tail.transform.localRotation = new Quaternion(p.tail_rotX, p.tail_rotY, p.tail_rotZ, 1);
+
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom && pv != null && pv.IsMine)
+        {
+            pv.RPC("CustomAtherPlayer", RpcTarget.OthersBuffered, pv.ViewID,
+                p.body_name, p.glove1_name, p.glove2_name, p.head_name, p.tail_name,
+                p.item1, p.item2,
+                p.body_x, p.body_y, p.body_z,
+                p.glove1_x, p.glove1_y, p.glove1_z,
+                p.glove2_x, p.glove2_y, p.glove2_z,
+                p.head_x, p.head_y, p.head_z,
+                p.tail_x, p.tail_y, p.tail_z,
+                p.body_rotX, p.body_rotY, p.body_rotZ,
+                p.glove1_rotX, p.glove1_rotY, p.glove1_rotZ,
+                p.glove2_rotX, p.glove2_rotY, p.glove2_rotZ,
+                p.head_rotX, p.head_rotY, p.head_rotZ,
+                p.tail_rotX, p.tail_rotY, p.tail_rotZ);
+        }
         yield return null;
     }
-    IEnumerator PlayerInfo()
-    {
-        yield return null;  
-    }
-    public void Cutsom(PlayerItem _item)
-    {
+   
+ 
+    
+  
+        
 
+    [PunRPC]
+    public void CustomAtherPlayer(int viewID, string bodyName, string glove1Name, string glove2Name, string headName, string tailName, string _item1, string _item2, float bodyX, float bodyY, float bodyZ, float glove1X, float glove1Y, float glove1Z, float glove2X, float glove2Y, float glove2Z, float headX, float headY, float headZ, float tailX, float tailY, float tailZ, float bodyRotX, float bodyRotY, float bodyRotZ, float glove1RotX, float glove1RotY, float glove1RotZ, float glove2RotX, float glove2RotY, float glove2RotZ, float headRotX, float headRotY, float headRotZ, float tailRotX, float tailRotY, float tailRotZ)
+    {
+        PhotonView[] views = FindObjectsOfType<PhotonView>();
+        foreach (PhotonView pv in views)
+        if(pv.ViewID==viewID)
+        {
+                pv.GetComponent<CharacterCustom>().body.ItemSet(Resources.Load<Item>("Item/FashionItem/" + bodyName));
+                pv.GetComponent<CharacterCustom>().glove1.ItemSet(Resources.Load<Item>("Item/FashionItem/" + glove1Name));
+                pv.GetComponent<CharacterCustom>().glove2.ItemSet(Resources.Load<Item>("Item/FashionItem/" + glove2Name));
+                pv.GetComponent<CharacterCustom>().head.ItemSet(Resources.Load<Item>("Item/FashionItem/" + headName));
+                pv.GetComponent<CharacterCustom>().tail.ItemSet(Resources.Load<Item>("Item/FashionItem/" + tailName));
+                pv.GetComponent<CharacterCustom>().item1.ItemSet(Resources.Load<Item>("Item/UseItem/" + _item1));
+                pv.GetComponent<CharacterCustom>().item2.ItemSet(Resources.Load<Item>("Item/UseItem/" + _item2));
+                pv.GetComponent<CharacterCustom>().body.transform.localScale = new Vector3(bodyX, bodyY, bodyZ);
+                pv.GetComponent<CharacterCustom>().glove1.transform.localScale = new Vector3(glove1X, glove1Y, glove1Z);
+                pv.GetComponent<CharacterCustom>().glove2.transform.localScale = new Vector3(glove2X, glove2Y, glove2Z);
+                pv.GetComponent<CharacterCustom>().head.transform.localScale = new Vector3(headX, headY, headZ);
+                pv.GetComponent<CharacterCustom>().tail.transform.localScale = new Vector3(tailX, tailY, tailZ);
+                pv.GetComponent<CharacterCustom>().body.transform.localRotation = new Quaternion(bodyRotX, bodyRotY, bodyRotZ, 1);
+                pv.GetComponent<CharacterCustom>().glove1.transform.localRotation = new Quaternion(glove1RotX, glove1RotY, glove1RotZ, 1);
+                pv.GetComponent<CharacterCustom>().glove2.transform.localRotation = new Quaternion(glove2RotX, glove2RotY, glove2RotZ, 1);
+                pv.GetComponent<CharacterCustom>().head.transform.localRotation = new Quaternion(headRotX, headRotY, headRotZ, 1);
+                pv.GetComponent<CharacterCustom>().tail.transform.localRotation = new Quaternion(tailRotX, tailRotY, tailRotZ, 1);
+        }       
     }
-
 }

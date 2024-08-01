@@ -47,6 +47,15 @@ public class GameManager : MonoBehaviour
         settingMenuPanel.SetActive(false);
         ActiveMenu(true);
     }
+    private void Update()
+    {
+        
+            if (Input.GetKey(KeyCode.RightArrow))
+            { Player.Rotate(new Vector3(0, 1, 0) * -50 * Time.deltaTime); }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
+      
+    }
 
     void ActiveMenu(bool active)
     {
@@ -159,6 +168,6 @@ public class GameManager : MonoBehaviour
     }
     public void SaveServerData()
     {        
-       saveload.SaveData(saveload.ID);
+       saveload.SaveData(saveload.ID);      
     }
 }

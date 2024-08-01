@@ -24,14 +24,20 @@ public class ItemData : MonoBehaviour
     }
     public InvenSwap inven;
 
-
+    SaveLoad.PLAYER p;
     private void Awake()
     {
+        if(FindObjectOfType<SaveLoad>())
+        p = FindObjectOfType<SaveLoad>().player;
         image = GetComponent<Image>();
         button = GetComponent<Button>();      
     }
     private void Start()
     {
+        if(custom)
+        {
+            CustomSet();
+        }
         button.onClick.AddListener(Onclick);
     }
     void Onclick()
@@ -51,7 +57,9 @@ public class ItemData : MonoBehaviour
     public void ItemGET(Item _item)
     {
         item = _item;         
-        ItemSet();      
+        ItemSet(); 
+        if (custom)
+            GameObject.FindGameObjectWithTag(inven.ToString()).GetComponent<PlayerItem>().ItemSet(item);
     }
    
     void ItemSet()
@@ -60,7 +68,8 @@ public class ItemData : MonoBehaviour
         {
             isEmpty = true;
             image.sprite = item.sprite;
-            image.color = new Color(1, 1, 1, 1); 
+            image.color = new Color(1, 1, 1, 1);
+            
            
         }
         else
@@ -68,7 +77,34 @@ public class ItemData : MonoBehaviour
             isEmpty = false;
             image.sprite = null;
             image.color = new Color(1, 1, 1, 0); 
-            
+
         }        
     }  
-}
+    void CustomSet()
+    {
+        if(custom)
+        {
+            if (inven == InvenSwap.BODY) {
+                item = (Resources.Load<Item>("Item/FashionItem/" + p.body_name)); ItemSet();
+            }
+            else if (inven == InvenSwap.GLOVEL) {
+                item = (Resources.Load<Item>("Item/FashionItem/" + p.glove1_name)); ItemSet();
+            }
+            else if (inven == InvenSwap.GLOVER) {
+                item = (Resources.Load<Item>("Item/FashionItem/" + p.glove2_name)); ItemSet();
+            }
+            else if (inven == InvenSwap.HEAD) {
+                item = (Resources.Load<Item>("Item/FashionItem/" + p.head_name)); ItemSet();
+            }
+            else if (inven == InvenSwap.TAIL) {
+                item = (Resources.Load<Item>("Item/FashionItem/" + p.tail_name)); ItemSet();
+            }
+            else if (inven == InvenSwap.USEITEM1) {
+                item = (Resources.Load<Item>("Item/UseItem/" + p.item1)); ItemSet();
+            }
+            else if (inven == InvenSwap.USEITEM2) {
+                item = (Resources.Load<Item>("Item/UseItem/" + p.item2)); ItemSet();
+            }
+        }
+            }
+            }
