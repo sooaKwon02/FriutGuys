@@ -30,7 +30,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator Start()
     {
-        string url = dll.LoginUnity; // PHP ½ºÅ©¸³Æ®ÀÇ URLÀ» ÀÔ·ÂÇÏ¼¼¿ä
+        string url = dll.LoginUnity; // PHP ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ URLï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
@@ -44,7 +44,7 @@ public class DatabaseManager : MonoBehaviour
             {
                 string jsonString = www.downloadHandler.text;
                 Debug.Log("Received JSON: " + jsonString);
-                JArray jsonArray = JArray.Parse(jsonString); // JSON µ¥ÀÌÅÍ°¡ ¹è¿­ÀÏ ¶§
+                JArray jsonArray = JArray.Parse(jsonString); // JSON ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½
 
                 foreach (JObject json in jsonArray)
                 {
@@ -67,7 +67,7 @@ public class DatabaseManager : MonoBehaviour
     public string passwordtext;
     [HideInInspector]
     public string nicknametext;
-    //=============================================================È¸¿ø°¡ÀÔ==============
+    //=============================================================È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½==============
     public void SignUpButton()
     {
         bool isIdValid = IdPassword(id.text);
@@ -78,18 +78,18 @@ public class DatabaseManager : MonoBehaviour
         else
         {
             SignUpComplete.SetActive(true);
-            SignUpComplete.GetComponentInChildren<Text>().text = "Á¦´ë·Î ÀÔ·ÂÇÏ¼¼¿ä";
-        }            
+            SignUpComplete.GetComponentInChildren<Text>().text = "ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½";
+        }
 
     }
     private bool IdPassword(string input)
     {
-        string pattern = @"^[a-zA-Z0-9°¡-ÆR\p{P}\p{S}]*$";
+        string pattern = @"^[a-zA-Z0-9ï¿½ï¿½-ï¿½R\p{P}\p{S}]*$";
         return Regex.IsMatch(input, pattern);
     }
     bool NickName(string input)
     {
-        string pattern = @"^[a-zA-Z0-9°¡-ÆR]*$";
+        string pattern = @"^[a-zA-Z0-9ï¿½ï¿½-ï¿½R]*$";
         return Regex.IsMatch(input, pattern);
     }
     IEnumerator SignUp(string id, string password, string nickname)
@@ -101,16 +101,16 @@ public class DatabaseManager : MonoBehaviour
         form.AddField("password", password);
         form.AddField("nickname", nickname);
         form.AddField("hash", hash);
-        // UnityWebRequest »ý¼º ¹× ¼³Á¤
+        // UnityWebRequest ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
         {
-            
-            yield return www.SendWebRequest(); // ¿äÃ» º¸³»±â
+
+            yield return www.SendWebRequest(); // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             if (www.result != UnityWebRequest.Result.Success)
             {
                 SignUpComplete.SetActive(true);
-                SignUpComplete.GetComponentInChildren<Text>().text= "¼­¹ö¿¡ ¿¬°áÇÒ ¼ö ¾ø½À´Ï´Ù";
+                SignUpComplete.GetComponentInChildren<Text>().text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½";
             }
             else
             {
@@ -118,7 +118,7 @@ public class DatabaseManager : MonoBehaviour
                 SignUpComplete.GetComponentInChildren<Text>().text = www.downloadHandler.text.ToString();
             }
         }
-    }  
+    }
     private string CalculateSHA256Hash(string input)
     {
         using (System.Security.Cryptography.SHA256 sha256 = System.Security.Cryptography.SHA256.Create())
@@ -126,7 +126,7 @@ public class DatabaseManager : MonoBehaviour
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input);
             byte[] hashBytes = sha256.ComputeHash(bytes);
 
-            // byte ¹è¿­À» 16Áø¼ö ¹®ÀÚ¿­·Î º¯È¯
+            // byte ï¿½è¿­ï¿½ï¿½ 16ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
             for (int i = 0; i < hashBytes.Length; i++)
             {
@@ -135,7 +135,7 @@ public class DatabaseManager : MonoBehaviour
             return builder.ToString();
         }
     }
-    //===============================================·Î±×ÀÎ=======================
+    //===============================================ï¿½Î±ï¿½ï¿½ï¿½=======================
     public InputField loginIdInput;
     public InputField loginPasswordInput;
     public void GameLogin()
@@ -151,7 +151,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLogin; // ¼­¹ö URLÀ» ¼³Á¤
+        string serverURL = dll.GameLogin; // ï¿½ï¿½ï¿½ï¿½ URLï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
@@ -163,40 +163,41 @@ public class DatabaseManager : MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 SignUpComplete.SetActive(true);
-                SignUpComplete.GetComponentInChildren<Text>().text = "³×Æ®¿öÅ© ¿À·ù";
+                SignUpComplete.GetComponentInChildren<Text>().text = "ï¿½ï¿½Æ®ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½";
             }
             else
             {
                 string responseText = www.downloadHandler.text;
                 Debug.Log("Response Text: " + responseText);
 
-                // JSON ÀÀ´äÀ» LoginResponse °´Ã¼·Î º¯È¯
+                // JSON ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ LoginResponse ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¯
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
 
                 if (response.success)
                 {
-                    saveload.LoadData(id); // ´Ð³×ÀÓÀ» Àü´Þ
+                    saveload.LoadData(id); // ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     saveload.SetNickName(id, response.nickname);
 
                     SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "·Î±×ÀÎ ¼º°ø";
+                    SignUpComplete.GetComponentInChildren<Text>().text = "ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
                 }
                 else
                 {
+                    Debug.LogError("Error parsing JSON: " + ex.Message);
                     SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "·Î±×ÀÎ ½ÇÆÐ: " + response.error;
+                    SignUpComplete.GetComponentInChildren<Text>().text = "ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + response.error;
                 }
             }
         }
     }
     public void LoginMain(int num)
     {
-        if (SignUpComplete.GetComponentInChildren<Text>().text == "È¸¿ø°¡ÀÔ ¼º°ø")
+        if (SignUpComplete.GetComponentInChildren<Text>().text == "È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")
         {
             SignUpPanel.SetActive(false);
             SignUpComplete.SetActive(false);
         }
-        else if (SignUpComplete.GetComponentInChildren<Text>().text == "·Î±×ÀÎ ¼º°ø")
+        else if (SignUpComplete.GetComponentInChildren<Text>().text == "ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")
         {
             SceneManager.LoadScene(2);
         }
@@ -205,12 +206,12 @@ public class DatabaseManager : MonoBehaviour
             SignUpPanel.SetActive(true);
             SignUpComplete.SetActive(false);
         }
-        if( num==1)
+        if (num == 1)
         {
             SignUpPanel.SetActive(false);
             SignUpComplete.SetActive(false);
         }
-       
+
         SignUpComplete.GetComponentInChildren<Text>().text = null;
     }
 }
