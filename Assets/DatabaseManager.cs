@@ -183,7 +183,6 @@ public class DatabaseManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Error parsing JSON: " + ex.Message);
                     SignUpComplete.SetActive(true);
                     SignUpComplete.GetComponentInChildren<Text>().text = "�α��� ����: " + response.error;
                 }
