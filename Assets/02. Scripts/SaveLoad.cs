@@ -110,8 +110,7 @@ public class SaveLoad : MonoBehaviour
         form.AddField("tail_rotY", c.tail.transform.localRotation.y.ToString());
         form.AddField("tail_rotZ", c.tail.transform.localRotation.z.ToString());
   
-            form.AddField("item1", player.item1);
-      
+            form.AddField("item1", player.item1);      
             form.AddField("item2", player.item2);
         form.AddField("gameMoney", player.gameMoney.ToString());
         form.AddField("cashMoney", player.cashMoney.ToString());
