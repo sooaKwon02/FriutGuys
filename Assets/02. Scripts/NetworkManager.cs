@@ -83,7 +83,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             bool isSucces = PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions, TypedLobby.Default);
 
-            Debug.Log("¹æ »ý¼º ¿Ï·á : " + isSucces);
+            Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ : " + isSucces);
         }
         else
         {
@@ -100,19 +100,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Room ÀÔÀå");
+        Debug.Log("Room ï¿½ï¿½ï¿½ï¿½");
     }
     private void OnPasswordEntered(string enteredPassword, RoomInfo room)
     {
         if (enteredPassword == roomPassword)
         {
-            Debug.Log("ºñ¹Ð¹øÈ£ ÀÏÄ¡");
+            Debug.Log("ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½Ä¡");
             pwPanel.gameObject.SetActive(false);
             PhotonNetwork.JoinRoom(room.Name);
         }
         else
         {
-            Debug.Log("ºñ¹Ð¹øÈ£ ºÒÀÏÄ¡");
+            Debug.Log("ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½Ä¡");
             StartCoroutine(PWFail());
         }
     }
@@ -125,13 +125,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public void OnClickJoinRandomRoom()
     {
-        //PhotonNetwork.JoinRoom(roomNameInput.text);
         PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("·£´ý ¹æ ÀÔÀå ½ÇÆÐ, ¹æ ¾øÀ½ " + message);
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ " + message);
         StartCoroutine(JoinRoomFail());
     }
 
@@ -144,7 +143,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("ÇÃ·¹ÀÌ¾î ÀÔÀå : " + newPlayer.NickName);
+        Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + newPlayer.NickName);
         CheckRoomPlayerCount();
     }
 
@@ -152,7 +151,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            Debug.Log("°¡µæ Âü");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½");
             PhotonNetwork.LeaveRoom();
             StartCoroutine(RoomFull());
         }
@@ -211,7 +210,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             pwPanel.gameObject.SetActive(false);
             PhotonNetwork.JoinRoom(roomInfo.Name);
-            Debug.Log("ºñ¹Ð¹øÈ£ ¾øÀ½");
+            Debug.Log("ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½");
         }
     }
     public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)

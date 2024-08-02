@@ -21,7 +21,7 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     public int gameMoney;
     public int cashMoney;
     public int score;
-    //ÇÃ·¹ÀÌ¾î Á¤º¸
+    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     SaveLoad.PLAYER p;
     public PhotonView pv;
 
@@ -36,7 +36,7 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         {
             p = FindObjectOfType<SaveLoad>().player;
         }
-        if(pv.IsMine)
+       if(pv.IsMine)
         StartCoroutine(CustomPlayer());
     }
  
