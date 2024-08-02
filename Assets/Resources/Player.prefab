@@ -780,8 +780,6 @@ MonoBehaviour:
   pullRadius: 1.5
   targetObject: {fileID: 0}
   holdPosition: {fileID: 0}
-  grabDistance: 2
-  GrabPoint: {fileID: 0}
 --- !u!136 &3323184941572198166
 CapsuleCollider:
   m_ObjectHideFlags: 0
