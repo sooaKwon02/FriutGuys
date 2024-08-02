@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 
 public class DatabaseManager : MonoBehaviour
 {
+    SaveLoad saveload;
     public static DatabaseManager Instance { get; private set; }
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
@@ -25,6 +26,7 @@ public class DatabaseManager : MonoBehaviour
             Destroy(gameObject);
         }
         SignUpComplete.SetActive(false);
+        saveload = FindObjectOfType<SaveLoad>();
     }
     IEnumerator Start()
     {
@@ -168,31 +170,21 @@ public class DatabaseManager : MonoBehaviour
                 string responseText = www.downloadHandler.text;
                 Debug.Log("Response Text: " + responseText);
 
-                try
-                {
-                    LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
+                // JSON 응답을 LoginResponse 객체로 변환
+                LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
 
-                    if (response.success)
-                    {
-                        SaveLoadInven.Instance.LoadData(id);
-                        SaveLoad.Instance.LoadData(id);
-                        SaveLoad.Instance.player.ID = id;
-                        SaveLoad.Instance.NickNameSet(response.nickname); // 닉네임을 전달
-
-                        SignUpComplete.SetActive(true);
-                        SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";
-                    }
-                    else
-                    {
-                        SignUpComplete.SetActive(true);
-                        SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패: " + response.error;
-                    }
-                }
-                catch (System.Exception ex)
+                if (response.success)
                 {
-                    Debug.LogError("Error parsing JSON: " + ex.Message);
+                    saveload.LoadData(id); // 닉네임을 전달
+                    saveload.SetNickName(id, response.nickname);
+
                     SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "응답 파싱 오류";
+                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";
+                }
+                else
+                {
+                    SignUpComplete.SetActive(true);
+                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패: " + response.error;
                 }
             }
         }

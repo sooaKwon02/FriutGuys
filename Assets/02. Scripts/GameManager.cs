@@ -26,10 +26,13 @@ public class GameManager : MonoBehaviour
     public GameObject playButtonPanel;
     public GameObject SearchRoomPanel;
     public GameObject createRoomPanel;
+    SaveLoad saveload;
 
 
-
-
+    private void Awake()
+    {
+        saveload = FindObjectOfType<SaveLoad>();
+    }
     private void Start()
     {
         errorBox.SetActive(false);
@@ -44,6 +47,15 @@ public class GameManager : MonoBehaviour
         settingMenuPanel.SetActive(false);
         ActiveMenu(true);
     }
+    private void Update()
+    {
+        
+            if (Input.GetKey(KeyCode.RightArrow))
+            { Player.Rotate(new Vector3(0, 1, 0) * -50 * Time.deltaTime); }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
+      
+    }
 
     void ActiveMenu(bool active)
     {
@@ -57,7 +69,11 @@ public class GameManager : MonoBehaviour
         CustomPanel.SetActive(check);
         inventoryPanel.SetActive(check);
         if (check) { Player.position = new Vector2(2, 0); }
-        else { Player.position = new Vector2(0, 0); }
+        else
+        { 
+            Player.position = new Vector2(0, 0);
+            SaveServerData();
+        }
         ActiveMenu(!check);
     }
     public void UseItemOnOff(bool check)
@@ -65,7 +81,11 @@ public class GameManager : MonoBehaviour
         useItemPanel.SetActive(check);
         inventoryPanel.SetActive(check);
         if (check) { Player.position = new Vector2(2, 0); }
-        else { Player.position = new Vector2(0, 0); }
+        else
+        { 
+            Player.position = new Vector2(0, 0);
+            SaveServerData();
+        }
         ActiveMenu(!check);
     }
     public void StoreOnOff(bool check)
@@ -147,8 +167,7 @@ public class GameManager : MonoBehaviour
         errorBox.SetActive(false);
     }
     public void SaveServerData()
-    {
-        SaveLoad.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
-        SaveLoadInven.Instance.OnDataChanged(SaveLoad.Instance.player.ID);
+    {        
+       saveload.SaveData(saveload.ID);      
     }
 }
