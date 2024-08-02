@@ -22,7 +22,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private DatabaseManager csDbManager;
     public GameObject scrollContents;
-    public GameObject pwPanel;
+    public GameObject pwPanel
+        
+        
+        ;
 
     
     private string selectedRoomName;
