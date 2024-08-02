@@ -83,7 +83,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             velocity.y = Mathf.Lerp(velocity.y, jumpY, Time.deltaTime * 30.0f);
             rb.velocity = velocity;            
         }
-        Debug.Log("ISMOVE : " + isMove);
     }
     void FixedUpdate()
     {

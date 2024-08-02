@@ -93,7 +93,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public void OnClickJoinRandomRoom()
     {
-        PhotonNetwork.JoinRoom(roomNameInput.text);
         PhotonNetwork.JoinRandomRoom();
     }
 
