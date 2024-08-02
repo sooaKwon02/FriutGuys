@@ -12,15 +12,16 @@ public class Custom : MonoBehaviour
     public Text styleName;
     CharacterCustom custom;
     Transform player=null;
-    SaveLoad.PLAYER p; // PLAYER 객체를 추가합니다.
+    SaveLoad.PLAYER p; 
     string StyleCheck= "Scale";
     int num ;
-    public float min = 1;
-    public float max = 4;
+    public float min ;
+    public float max ;
     public Slider sliderX;
     public Slider sliderY;
     public Slider sliderZ;
-    Vector3 slideSet;
+    public bool setSize;
+   
 
     private void Awake()
     {              
@@ -34,53 +35,39 @@ public class Custom : MonoBehaviour
         num = 0;
         StyleCheck = "Scale";
         styleName.text = "Scale";
-        min = 1; max = 4;
-        ValueSet();
+        min = 1f; max = 4f;
         player = custom.body.transform;
+        ValueSet();
         sliderX.value = p.body_x;
         sliderY.value = p.body_y;
-        sliderZ.value = p.body_z;
-        sliderX.onValueChanged.AddListener(SizeCustom);
-        sliderY.onValueChanged.AddListener(SizeCustom);
-        sliderZ.onValueChanged.AddListener(SizeCustom);
+        sliderZ.value = p.body_z;      
 
     }
 
-    public void SizeCustom(float _value)
-    {
-
-        slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
-        if (StyleCheck == "Rotation")
-        {
-            player.transform.localRotation = Quaternion.Euler(slideSet);
-            UpdatePlayerData();
-        }
-        else if (StyleCheck == "Scale")
-        {
-            player.transform.localScale = slideSet;
-            UpdatePlayerData();
-        }
-    }
+   
     public void Choice(string str)
     {
         StyleCheck = str;
         styleName.text = str;
-        PartSelect(num);
+        Set();
     }
     public void PartSelect(int _num)
     {
         num = _num;
+        Set();    
+    }
+    void Set()
+    {
         if (StyleCheck == "Rotation")
         {
-            min = -180f; max = 180;
+            min = -180f; max = 180f;
             ValueSet();
         }
         else if (StyleCheck == "Scale")
         {
-            min = 1; max = 4;
+            min = 1f; max = 4f;
             ValueSet();
-        }      
-        UpdatePlayerData();
+        }
     }
    
     void ValueSet()
@@ -88,7 +75,6 @@ public class Custom : MonoBehaviour
         sliderX.minValue = min; sliderX.maxValue = max;
         sliderY.minValue = min; sliderY.maxValue = max;
         sliderZ.minValue = min; sliderZ.maxValue = max; 
-        slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
         if (num == 0)
         {
             player = custom.body.transform;
@@ -114,7 +100,8 @@ public class Custom : MonoBehaviour
             player = custom.tail.transform;
             FixedPartName.text = player.name;
         }
-        if(StyleCheck=="Rotation")
+        setSize = false;
+        if (StyleCheck=="Rotation")
         {
             sliderX.value = player.localRotation.eulerAngles.x;
             sliderY.value = player.localRotation.eulerAngles.y;
@@ -126,7 +113,23 @@ public class Custom : MonoBehaviour
             sliderY.value = player.localScale.y;
             sliderZ.value = player.localScale.z;
         }
-
+        setSize = true;
+    }
+    public void SizeCustom()
+    {
+        if (setSize)
+        {
+            Vector3 slideSet = new Vector3(sliderX.value, sliderY.value, sliderZ.value);
+            if (StyleCheck == "Rotation")
+            {
+            player.transform.localRotation = Quaternion.Euler(slideSet);
+            }
+            else if (StyleCheck == "Scale")
+            {
+            player.transform.localScale = slideSet;
+            }
+            UpdatePlayerData();
+        }       
     }
     void UpdatePlayerData()
     {
