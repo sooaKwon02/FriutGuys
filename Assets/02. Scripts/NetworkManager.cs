@@ -18,6 +18,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Transform roomListPanel;
     public GameObject roomListButtonPrefabs;
     public GameObject createRoomFailPanel;
+    public GameObject pwFailPanel;
 
     private DatabaseManager csDbManager;
     public GameObject scrollContents;
@@ -75,7 +76,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (byte.TryParse(fullRoomInput.text, out maxPlayers) && maxPlayers > 1 && maxPlayers < 17)
         {
             roomOptions.MaxPlayers = maxPlayers;
-            if(!secretCheck && !string.IsNullOrEmpty(passwordInput.text))
+            if(toggle.isOn && !string.IsNullOrEmpty(passwordInput.text))
             {
                 roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "Password", passwordInput.text } };
                 roomOptions.CustomRoomPropertiesForLobby = new string[] { "Password" };
@@ -100,26 +101,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Room 입장");
+    }
+    private void OnPasswordEntered(string enteredPassword, RoomInfo room)
+    {
+        if (enteredPassword == roomPassword)
+        {
+            Debug.Log("비밀번호 일치");
+            pwPanel.gameObject.SetActive(false);
+            PhotonNetwork.JoinRoom(room.Name);
+        }
+        else
+        {
+            Debug.Log("비밀번호 불일치");
+            StartCoroutine(PWFail());
+        }
+    }
 
-        //if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Password", out object password))
-        //{
-        //     roomPassword = password as string;
-        //    if (!string.IsNullOrEmpty(roomPassword))
-        //    {
-        //        pwPanel.gameObject.SetActive(true);
-        //        inputPw.onEndEdit.AddListener(OnPasswordEntered);
-        //    }
-        //    else
-        //    {
-        //        pwPanel.gameObject.SetActive(false);
-        //        Debug.Log("비밀번호 없음");
-        //    }
-        //}
-
+    IEnumerator PWFail()
+    {
+        pwFailPanel.SetActive(true);
+        yield return new WaitForSeconds(2);
+        pwFailPanel.SetActive(false);
     }
     public void OnClickJoinRandomRoom()
     {
-        PhotonNetwork.JoinRoom(roomNameInput.text);
+        //PhotonNetwork.JoinRoom(roomNameInput.text);
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -158,6 +164,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2);
         createRoomFailPanel.SetActive(false);
     }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("ROOM_ITEM"))
@@ -180,47 +187,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             roomData.DisplayRoomData();
 
-            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(roomData.roomName); Debug.Log("Room Click " + roomData.roomName); });
+            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(_room); Debug.Log("Room Click " + roomData.roomName); });
 
             scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
             scrollContents.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20f);
-       }
+        }
        
     }
 
-    void OnClickRoomItem(string roomName)
+    void OnClickRoomItem(RoomInfo roomInfo)
     {
-        PhotonNetwork.JoinRoom(roomName);
-
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Password", out object password))
+        if (roomInfo.CustomProperties.TryGetValue("Password", out object password))
         {
             roomPassword = password as string;
             if (!string.IsNullOrEmpty(roomPassword))
             {
                 pwPanel.gameObject.SetActive(true);
-                inputPw.onEndEdit.AddListener(OnPasswordEntered);
-            }
-            else
-            {
-                pwPanel.gameObject.SetActive(false);
-                Debug.Log("비밀번호 없음");
-            }
-        }
-    }
+                inputPw.onEndEdit.AddListener(enteredPassword => OnPasswordEntered(enteredPassword, roomInfo));
 
-    private void OnPasswordEntered(string enteredPassword)
-    {
-        if (enteredPassword == roomPassword)
-        {
-            Debug.Log("비밀번호 일치");
-            pwPanel.gameObject.SetActive(false);
-            // Proceed with room functionality
+            }
         }
         else
         {
-            Debug.Log("비밀번호 불일치");
-            PhotonNetwork.LeaveRoom();
-            StartCoroutine(JoinRoomFail());
+            pwPanel.gameObject.SetActive(false);
+            PhotonNetwork.JoinRoom(roomInfo.Name);
+            Debug.Log("비밀번호 없음");
         }
     }
     public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)

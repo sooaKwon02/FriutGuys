@@ -91,9 +91,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 isJump = true;
             }
             Slide();
-            Grab();
-            GrabEnd();
-            Debug.DrawRay(transform.position, player.transform.forward * grabDistance, Color.blue);
+            //잡기 아직 멀음..
+            //Grab();
+            //GrabEnd();
+            //Debug.DrawRay(transform.position, player.transform.forward * grabDistance, Color.blue);
             //if (Input.GetKeyDown(KeyCode.LeftShift))
             //{
             //    pullForce = true;
@@ -359,101 +360,65 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         isColl = false;
     }
-    public float grabDistance = 2.0f;
-    private GameObject grabTarget;
-    private SpringJoint springJoint;
-    private FixedJoint fixedJoint;
-    [SerializeField]
-    Transform GrabPoint = null;
-    private bool isGrab = false;
-    void Grab()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (isGrab) return;
 
-            if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
-            {
-                if (hit.collider.CompareTag("Player"))
-                {
-                    Debug.Log(hit.collider.gameObject.name);
-                    grabTarget = hit.collider.gameObject;
+    //잡기 아직 구현중..
+    //public float grabDistance = 2.0f;
+    //private GameObject grabTarget;
+    //private SpringJoint springJoint;
+    //[SerializeField]
+    //Transform GrabPoint = null;
+    //private bool isGrab = false;
+    //void Grab()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.LeftShift))
+    //    {
+    //        if (isGrab) return;
 
-                    springJoint = grabTarget.AddComponent<SpringJoint>();
-                    //springJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
-                    //springJoint.spring = 1000.0f;
-                    //springJoint.damper = 0.0f;
-                    //springJoint.minDistance = 0.0f;
-                    //springJoint.maxDistance = 0.1f;
-                    springJoint.autoConfigureConnectedAnchor = false;
-                    springJoint.connectedAnchor = GrabPoint.localPosition;
-                    springJoint.damper = 10000;
-                    springJoint.spring = 10000;
-                    springJoint.minDistance = 0.5f;
-                    springJoint.maxDistance = 1.0f;
-                    springJoint.enableCollision = true;
-                    springJoint.breakForce = 10000;
-                    springJoint.breakTorque = 10000;
-                    springJoint.connectedBody = rb;
-                    
-                    //if (grabTarget != null)
-                    //{
-                    //    fixedJoint = transform.parent.parent.gameObject.AddComponent<FixedJoint>();
-                    //    fixedJoint.connectedBody = grabTarget.GetComponent<Rigidbody>();
-                    //    isGrab = true;
-                    //}
+    //        if (Physics.Raycast(transform.position, player.transform.forward, out RaycastHit hit, grabDistance))
+    //        {
+    //            if (hit.collider.CompareTag("Player"))
+    //            {
+    //                Debug.Log(hit.collider.gameObject.name);
+    //                grabTarget = hit.collider.gameObject;
 
+    //                springJoint = grabTarget.AddComponent<SpringJoint>();
+    //                springJoint.autoConfigureConnectedAnchor = false;
+    //                springJoint.connectedAnchor = GrabPoint.localPosition;
+    //                springJoint.damper = 10000;
+    //                springJoint.spring = 10000;
+    //                springJoint.minDistance = 0.5f;
+    //                springJoint.maxDistance = 1.0f;
+    //                springJoint.enableCollision = true;
+    //                springJoint.breakForce = 10000;
+    //                springJoint.breakTorque = 10000;
+    //                springJoint.connectedBody = rb;
+    //            }
+    //        }
+    //    }
+    //}
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        grabTarget = other.gameObject;
+    //        Debug.Log(grabTarget);
+    //    }
+    //}
 
-                    //}
-                    //}
-                }
-            }
-        }
-    }
-            void OnTriggerEnter(Collider other)
-            {
-                if (other.CompareTag("Player"))
-                {
-                    grabTarget = other.gameObject;
-                    Debug.Log(grabTarget);
-                }
-            }
+    //void GrabEnd()
+    //{
+    //    if (Input.GetKeyUp(KeyCode.LeftShift))
+    //    {
+    //        if (!isGrab) return;
 
-
-            //아무때나 키 누르면 전의 오브젝트 물체가 플레이어를 따라옴
-            //null값으로 만들어줘야 함.
-            //void OnTriggerExit(Collider other)
-            //{
-            //    if (other.gameObject == grabTarget)
-            //    {
-            //        target = null;
-            //    }
-            //}
-            void GrabEnd()
-            {
-                if (Input.GetKeyUp(KeyCode.LeftShift))
-                {
-                    if (!isGrab) return;
-
-                if (springJoint != null)
-                {
-                    Destroy(springJoint);
-                    springJoint = null;
-                    grabTarget = null;
-                    isGrab = false;
-                }
-
-            //if (fixedJoint != null)
-            //{
-
-            //    Destroy(fixedJoint);
-            //    fixedJoint = null;
-            //    grabTarget = null;
-            //    isGrab = false;
-
-            //}
-            }
-
-            }
-        }
+    //        if (springJoint != null)
+    //        {
+    //            Destroy(springJoint);
+    //            springJoint = null;
+    //            grabTarget = null;
+    //            isGrab = false;
+    //        }
+    //    }
+    //}
+}
     

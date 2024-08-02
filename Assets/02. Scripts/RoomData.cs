@@ -14,8 +14,6 @@ public class RoomData : MonoBehaviour
     [HideInInspector]
     public int maxPlayers = 0;
 
-    [HideInInspector]
-    public string password = "";
 
     public Text textRoomName;
     public Text textConnectInfo;
@@ -23,7 +21,7 @@ public class RoomData : MonoBehaviour
     public void DisplayRoomData()
     {
         textRoomName.text = roomName;
-        textConnectInfo.text = "(" + connectPlayer.ToString() + " / " +  maxPlayers.ToString() + password +  ")";
+        textConnectInfo.text = "(" + connectPlayer.ToString() + " / " +  maxPlayers.ToString() +  ")";
         Debug.Log(maxPlayers);
     }
 }
