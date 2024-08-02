@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerItem : MonoBehaviour
 {
     public MeshFilter mesh;
-    [HideInInspector]
     public Item item;
     private void Awake()
     {
