@@ -13,22 +13,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public InputField fullRoomInput;
     public InputField passwordInput;
     public InputField inputPw;
+
     public bool secretCheck;
     public Toggle toggle;
     public Transform roomListPanel;
+
     public GameObject roomListButtonPrefabs;
     public GameObject createRoomFailPanel;
     public GameObject pwFailPanel;
-
-    private DatabaseManager csDbManager;
     public GameObject scrollContents;
-    public GameObject pwPanel
-        
-        
-        ;
-
-    
-    private string selectedRoomName;
+    public GameObject pwPanel;
 
     private string roomPassword = "";
     void Awake()
@@ -79,7 +73,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (byte.TryParse(fullRoomInput.text, out maxPlayers) && maxPlayers > 1 && maxPlayers < 17)
         {
             roomOptions.MaxPlayers = maxPlayers;
-            if(toggle.isOn)// && !string.IsNullOrEmpty(passwordInput.text))
+            if(toggle.isOn)// !string.IsNullOrEmpty(passwordInput.text))
             {
                 roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "Password", passwordInput.text } };
                 roomOptions.CustomRoomPropertiesForLobby = new string[] { "Password" };
@@ -116,6 +110,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         else
         {
             Debug.Log("비밀번호 틀림");
+            pwPanel.gameObject.SetActive(false);
             StartCoroutine(PWFail());
         }
     }
@@ -128,6 +123,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public void OnClickJoinRandomRoom()
     {
+        //비밀번호 있으면 비공개 --> roomoption false?로 해서 리스트에만 보이게 할 수 있지 않을까 
+        //준비 다 하고 시작한 방은 들어가지 못하게
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -193,7 +190,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
             scrollContents.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20f);
-        }
+       }
        
     }
 
@@ -216,6 +213,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Debug.Log("비밀번호 없음");
         }
     }
+
     public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
     {
     }    

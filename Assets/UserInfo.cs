@@ -5,21 +5,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UserInfo : MonoBehaviourPun
+public class UserInfo : MonoBehaviourPunCallbacks
 {
     [HideInInspector]
     public Text userName;
     public Image readyGame;
     public GameObject kickGame;
     [HideInInspector]
-    public bool readyCheck;
+    public bool isReady;
 
-    private void Awake()
+    public string nickname;
+    private SaveLoad saveLoadScript;
+    public Transform userPanel;
+
+    private void Start()
     {
-        readyCheck = false;
+        //왜 안될까....
+        this.transform.SetParent(userPanel.transform);
+    }
+    public void DisplayPlayerInfo()
+    {
+        saveLoadScript = FindObjectOfType<SaveLoad>();
+        nickname = saveLoadScript.nickName;
+        userName.text = nickname;
+
         if (PhotonNetwork.IsMasterClient)
         {
-            if(!photonView.IsMine)
+            if (!photonView.IsMine)
             {
                 kickGame.SetActive(true);
             }
@@ -27,46 +39,84 @@ public class UserInfo : MonoBehaviourPun
             {
                 kickGame.SetActive(false);
             }
-        }              
+        }
         else
         {
+            isReady = false;
             kickGame.SetActive(false);
-        }
-        if (GameObject.FindGameObjectWithTag("UserInfoPanel"))
-        {
-            transform.SetParent(GameObject.FindGameObjectWithTag("UserInfoPanel").transform);   
         }
 
     }
-    public void KickOutButton()
+
+    public void SetReady()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonView pv = gameObject.GetComponent<PhotonView>();
-            photonView.RPC("TriggerPlayerKick",pv.Owner);
-        }
+        isReady = true;
+        photonView.RPC("UpdateReadyStatus", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName, isReady);
     }
+
     [PunRPC]
-    void TriggerPlayerKick()
+    void UpdateReadyStatus(string playerName, bool ready)
     {
-        PhotonNetwork.LeaveRoom();
-    }
-    public void Ready(bool check)
-    {
-        if (check)
+        if(userName.text == playerName)
         {
-            readyGame.color = new Color(0, 1, 0, 1);
-            readyCheck = true;
+            isReady = ready;
         }
-        else
-        {
-            readyGame.color = new Color(1, 1, 1, 0.5f);
-            readyCheck = false;
-        }
+        PlayerCon.instance.CheckAllPlayersReady();
     }
-    public void SetUserInfo(string _name)
-    {
-        userName.text = _name;
-        PhotonNetwork.NickName = _name;
-    }
+
+    //private void Awake()
+    //{
+    //    readyCheck = false;
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        if(!photonView.IsMine)
+    //        {
+    //            kickGame.SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            kickGame.SetActive(false);
+    //        }
+    //    }              
+    //    else
+    //    {
+    //        kickGame.SetActive(false);
+    //    }
+    //    if (GameObject.FindGameObjectWithTag("UserInfoPanel"))
+    //    {
+    //        transform.SetParent(GameObject.FindGameObjectWithTag("UserInfoPanel").transform);   
+    //    }
+
+    //}
+    //public void KickOutButton()
+    //{
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        PhotonView pv = gameObject.GetComponent<PhotonView>();
+    //        photonView.RPC("TriggerPlayerKick",pv.Owner);
+    //    }
+    //}
+    //[PunRPC]
+    //void TriggerPlayerKick()
+    //{
+    //    PhotonNetwork.LeaveRoom();
+    //}
+    //public void Ready(bool check)
+    //{
+    //    if (check)
+    //    {
+    //        readyGame.color = new Color(0, 1, 0, 1);
+    //        readyCheck = true;
+    //    }
+    //    else
+    //    {
+    //        readyGame.color = new Color(1, 1, 1, 0.5f);
+    //        readyCheck = false;
+    //    }
+    //}
+    //public void SetUserInfo(string _name)
+    //{
+    //    userName.text = _name;
+    //    PhotonNetwork.NickName = _name;
+    //}
 }

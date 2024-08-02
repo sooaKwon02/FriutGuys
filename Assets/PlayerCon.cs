@@ -7,75 +7,139 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCon : MonoBehaviourPunCallbacks
 {
+    public static PlayerCon instance;
+
     private string playerName;
+    private SaveLoad saveLoadScript;
+
     public GameObject userInfo;
+    public Transform userPanel;
     public Button startButton;
     public Text readyText;
-    bool ready;
+
+    private bool isReady = false;
 
     private void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         if (PhotonNetwork.IsMasterClient)
         {
+            //들어오면 플레이어 생성
             StartCoroutine(CreatePlayer());
+            startButton.onClick.AddListener(StartGame);
             readyText.text = "시작";
-        }           
+        }
+        else
+        {
+            StartCoroutine(CreatePlayer());
+            startButton.onClick.AddListener(ReadyGame);
+            readyText.text = "준비";
+        }
     }
-   
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        CheckAllPlayersReady();
+    }
+
     public void LeaveGame()
     {
+        //나가기
         PhotonNetwork.LeaveRoom();
     }
     public void StartGame()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel(4);
+            PhotonNetwork.LoadLevel(4); //랜덤으로 받아오자
+
         }
     }
     public void ReadyGame()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        //if (!PhotonNetwork.IsMasterClient)
+        //{
+        //    if (FindObjectOfType<UserInfo>())
+        //    {
+        //        UserInfo[] _infos = FindObjectsOfType<UserInfo>();
+        //        foreach (UserInfo _info in _infos)
+        //        {
+        //            if (_info.userName.text == playerName)
+        //            {
+        //                isReady = !_info.isReady;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    if (FindObjectOfType<UserInfo>())
+        //    {
+        //        UserInfo[] _infos = FindObjectsOfType<UserInfo>();
+        //        foreach (UserInfo _info in _infos)
+        //        {
+        //            if (_info.readyCheck == true)
+        //            {
+        //                _info.Ready(true);
+        //            }
+        //        }
+        //    }
+        //}
+
+        UserInfo userinfo = FindObjectOfType<UserInfo>();
+        if(userinfo != null)
         {
-            if (FindObjectOfType<UserInfo>())
+            userinfo.SetReady();
+        }
+    }
+
+    public void CheckAllPlayersReady()
+    {
+        UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
+        foreach(Player player in PhotonNetwork.PlayerList)
+        {
+            bool playerReady = false;
+            foreach(UserInfo userif in userInfos)
             {
-                UserInfo[] _infos = FindObjectsOfType<UserInfo>();
-                foreach (UserInfo _info in _infos)
+                if (userif.userName.text == player.NickName && userif.isReady)
                 {
-                    if(_info.userName.text == playerName)
-                    {
-                        if(_info.readyCheck == false)
-                            _info.Ready(true);
-                        else
-                            _info.Ready(false); 
-                    }
+                    playerReady = true;
+                    break;
                 }
             }
-        }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (FindObjectOfType<UserInfo>())
+
+            if (!playerReady)
             {
-                UserInfo[] _infos = FindObjectsOfType<UserInfo>();
-                foreach (UserInfo _info in _infos)
+                if (PhotonNetwork.IsMasterClient)
                 {
-                    if (_info.readyCheck == true)
-                    {
-                        _info.Ready(true);
-                    }
+                    startButton.enabled = false;
                 }
+                return;
             }
         }
 
-    }
-    public override void OnJoinedRoom()
-    {
-        if (!PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(CreatePlayer());
-            readyText.text = "준비";
+            startButton.enabled = true;
         }
     }
+    //public override void OnJoinedRoom()
+    //{
+    //    if (!PhotonNetwork.IsMasterClient)
+    //    {
+    //        StartCoroutine(CreatePlayer());
+    //        readyText.text = "준비";
+    //    }
+    //}
     //public override void OnPlayerEnteredRoom(Player newPlayer)
     //{
     //    Debug.Log("asd");
@@ -88,8 +152,28 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     //        else
     //            player.GetComponentInChildren<Camera>().enabled = false;
     //    }
-      
+
     //}
+
+    //[PunRPC]
+    //void UpdateReady(Player newPlayer, bool ready)
+    //{
+    //    if (FindObjectOfType<UserInfo>())
+    //    {
+    //        UserInfo[] _info = FindObjectsOfType<UserInfo>();
+    //        foreach (UserInfo _if in _info)
+    //        {
+    //            if (_if.userName.text == newPlayer.NickName)
+    //            {
+    //                _if.isReady = ready;
+    //                _if.DisplayPlayerInfo();
+    //                break;
+    //            }
+    //        }
+    //    }
+    //    CheckAllPlayersReady();
+    //}
+
     IEnumerator CreatePlayer()
     {
         yield return new WaitForSeconds(1f);
@@ -100,7 +184,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             
             if (GameObject.FindGameObjectWithTag("UserInfoPanel"))
             {
-                GameObject obj = PhotonNetwork.Instantiate("UserInfo", Vector3.zero, Quaternion.identity);
+                GameObject obj = PhotonNetwork.Instantiate("UserInfoPanel", Vector3.zero, Quaternion.identity);
             }
         }
     }
