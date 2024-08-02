@@ -36,7 +36,7 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         {
             p = FindObjectOfType<SaveLoad>().player;
         }
-        if(pv.IsMine)
+       if(pv.IsMine)
         StartCoroutine(CustomPlayer());
     }
  
