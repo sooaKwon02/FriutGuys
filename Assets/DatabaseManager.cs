@@ -154,14 +154,16 @@ public class DatabaseManager : MonoBehaviour
                 else
                 {
                     SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패: " + response.error;
+                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패 ";
                 }
             }
+            LoginReset();
         }
+        
     }
     public void LoginMain(int num)
     {
-        if (SignUpComplete.GetComponentInChildren<Text>().text == "회원가입 성공")
+        if (SignUpComplete.GetComponentInChildren<Text>().text == "회원가입 성공"|| SignUpComplete.GetComponentInChildren<Text>().text == "로그인 실패")
         {
             SignUpPanel.SetActive(false);
             SignUpComplete.SetActive(false);
@@ -180,7 +182,19 @@ public class DatabaseManager : MonoBehaviour
             SignUpPanel.SetActive(false);
             SignUpComplete.SetActive(false);
         }
-       
+        SignReset();
         SignUpComplete.GetComponentInChildren<Text>().text = null;
+    }
+
+    void SignReset()
+    {
+        id.text = null;
+        password.text = null;
+        nickname.text = null;
+    }
+    void LoginReset()
+    {
+        loginIdInput.text = null;
+        loginPasswordInput.text = null;
     }
 }
