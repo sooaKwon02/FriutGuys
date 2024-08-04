@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using Newtonsoft.Json;
+using System.Text;
+using System;
 
 public class SaveLoad : MonoBehaviour
 {
@@ -26,11 +29,26 @@ public class SaveLoad : MonoBehaviour
         public string item1, item2;
         public int gameMoney, cashMoney, score;
     }
+
+    [System.Serializable]
+    public class INVEN
+    {
+        public int num;
+        public string name;
+    }
+
+    [System.Serializable]
+    public class INVENTYPE
+    {
+        public INVEN[] useInven;
+        public INVEN[] fashionInven;
+    }
     public string ID;
     public string nickName;
     public PLAYER player;
-
-
+    INVENTYPE inventype;
+    public Inventory inventory;
+    Item item;
     private string saveUrl = "http://192.168.35.229/fruitsGuys/PlayerItemSave.php";
     private string loadUrl = "http://192.168.35.229/fruitsGuys/PlayerItemLoad.php";
 
@@ -38,10 +56,19 @@ public class SaveLoad : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
+    private void Start()
+    {
+        inventype = new INVENTYPE();
+    }
+    public void InventorySet()
+    {
+        inventory = FindObjectOfType<Inventory>();
+    }
 
     private void OnApplicationQuit()
     {
-        SaveData(ID); // 게임 종료 시 데이터 저장
+        SaveData();
+        SaveInven();
     }
 
     public void SetNickName(string _id ,string _nick)
@@ -50,13 +77,11 @@ public class SaveLoad : MonoBehaviour
         nickName = _nick;
     }
 
-    public void SaveData(string id)
+    public void SaveData()
     {
-
-        StartCoroutine(SaveDataCoroutine(id));
+        StartCoroutine(SaveDataCoroutine());
     }
-
-    private IEnumerator SaveDataCoroutine(string id)
+    private IEnumerator SaveDataCoroutine()
     {
         CharacterCustom c = FindObjectOfType<CharacterCustom>();
         if (c == null)
@@ -66,7 +91,7 @@ public class SaveLoad : MonoBehaviour
         }
 
         WWWForm form = new WWWForm();
-        form.AddField("id", id);
+        form.AddField("id",ID);
 
         form.AddField("body_name",player.body_name);
         form.AddField("body_x", c.body.transform.localScale.x.ToString());
@@ -76,99 +101,160 @@ public class SaveLoad : MonoBehaviour
         form.AddField("body_rotY", c.body.transform.localRotation.y.ToString());
         form.AddField("body_rotZ", c.body.transform.localRotation.z.ToString());
 
-
-            form.AddField("glove1_name",  player.glove1_name);
+        form.AddField("glove1_name", player.glove1_name);
         form.AddField("glove1_x", c.glove1.transform.localScale.x.ToString());
         form.AddField("glove1_y", c.glove1.transform.localScale.y.ToString());
         form.AddField("glove1_z", c.glove1.transform.localScale.z.ToString());
         form.AddField("glove1_rotX", c.glove1.transform.localRotation.x.ToString());
         form.AddField("glove1_rotY", c.glove1.transform.localRotation.y.ToString());
         form.AddField("glove1_rotZ", c.glove1.transform.localRotation.z.ToString());
-      
-            form.AddField("glove2_name", player.glove2_name);
+
+        form.AddField("glove2_name", player.glove2_name);
         form.AddField("glove2_x", c.glove2.transform.localScale.x.ToString());
         form.AddField("glove2_y", c.glove2.transform.localScale.y.ToString());
         form.AddField("glove2_z", c.glove2.transform.localScale.z.ToString());
         form.AddField("glove2_rotX", c.glove2.transform.localRotation.x.ToString());
         form.AddField("glove2_rotY", c.glove2.transform.localRotation.y.ToString());
         form.AddField("glove2_rotZ", c.glove2.transform.localRotation.z.ToString());
-   
-            form.AddField("head_name", player.head_name);
+
+        form.AddField("head_name", player.head_name);
         form.AddField("head_x", c.head.transform.localScale.x.ToString());
         form.AddField("head_y", c.head.transform.localScale.y.ToString());
         form.AddField("head_z", c.head.transform.localScale.z.ToString());
         form.AddField("head_rotX", c.head.transform.localRotation.x.ToString());
         form.AddField("head_rotY", c.head.transform.localRotation.y.ToString());
         form.AddField("head_rotZ", c.head.transform.localRotation.z.ToString());
-  
-            form.AddField("tail_name", player.tail_name);
+
+        form.AddField("tail_name", player.tail_name);
         form.AddField("tail_x", c.tail.transform.localScale.x.ToString());
         form.AddField("tail_y", c.tail.transform.localScale.y.ToString());
         form.AddField("tail_z", c.tail.transform.localScale.z.ToString());
         form.AddField("tail_rotX", c.tail.transform.localRotation.x.ToString());
         form.AddField("tail_rotY", c.tail.transform.localRotation.y.ToString());
         form.AddField("tail_rotZ", c.tail.transform.localRotation.z.ToString());
-  
-            form.AddField("item1", player.item1);      
-            form.AddField("item2", player.item2);
+
+        form.AddField("item1", player.item1);
+        form.AddField("item2", player.item2);
         form.AddField("gameMoney", player.gameMoney.ToString());
         form.AddField("cashMoney", player.cashMoney.ToString());
         form.AddField("score", player.score.ToString());
 
         using (UnityWebRequest www = UnityWebRequest.Post(saveUrl, form))
         {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error saving data: " + www.error);
-            }
-            else
-            {
-                Debug.Log("Data saved successfully.");
-            }
+            yield return www.SendWebRequest();         
         }
     }
-
-
-
-
-    public void LoadData(string id)
+    public void LoadData()
     {
-        StartCoroutine(LoadDataCoroutine(id));
+        StartCoroutine(LoadDataCoroutine());
     }
-
-    private IEnumerator LoadDataCoroutine(string id)
+    private IEnumerator LoadDataCoroutine()
     {
         WWWForm form = new WWWForm();
-        form.AddField("id", id);
-
+        form.AddField("id", ID);
         using (UnityWebRequest www = UnityWebRequest.Post(loadUrl, form))
         {
             yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
+            string json = www.downloadHandler.text;
+            PLAYER data = JsonUtility.FromJson<PLAYER>(json);
+            player = data;
+        }
+    }
+    public void SaveInven()
+    {
+        StartCoroutine(InvenSaveCoroutine());
+    }
+    public IEnumerator InvenSaveCoroutine()
+    {
+        inventype.fashionInven = new INVEN[inventory.fashionInventory.transform.childCount];
+        inventype.useInven = new INVEN[inventory.useInventory.transform.childCount];
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
+        for (int i = 0; i < inventory.fashionInventory.transform.childCount; i++)
+        {
+            if (inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionInventory.transform.childCount > 0)
             {
-                Debug.LogError("Error loading data: " + www.error);
+                
+                item = inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
+                inventype.fashionInven[i] = new INVEN { num = i, name = item.name };
+            }    
+            else
+                inventype.fashionInven[i] = new INVEN { num = i, name = "" };
+         
+        }
+        for (int i = 0; i < inventory.useInventory.transform.childCount; i++)
+        {
+            if (inventory.useInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.useInventory.transform.childCount > 0)
+            {
+                item = inventory.useInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
+                inventype.useInven[i] = new INVEN { num = i, name = item.name };
+            }
+            else
+                inventype.useInven[i] = new INVEN { num = i, name = "" };
+           
+         
+        }
+        var data = new { id = ID, use = inventype.useInven, fashion = inventype.fashionInven, };
+        string setitem = JsonConvert.SerializeObject(data);
+        using (UnityWebRequest www = UnityWebRequest.Post(url, setitem))
+        {
+            byte[] jsonToSend = new UTF8Encoding().GetBytes(setitem);
+            www.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+            yield return www.SendWebRequest();
+        }
+    }
+    public void LoadInven()
+    {
+        StartCoroutine(InvenLoadCoroutine());
+    }
+    public IEnumerator InvenLoadCoroutine()
+    {
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenLoad.php";
+        string urlWithParams = $"{url}?id={UnityWebRequest.EscapeURL(ID)}";
+
+        using (UnityWebRequest www = UnityWebRequest.Get(urlWithParams))
+        {
+            yield return www.SendWebRequest();
+
+            // 서버 응답을 로그로 출력하여 실제 내용을 확인합니다
+            Debug.Log("Server Response: " + www.downloadHandler.text);
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                try
+                {
+                    // JSON 객체를 INVENTYPE으로 역직렬화합니다
+                    var responseText = www.downloadHandler.text;
+                    var inventoryData = JsonConvert.DeserializeObject<INVENTYPE>(responseText);
+                    ProcessFetchedData(inventoryData);
+                }
+                catch (JsonSerializationException ex)
+                {
+                    Debug.LogError("JSON Serialization Error: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Unexpected Error: " + ex.Message);
+                }
             }
             else
             {
-                string json = www.downloadHandler.text;
-                Debug.Log("Received JSON: " + json); // JSON 데이터 확인
-
-                PLAYER data = JsonUtility.FromJson<PLAYER>(json);
-
-                if (data != null)
-                {
-                    player = data;
-                    Debug.Log("Data loaded successfully.");
-                }
-                else
-                {
-                    Debug.LogError("Error parsing loaded data.");
-                }
+                Debug.LogError($"Error: {www.error}");
             }
+        }    
+    }
+    private void ProcessFetchedData(INVENTYPE results)
+    {
+        foreach (var item in results.useInven)
+        {
+            Debug.Log($"Use Item Num: {item.num}, Item Name: {item.name}");
+        }
+
+        // 패션 아이템을 처리합니다
+        foreach (var item in results.fashionInven)
+        {
+            Debug.Log($"Fashion Item Num: {item.num}, Item Name: {item.name}");
         }
     }
-
 }

@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 public class DatabaseManager : MonoBehaviour
 {
     SaveLoad saveload;
+    Inventory inven;
     public static DatabaseManager Instance { get; private set; }
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
@@ -27,6 +28,7 @@ public class DatabaseManager : MonoBehaviour
         }
         SignUpComplete.SetActive(false);
         saveload = FindObjectOfType<SaveLoad>();
+        inven = FindObjectOfType<Inventory>();
     }
 
     public InputField id;
@@ -52,8 +54,7 @@ public class DatabaseManager : MonoBehaviour
         {
             SignUpComplete.SetActive(true);
             SignUpComplete.GetComponentInChildren<Text>().text = "제대로 입력하세요";
-        }            
-
+        }        
     }
     private bool IdPassword(string input)
     {
@@ -75,10 +76,8 @@ public class DatabaseManager : MonoBehaviour
         form.AddField("nickname", nickname);
         form.AddField("hash", hash);
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
-        {
-            
+        {            
             yield return www.SendWebRequest(); 
-
             if (www.result != UnityWebRequest.Result.Success)
             {
                 SignUpComplete.SetActive(true);
@@ -139,14 +138,13 @@ public class DatabaseManager : MonoBehaviour
             else
             {
                 string responseText = www.downloadHandler.text;
-                Debug.Log("Response Text: " + responseText);
-
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
 
                 if (response.success)
                 {
-                    saveload.LoadData(id); 
                     saveload.SetNickName(id, response.nickname);
+                    saveload.LoadData();
+                    saveload.LoadInven();
 
                     SignUpComplete.SetActive(true);
                     SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";

@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        saveload = FindObjectOfType<SaveLoad>();
     }
     private void Start()
     {
@@ -45,6 +44,8 @@ public class GameManager : MonoBehaviour
         useItemPanel.SetActive(false);
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
+        saveload = FindObjectOfType<SaveLoad>();
+        saveload.InventorySet();
         ActiveMenu(true);
     }
     private void Update()
@@ -93,6 +94,10 @@ public class GameManager : MonoBehaviour
         store.SetActive(check);
         inventoryPanel.SetActive(check);
         ActiveMenu(!check);
+        if(!check)
+        {
+            saveload.SaveInven();
+        }
 
     }
     public void SettingOnOff(bool check)
@@ -167,7 +172,9 @@ public class GameManager : MonoBehaviour
         errorBox.SetActive(false);
     }
     public void SaveServerData()
-    {        
-       saveload.SaveData(saveload.ID);      
+    {
+        saveload.SaveData();
+        saveload.SaveInven();
     }
+  
 }
