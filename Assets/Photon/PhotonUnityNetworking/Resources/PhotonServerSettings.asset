@@ -55,6 +55,9 @@ MonoBehaviour:
   - CustomAtherPlayer
   - UpdateReady
   - UpdateReadyStatus
+  - UpdateNickname
+  - CheckAllPlayersReady
+  - SetPlayerReady
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

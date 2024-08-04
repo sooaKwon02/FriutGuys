@@ -7,27 +7,27 @@ using UnityEngine.UI;
 
 public class UserInfo : MonoBehaviourPunCallbacks
 {
-    [HideInInspector]
+    //[HideInInspector]
     public Text userName;
-    public Image readyGame;
+    public GameObject readyGame;
     public GameObject kickGame;
+
     [HideInInspector]
     public bool isReady;
 
     public string nickname;
-    private SaveLoad saveLoadScript;
-    public Transform userPanel;
+    //private SaveLoad saveLoadScript;
+    private Transform userPanel;
 
-    private void Start()
+    private void Awake()
     {
-        //왜 안될까....
-        this.transform.SetParent(userPanel.transform);
+        userPanel = GameObject.FindGameObjectWithTag("UserInfoPanel").transform;
+        transform.SetParent(userPanel.transform);
     }
     public void DisplayPlayerInfo()
     {
-        saveLoadScript = FindObjectOfType<SaveLoad>();
-        nickname = saveLoadScript.nickName;
         userName.text = nickname;
+        readyGame.SetActive(isReady);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -42,26 +42,23 @@ public class UserInfo : MonoBehaviourPunCallbacks
         }
         else
         {
-            isReady = false;
+            //isReady = false;
             kickGame.SetActive(false);
         }
 
     }
 
-    public void SetReady()
-    {
-        isReady = true;
-        photonView.RPC("UpdateReadyStatus", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName, isReady);
-    }
+    //public void SetReady()
+    //{
+    //    isReady = true;
+    //}
 
     [PunRPC]
-    void UpdateReadyStatus(string playerName, bool ready)
+    void UpdateNickname(string playerName)
     {
-        if(userName.text == playerName)
-        {
-            isReady = ready;
-        }
-        PlayerCon.instance.CheckAllPlayersReady();
+        nickname = playerName;
+        DisplayPlayerInfo();
+        //PlayerCon.instance.CheckAllPlayersReady();
     }
 
     //private void Awake()

@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 6179415956667228493}
   - component: {fileID: 6179415956667228494}
   - component: {fileID: 6179415956667228495}
-  - component: {fileID: -4858348133677379303}
   - component: {fileID: 2106956092593037213}
+  - component: {fileID: 3984738829281745230}
   m_Layer: 5
   m_Name: UserInfoPanel
-  m_TagString: UserInfoPanel
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &-4858348133677379303
+--- !u!114 &2106956092593037213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6179415956667228489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2226f83d2e4e8024080dd46e58592c5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userName: {fileID: 6179415958173349899}
+  readyGame: {fileID: 6179415956853227898}
+  kickGame: {fileID: 6179415958115982456}
+  isReady: 0
+  nickname: 
+--- !u!114 &3984738829281745230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,24 +146,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2106956092593037213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6179415956667228489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2226f83d2e4e8024080dd46e58592c5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  userName: {fileID: 0}
-  readyGame: {fileID: 6179415956853227896}
-  kickGame: {fileID: 6179415958115982456}
-  isReady: 0
-  nickname: 
-  userPanel: {fileID: 6179415956667228488}
 --- !u!1 &6179415956853227898
 GameObject:
   m_ObjectHideFlags: 0

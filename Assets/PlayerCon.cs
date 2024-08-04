@@ -4,44 +4,32 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using ExitGames.Client.Photon;
 
 public class PlayerCon : MonoBehaviourPunCallbacks
 {
-    public static PlayerCon instance;
-
-    private string playerName;
-    private SaveLoad saveLoadScript;
-
+    public Text userName;
     public GameObject userInfo;
     public Transform userPanel;
-    public Button startButton;
-    public Text readyText;
+    public GameObject startButton;
+    public GameObject readyButton;
 
-    private bool isReady = false;
+    public bool isReady = false;
 
     private void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         if (PhotonNetwork.IsMasterClient)
         {
             //들어오면 플레이어 생성
             StartCoroutine(CreatePlayer());
-            startButton.onClick.AddListener(StartGame);
-            readyText.text = "시작";
+            startButton.SetActive(true);
+            startButton.GetComponent<Button>().onClick.AddListener(StartGame);
         }
         else
         {
             StartCoroutine(CreatePlayer());
-            startButton.onClick.AddListener(ReadyGame);
-            readyText.text = "준비";
+            readyButton.SetActive(true);
+            readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame);
         }
     }
 
@@ -60,9 +48,9 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(4); //랜덤으로 받아오자
-
         }
     }
+
     public void ReadyGame()
     {
         //if (!PhotonNetwork.IsMasterClient)
@@ -95,20 +83,40 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         //    }
         //}
 
-        UserInfo userinfo = FindObjectOfType<UserInfo>();
-        if(userinfo != null)
-        {
-            userinfo.SetReady();
-        }
+        //UserInfo userinfo = FindObjectOfType<UserInfo>();
+        //if (userinfo != null)
+        //{
+        //    userinfo.SetReady();
+        //    photonView.RPC("CheckAllPlayersReady", RpcTarget.MasterClient);
+        //}
+        isReady = !isReady;
+        photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.NickName, isReady);
     }
 
+    [PunRPC]
+    public void SetPlayerReady(string playerName, bool ready)
+    {
+        UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
+        foreach(UserInfo userInfo in userInfos)
+        {
+            if(userInfo.userName.text == playerName)
+            {
+                userInfo.isReady = ready;
+                userInfo.DisplayPlayerInfo();
+                break;
+            }
+        }
+        CheckAllPlayersReady();
+    }
+
+    [PunRPC]
     public void CheckAllPlayersReady()
     {
         UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
-        foreach(Player player in PhotonNetwork.PlayerList)
+        foreach (Player player in PhotonNetwork.PlayerList)
         {
             bool playerReady = false;
-            foreach(UserInfo userif in userInfos)
+            foreach (UserInfo userif in userInfos)
             {
                 if (userif.userName.text == player.NickName && userif.isReady)
                 {
@@ -121,7 +129,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    startButton.enabled = false;
+                    startButton.GetComponent<Button>().interactable = false;
                 }
                 return;
             }
@@ -129,7 +137,8 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            startButton.enabled = true;
+            startButton.GetComponent<Button>().interactable = true;
+            Debug.Log("모든 플레이어가 준비함");
         }
     }
     //public override void OnJoinedRoom()
@@ -180,12 +189,14 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnectedAndReady)
         {
             GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
-          
-            
-            if (GameObject.FindGameObjectWithTag("UserInfoPanel"))
-            {
-                GameObject obj = PhotonNetwork.Instantiate("UserInfoPanel", Vector3.zero, Quaternion.identity);
-            }
+
+            GameObject userInfoPanel = PhotonNetwork.Instantiate("UserInfoPanel", Vector3.zero, Quaternion.identity);
+
+            SaveLoad saveLoadScript = FindObjectOfType<SaveLoad>();
+            string nickname = saveLoadScript.nickName;
+
+            PhotonView photonView = userInfoPanel.GetComponent<PhotonView>();
+            photonView.RPC("UpdateNickname", RpcTarget.AllBuffered, nickname);
         }
     }
 }
