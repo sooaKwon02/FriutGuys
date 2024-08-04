@@ -28,33 +28,6 @@ public class DatabaseManager : MonoBehaviour
         SignUpComplete.SetActive(false);
         saveload = FindObjectOfType<SaveLoad>();
     }
-    IEnumerator Start()
-    {
-        string url = dll.LoginUnity; // PHP 스크립트의 URL을 입력하세요
-
-        using (UnityWebRequest www = UnityWebRequest.Get(url))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error: " + www.error);
-            }
-            else
-            {
-                string jsonString = www.downloadHandler.text;
-                Debug.Log("Received JSON: " + jsonString);
-                JArray jsonArray = JArray.Parse(jsonString); // JSON 데이터가 배열일 때
-
-                foreach (JObject json in jsonArray)
-                {
-                    string id = (string)json["id"];
-                    string nickname = (string)json["nickname"];
-                    Debug.Log($"ID: {id}, Nickname: {nickname}");
-                }
-            }
-        }
-    }
 
     public InputField id;
     public InputField password;
@@ -94,18 +67,17 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = dll.SignUp;
+        string serverURL = dll.SignUpMine;
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
         form.AddField("nickname", nickname);
         form.AddField("hash", hash);
-        // UnityWebRequest 생성 및 설정
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
         {
             
-            yield return www.SendWebRequest(); // 요청 보내기
+            yield return www.SendWebRequest(); 
 
             if (www.result != UnityWebRequest.Result.Success)
             {
@@ -125,8 +97,7 @@ public class DatabaseManager : MonoBehaviour
         {
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input);
             byte[] hashBytes = sha256.ComputeHash(bytes);
-
-            // byte 배열을 16진수 문자열로 변환
+          
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
             for (int i = 0; i < hashBytes.Length; i++)
             {
@@ -151,7 +122,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLogin; // 서버 URL을 설정
+        string serverURL = dll.GameLoginMine; 
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
@@ -170,12 +141,11 @@ public class DatabaseManager : MonoBehaviour
                 string responseText = www.downloadHandler.text;
                 Debug.Log("Response Text: " + responseText);
 
-                // JSON 응답을 LoginResponse 객체로 변환
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
 
                 if (response.success)
                 {
-                    saveload.LoadData(id); // 닉네임을 전달
+                    saveload.LoadData(id); 
                     saveload.SetNickName(id, response.nickname);
 
                     SignUpComplete.SetActive(true);

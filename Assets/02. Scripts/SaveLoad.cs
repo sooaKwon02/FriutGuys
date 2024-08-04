@@ -31,8 +31,8 @@ public class SaveLoad : MonoBehaviour
     public PLAYER player;
 
 
-    private string saveUrl = "http://61.99.10.173/fruitsGuys/PlayerItemSave.php";
-    private string loadUrl = "http://61.99.10.173/fruitsGuys/PlayerItemLoad.php";
+    private string saveUrl = "http://192.168.35.229/fruitsGuys/PlayerItemSave.php";
+    private string loadUrl = "http://192.168.35.229/fruitsGuys/PlayerItemLoad.php";
 
     private void Awake()
     {
@@ -67,7 +67,6 @@ public class SaveLoad : MonoBehaviour
 
         WWWForm form = new WWWForm();
         form.AddField("id", id);
-        // PlayerItem의 item 속성값을 직접 확인
 
         form.AddField("body_name",player.body_name);
         form.AddField("body_x", c.body.transform.localScale.x.ToString());
