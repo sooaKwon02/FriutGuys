@@ -49,8 +49,7 @@ public class SaveLoad : MonoBehaviour
     INVENTYPE inventype;
     public Inventory inventory;
     Item item;
-    private string saveUrl = "http://192.168.35.229/fruitsGuys/PlayerItemSave.php";
-    private string loadUrl = "http://192.168.35.229/fruitsGuys/PlayerItemLoad.php";
+    
 
     private void Awake()
     {
@@ -84,12 +83,12 @@ public class SaveLoad : MonoBehaviour
     private IEnumerator SaveDataCoroutine()
     {
         CharacterCustom c = FindObjectOfType<CharacterCustom>();
+        string url = "http://61.99.10.173/fruitsGuys/PlayerItemSave.php";
         if (c == null)
         {
             Debug.LogError("CharacterCustom not found!");
             yield break;
         }
-
         WWWForm form = new WWWForm();
         form.AddField("id",ID);
 
@@ -139,7 +138,7 @@ public class SaveLoad : MonoBehaviour
         form.AddField("cashMoney", player.cashMoney.ToString());
         form.AddField("score", player.score.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post(saveUrl, form))
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
             yield return www.SendWebRequest();         
         }
@@ -150,9 +149,10 @@ public class SaveLoad : MonoBehaviour
     }
     private IEnumerator LoadDataCoroutine()
     {
+        string url = "http://61.99.10.173/fruitsGuys/PlayerItemLoad.php";
         WWWForm form = new WWWForm();
         form.AddField("id", ID);
-        using (UnityWebRequest www = UnityWebRequest.Post(loadUrl, form))
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
             yield return www.SendWebRequest();
             string json = www.downloadHandler.text;
@@ -168,12 +168,11 @@ public class SaveLoad : MonoBehaviour
     {
         inventype.fashionInven = new INVEN[inventory.fashionInventory.transform.childCount];
         inventype.useInven = new INVEN[inventory.useInventory.transform.childCount];
-        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
+        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
         for (int i = 0; i < inventory.fashionInventory.transform.childCount; i++)
         {
             if (inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionInventory.transform.childCount > 0)
-            {
-                
+            {                
                 item = inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
                 inventype.fashionInven[i] = new INVEN { num = i, name = item.name };
             }    
@@ -210,7 +209,7 @@ public class SaveLoad : MonoBehaviour
     }
     public IEnumerator InvenLoadCoroutine()
     {
-        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenLoad.php";
+        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenLoad.php";
         string urlWithParams = $"{url}?id={UnityWebRequest.EscapeURL(ID)}";
 
         using (UnityWebRequest www = UnityWebRequest.Get(urlWithParams))
