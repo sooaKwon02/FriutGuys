@@ -19,7 +19,7 @@ public class ObstacleSpeed : MonoBehaviour
 
     IEnumerator MoveSpeed()
     {
-
+        speed += 5.0f;
         yield return new WaitForSeconds(10.0f);
     }
 }
