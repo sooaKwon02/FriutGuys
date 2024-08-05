@@ -35,13 +35,20 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        if (FindObjectOfType<SaveLoad>())
+        if (FindObjectOfType<SaveLoad>()&&pv == null)
         {
             p = FindObjectOfType<SaveLoad>().player;
-        }    
-        if(pv != null&&pv.IsMine)
+            StartCoroutine(CustomPlayer());
+        }
+        else if(FindObjectOfType<SaveLoad>() && pv.IsMine)
         {
+            p = FindObjectOfType<SaveLoad>().player;
+            StartCoroutine(CustomPlayer());
             pv.RPC("UserInfoSet", RpcTarget.AllBuffered, nickName);
+        }
+        else
+        {
+            Debug.Log("?");
         }
     }
 
