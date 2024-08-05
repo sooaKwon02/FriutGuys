@@ -14,7 +14,6 @@ public class StartGameManager : MonoBehaviour
     int goalCount;
     int count;
     GameObject[] players;
-    PhotonView[] pv;
     GameObject error;
     private void Awake()
     {
@@ -28,28 +27,12 @@ public class StartGameManager : MonoBehaviour
         StartCoroutine(SpawnSet());
     }
     IEnumerator SpawnSet()
-    {        
-        if (players.Length == currentPlayers)
+    {
+        for (int i = 0; i < players.Length; i++)
         {
-            for (int i = 0; i < pos.Length; i++)
-            {
-                if (players[i] != null)
-                {
-                    players[i].transform.position = pos[i].transform.position;
-                    pv[i] = players[i].GetComponent<PhotonView>();
-                }
-                else 
-                {
-                    break;
-                }
-            }
-            yield return new WaitForSeconds(3f);
+            players[i].transform.position = pos[i].position;
         }
-        else
-        {
-            yield return new WaitForSeconds(3f);
-            StartCoroutine(SpawnSet());
-        }        
+        yield return new WaitForSeconds(3f);
     }
 
     IEnumerator GameStart()

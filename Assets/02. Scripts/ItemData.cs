@@ -44,10 +44,10 @@ public class ItemData : MonoBehaviour
     {
         if(item!=null)
         {
-            GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
-            Inventory inventory = canvas.GetComponentInChildren<Inventory>();
+            
+            Inventory inventory = FindObjectOfType<GameManager>().GetComponent<Inventory>();
             inventory.target.SetActive(true);
-            ItemTG itemTG = canvas.GetComponentInChildren<ItemTG>();
+            ItemTG itemTG = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<ItemTG>();
             itemTG.ItemInfo(item);
             itemTG.itemSwap = gameObject;
             ItemGET(null);            
