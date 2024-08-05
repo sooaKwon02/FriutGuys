@@ -4,6 +4,8 @@ using System.Collections;
 using Newtonsoft.Json;
 using System.Text;
 using System;
+using static UnityEngine.Networking.UnityWebRequest;
+using System.Linq;
 
 public class SaveLoad : MonoBehaviour
 {
@@ -33,7 +35,6 @@ public class SaveLoad : MonoBehaviour
     [System.Serializable]
     public class INVEN
     {
-        public string id;
         public int num;
         public string name;
     }
@@ -49,6 +50,9 @@ public class SaveLoad : MonoBehaviour
     public PLAYER player;
     public INVENTYPE inventype;
     public Inventory inventory;
+    public INVEN[] use;
+    public INVEN[] fashion;
+  
     Item item;
     
 
@@ -58,7 +62,8 @@ public class SaveLoad : MonoBehaviour
     }
     private void Start()
     {
-        inventype = new INVENTYPE();
+       
+        
     }
     public void InventorySet()
     {
@@ -222,22 +227,72 @@ public class SaveLoad : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 var responseText = www.downloadHandler.text;
-                var inventoryData = JsonConvert.DeserializeObject<INVENTYPE>(responseText);
-                inventype = new INVENTYPE();
-                ProcessFetchedData(inventoryData);
-            }
-            else
-            {
-                Debug.LogError($"Error: {www.error}");
-            }
+                var data = JsonConvert.DeserializeObject<INVENTYPE>(responseText);
+                Debug.Log(www.downloadHandler.text);
+                //Debug.Log(data);
+                //ProcessFetchedData(data);
+            }           
         }    
     }
-    private void ProcessFetchedData(INVENTYPE results)
+    //void ProcessFetchedData(INVENTYPE results)
+    //{
+    //    use = new INVEN[results.useInven.Length];
+    //    fashion = new INVEN[results.fashionInven.Length];
+
+    //    for (int i = 0; i < results.useInven.Length; i++)
+    //    {
+    //        var useInven = results.useInven[i];
+    //        use[i] = new INVEN
+    //        {
+    //            num = ParseIntArray(useInven.num.ToString()),
+    //            name = ParseStringArray(useInven.name.ToString())
+    //        };
+    //    }
+
+    //    for (int i = 0; i < results.fashionInven.Length; i++)
+    //    {
+    //        var fashionInven = results.fashionInven[i];
+    //        fashion[i] = new INVEN
+    //        {
+    //            num = ParseIntArray(fashionInven.num.ToString()),
+    //            name = ParseStringArray(fashionInven.name.ToString())
+    //        };
+    //    }
+
+    //    inventype = new INVENTYPE
+    //    {
+    //        useInven = use,
+    //        fashionInven = fashion
+    //    };
+    //}
+    private int[] ParseIntArray(string jsonArray)
     {
-        for (int i = 0; i < results.useInven.Length; i++)
+        if (string.IsNullOrEmpty(jsonArray))
         {
-            inventype.useInven[i]=results.useInven[i];  
-        }   
-        for(int i=0;i<results.useInven.Length;i++)
+            return new int[0];
+        }
+
+        // 대괄호 제거 및 쉼표로 구분된 숫자 추출
+        jsonArray = jsonArray.TrimStart('[').TrimEnd(']');
+        var items = jsonArray.Split(','); 
+        int[] result = new int[items.Length];
+        for (int i = 0; i < items.Length; i++)
+        {
+            result[i] = int.Parse(items[i].Trim());
+        }
+        return items.Select(item => int.Parse(item.Trim())).ToArray();
+    }
+
+    private string[] ParseStringArray(string jsonArray)
+    {
+        if (string.IsNullOrEmpty(jsonArray))
+        {
+            return new string[0];
+        }
+
+        // 대괄호, 따옴표 제거 및 쉼표로 구분된 문자열 추출
+        jsonArray = jsonArray.TrimStart('[').TrimEnd(']').Replace("\"", "");
+        var items = jsonArray.Split(',');
+        return items.Select(item => item.Trim()).ToArray();
     }
 }
