@@ -13,6 +13,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     public Transform userPanel;
     public GameObject startButton;
     public GameObject readyButton;
+    public Text playerCountText;
 
     public bool isReady = false;
 
@@ -31,6 +32,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             readyButton.SetActive(true);
             readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame);
         }
+        RoomOptions roomOption = new RoomOptions;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
