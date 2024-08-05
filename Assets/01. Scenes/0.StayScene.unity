@@ -374,6 +374,14 @@ MonoBehaviour:
     gameMoney: 0
     cashMoney: 0
     score: 0
+  inventype:
+    useInven: []
+    fashionInven: []
+  inventory: {fileID: 0}
+  useNum: 
+  useName: []
+  fashionNum: 
+  fashionName: []
 --- !u!4 &1069689250530235657
 Transform:
   m_ObjectHideFlags: 0

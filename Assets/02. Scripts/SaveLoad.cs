@@ -6,13 +6,14 @@ using System.Text;
 using System;
 using static UnityEngine.Networking.UnityWebRequest;
 using System.Linq;
+using System.Collections.Generic;
 
 public class SaveLoad : MonoBehaviour
 {
     [System.Serializable]
     public class PLAYER
     {
-        
+
         public string body_name;
         public float body_x, body_y, body_z;
         public float body_rotX, body_rotY, body_rotZ;
@@ -48,27 +49,23 @@ public class SaveLoad : MonoBehaviour
     public string ID;
     public string nickName;
     public PLAYER player;
-    public INVENTYPE inventype;
+    public INVENTYPE inventype = null;
     public Inventory inventory;
-    public INVEN[] use;
-    public INVEN[] fashion;
-  
+
+    public int[] useNum = new int[0];
+    public string[] useName = new string[0];
+    public int[] fashionNum = new int[0];
+    public string[] fashionName = new string[0];
+
     Item item;
-    
+
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
-    private void Start()
-    {
-       
-        
-    }
-    public void InventorySet()
-    {
-        inventory = FindObjectOfType<Inventory>();
-    }
+
+
 
     private void OnApplicationQuit()
     {
@@ -76,7 +73,7 @@ public class SaveLoad : MonoBehaviour
         SaveInven();
     }
 
-    public void SetNickName(string _id ,string _nick)
+    public void SetNickName(string _id, string _nick)
     {
         ID = _id;
         nickName = _nick;
@@ -89,16 +86,16 @@ public class SaveLoad : MonoBehaviour
     private IEnumerator SaveDataCoroutine()
     {
         CharacterCustom c = FindObjectOfType<CharacterCustom>();
-        string url = "http://61.99.10.173/fruitsGuys/PlayerItemSave.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerItemSave.php";
         if (c == null)
         {
             Debug.LogError("CharacterCustom not found!");
             yield break;
         }
         WWWForm form = new WWWForm();
-        form.AddField("id",ID);
+        form.AddField("id", ID);
 
-        form.AddField("body_name",player.body_name);
+        form.AddField("body_name", player.body_name);
         form.AddField("body_x", c.body.transform.localScale.x.ToString());
         form.AddField("body_y", c.body.transform.localScale.y.ToString());
         form.AddField("body_z", c.body.transform.localScale.z.ToString());
@@ -146,7 +143,7 @@ public class SaveLoad : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
-            yield return www.SendWebRequest();         
+            yield return www.SendWebRequest();
         }
     }
     public void LoadData()
@@ -155,7 +152,7 @@ public class SaveLoad : MonoBehaviour
     }
     private IEnumerator LoadDataCoroutine()
     {
-        string url = "http://61.99.10.173/fruitsGuys/PlayerItemLoad.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerItemLoad.php";
         WWWForm form = new WWWForm();
         form.AddField("id", ID);
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -174,17 +171,17 @@ public class SaveLoad : MonoBehaviour
     {
         inventype.fashionInven = new INVEN[inventory.fashionInventory.transform.childCount];
         inventype.useInven = new INVEN[inventory.useInventory.transform.childCount];
-        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
         for (int i = 0; i < inventory.fashionInventory.transform.childCount; i++)
         {
             if (inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionInventory.transform.childCount > 0)
-            {                
+            {
                 item = inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
                 inventype.fashionInven[i] = new INVEN { num = i, name = item.name };
-            }    
+            }
             else
                 inventype.fashionInven[i] = new INVEN { num = i, name = "" };
-         
+
         }
         for (int i = 0; i < inventory.useInventory.transform.childCount; i++)
         {
@@ -195,8 +192,8 @@ public class SaveLoad : MonoBehaviour
             }
             else
                 inventype.useInven[i] = new INVEN { num = i, name = "" };
-           
-         
+
+
         }
         var data = new { id = ID, use = inventype.useInven, fashion = inventype.fashionInven, };
         string setitem = JsonConvert.SerializeObject(data);
@@ -213,86 +210,105 @@ public class SaveLoad : MonoBehaviour
     {
         StartCoroutine(InvenLoadCoroutine());
     }
-    public IEnumerator InvenLoadCoroutine()
+    private IEnumerator InvenLoadCoroutine()
     {
-        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenLoad.php";
-        string urlWithParams = $"{url}?id={UnityWebRequest.EscapeURL(ID)}";
-
-        using (UnityWebRequest www = UnityWebRequest.Get(urlWithParams))
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenLoad.php";
+        using (UnityWebRequest www = UnityWebRequest.Get($"{url}?id={UnityWebRequest.EscapeURL(ID)}"))
         {
             yield return www.SendWebRequest();
 
-            Debug.Log("Server Response: " + www.downloadHandler.text);
-
             if (www.result == UnityWebRequest.Result.Success)
             {
-                var responseText = www.downloadHandler.text;
-                var data = JsonConvert.DeserializeObject<INVENTYPE>(responseText);
-                Debug.Log(www.downloadHandler.text);
-                //Debug.Log(data);
-                //ProcessFetchedData(data);
-            }           
-        }    
+                ProcessResponse(www.downloadHandler.text);
+            }
+        }
     }
-    //void ProcessFetchedData(INVENTYPE results)
-    //{
-    //    use = new INVEN[results.useInven.Length];
-    //    fashion = new INVEN[results.fashionInven.Length];
-
-    //    for (int i = 0; i < results.useInven.Length; i++)
-    //    {
-    //        var useInven = results.useInven[i];
-    //        use[i] = new INVEN
-    //        {
-    //            num = ParseIntArray(useInven.num.ToString()),
-    //            name = ParseStringArray(useInven.name.ToString())
-    //        };
-    //    }
-
-    //    for (int i = 0; i < results.fashionInven.Length; i++)
-    //    {
-    //        var fashionInven = results.fashionInven[i];
-    //        fashion[i] = new INVEN
-    //        {
-    //            num = ParseIntArray(fashionInven.num.ToString()),
-    //            name = ParseStringArray(fashionInven.name.ToString())
-    //        };
-    //    }
-
-    //    inventype = new INVENTYPE
-    //    {
-    //        useInven = use,
-    //        fashionInven = fashion
-    //    };
-    //}
-    private int[] ParseIntArray(string jsonArray)
+    private void ProcessResponse(string responseText)
     {
-        if (string.IsNullOrEmpty(jsonArray))
-        {
-            return new int[0];
-        }
+        string[] lines = responseText.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        bool isUse = false;
+        bool isFashion = false;
 
-        // 대괄호 제거 및 쉼표로 구분된 숫자 추출
-        jsonArray = jsonArray.TrimStart('[').TrimEnd(']');
-        var items = jsonArray.Split(','); 
-        int[] result = new int[items.Length];
-        for (int i = 0; i < items.Length; i++)
-        {
-            result[i] = int.Parse(items[i].Trim());
-        }
-        return items.Select(item => int.Parse(item.Trim())).ToArray();
-    }
+        List<int> use_num = new List<int>();
+        List<string> use_name = new List<string>();
+        List<int> fashion_num = new List<int>();
+        List<string> fashion_name = new List<string>();
 
-    private string[] ParseStringArray(string jsonArray)
-    {
-        if (string.IsNullOrEmpty(jsonArray))
-        {
-            return new string[0];
-        }
 
-        // 대괄호, 따옴표 제거 및 쉼표로 구분된 문자열 추출
-        jsonArray = jsonArray.TrimStart('[').TrimEnd(']').Replace("\"", "");
-        var items = jsonArray.Split(',');
-        return items.Select(item => item.Trim()).ToArray();
+        foreach (string line in lines)
+        {
+            if (line.StartsWith("Use Inventory:"))
+            {
+                isUse = true;
+                isFashion = false;
+                continue;
+            }
+            if (line.StartsWith("Fashion Inventory:"))
+            {
+                isUse = false;
+                isFashion = true;
+                continue;
+            }
+            if (isUse || isFashion)
+            {
+                string cleanLine = line.Trim('[', ']', '"');
+                var parts = cleanLine.Split(new[] { "],[" }, StringSplitOptions.None);
+
+                if (parts.Length == 2)
+                {
+                    string[] numberStrings = parts[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var numStr in numberStrings)
+                    {
+                        if (int.TryParse(numStr.Trim(), out int itemNum))
+                        {
+                            if (isUse)
+                            {
+                                use_num.Add(itemNum);
+                            }
+                            else if (isFashion)
+                            {
+                                fashion_num.Add(itemNum);
+                            }
+                        }
+                    }
+                    string[] nameStrings = parts[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var nameStr in nameStrings)
+                    {
+                        var itemName = nameStr.Trim().Trim('"');
+                        if (isUse)
+                        {
+                            use_name.Add(itemName);
+                        }
+                        else if (isFashion)
+                        {
+                            fashion_name.Add(itemName);
+                        }
+                    }
+                }
+            }
+
+            useNum = use_num.ToArray();
+            useName = use_name.ToArray();
+            fashionNum = fashion_num.ToArray();
+            fashionName = fashion_name.ToArray(); 
+
+            inventype = new INVENTYPE
+            {
+                useInven = new INVEN[useNum.Length],
+                fashionInven = new INVEN[fashionNum.Length]
+            };
+
+            for (int i = 0; i < useNum.Length; i++)
+            {
+                inventype.useInven[i] = new INVEN { num = useNum[i], name = useName[i] };
+            }
+
+            for (int i = 0; i < fashionNum.Length; i++)
+            {
+                inventype.fashionInven[i] = new INVEN { num = fashionNum[i], name = fashionName[i] };
+            }
+        }
     }
 }

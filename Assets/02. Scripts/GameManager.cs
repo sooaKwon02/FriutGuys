@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
         saveload = FindObjectOfType<SaveLoad>();
-        saveload.InventorySet();
         ActiveMenu(true);
     }
     private void Update()
