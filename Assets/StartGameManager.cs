@@ -38,7 +38,7 @@ public class StartGameManager : MonoBehaviour
     IEnumerator GameStart()
     {
         error.SetActive(true);
-        error.GetComponentInChildren<Text>().text = "°ÔÀÓ½ÃÀÛ";
+        error.GetComponentInChildren<Text>().text = "ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½";
         yield return new WaitForSeconds(10f);
     }
     IEnumerator GameOver()
