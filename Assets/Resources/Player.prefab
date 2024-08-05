@@ -842,6 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9130801401853474382cd700febb2db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nickName: 
   body: {fileID: 6028792856598254200}
   glove1: {fileID: 6525138680903542920}
   glove2: {fileID: 494903752996905638}
