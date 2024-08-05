@@ -12,6 +12,7 @@ public class MusicSet : MonoBehaviour
     public GameObject musicItem;
     AudioSource audioSource;
     public Toggle toggle;
+    GameObject music;
 
     private void Awake()
     {
@@ -20,18 +21,23 @@ public class MusicSet : MonoBehaviour
         toggle.isOn = audioSource.mute;
         musicName.text = audioSource.clip.name;
 
-        for(int i=0;i< SoundManager.Instance.backgroundSound.Length;i++)
+   
+        
+
+    }
+    private void Start()
+    {
+        for (int i = 0; i < SoundManager.Instance.backgroundSound.Length; i++)
         {
-            GameObject music = Instantiate(musicItem); 
+            music = Instantiate(musicItem);
             music.transform.SetParent(musicContents, false);
             music.GetComponent<MusicItem>().Setting(SoundManager.Instance.backgroundSound[i].name, i);
         }
-        musicContents.GetComponent<RectTransform>().sizeDelta = new Vector2(FindObjectOfType<MusicItem>().GetComponent<RectTransform>().sizeDelta.x,
-                    FindObjectsOfType<MusicItem>().Length * FindObjectOfType<MusicItem>().GetComponent<RectTransform>().sizeDelta.y);
+        musicContents.GetComponent<RectTransform>().sizeDelta = new Vector2(music.GetComponent<RectTransform>().sizeDelta.x,
+                      SoundManager.Instance.backgroundSound.Length *( music.GetComponent<RectTransform>().sizeDelta.y));
         selectPanel.gameObject.SetActive(false);
-
     }
-  
+
     public void SelectPanelOnOff()
     {
         if(selectPanel.gameObject.activeSelf)

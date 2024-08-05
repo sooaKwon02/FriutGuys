@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 public class DatabaseManager : MonoBehaviour
 {
     SaveLoad saveload;
+    Inventory inven;
     public static DatabaseManager Instance { get; private set; }
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
@@ -27,33 +28,7 @@ public class DatabaseManager : MonoBehaviour
         }
         SignUpComplete.SetActive(false);
         saveload = FindObjectOfType<SaveLoad>();
-    }
-    IEnumerator Start()
-    {
-        string url = dll.LoginUnity; // PHP 스크립트의 URL을 입력하세요
-
-        using (UnityWebRequest www = UnityWebRequest.Get(url))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error: " + www.error);
-            }
-            else
-            {
-                string jsonString = www.downloadHandler.text;
-                Debug.Log("Received JSON: " + jsonString);
-                JArray jsonArray = JArray.Parse(jsonString); // JSON 데이터가 배열일 때
-
-                foreach (JObject json in jsonArray)
-                {
-                    string id = (string)json["id"];
-                    string nickname = (string)json["nickname"];
-                    Debug.Log($"ID: {id}, Nickname: {nickname}");
-                }
-            }
-        }
+        inven = FindObjectOfType<Inventory>();
     }
 
     public InputField id;
@@ -79,8 +54,7 @@ public class DatabaseManager : MonoBehaviour
         {
             SignUpComplete.SetActive(true);
             SignUpComplete.GetComponentInChildren<Text>().text = "제대로 입력하세요";
-        }            
-
+        }        
     }
     private bool IdPassword(string input)
     {
@@ -101,12 +75,9 @@ public class DatabaseManager : MonoBehaviour
         form.AddField("password", password);
         form.AddField("nickname", nickname);
         form.AddField("hash", hash);
-        // UnityWebRequest 생성 및 설정
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
-        {
-            
-            yield return www.SendWebRequest(); // 요청 보내기
-
+        {            
+            yield return www.SendWebRequest(); 
             if (www.result != UnityWebRequest.Result.Success)
             {
                 SignUpComplete.SetActive(true);
@@ -125,8 +96,7 @@ public class DatabaseManager : MonoBehaviour
         {
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input);
             byte[] hashBytes = sha256.ComputeHash(bytes);
-
-            // byte 배열을 16진수 문자열로 변환
+          
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
             for (int i = 0; i < hashBytes.Length; i++)
             {
@@ -151,7 +121,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLogin; // 서버 URL을 설정
+        string serverURL = dll.GameLogin; 
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
@@ -168,15 +138,13 @@ public class DatabaseManager : MonoBehaviour
             else
             {
                 string responseText = www.downloadHandler.text;
-                Debug.Log("Response Text: " + responseText);
-
-                // JSON 응답을 LoginResponse 객체로 변환
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
 
                 if (response.success)
                 {
-                    saveload.LoadData(id); // 닉네임을 전달
                     saveload.SetNickName(id, response.nickname);
+                    saveload.LoadData();
+                    saveload.LoadInven();
 
                     SignUpComplete.SetActive(true);
                     SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";
@@ -184,14 +152,16 @@ public class DatabaseManager : MonoBehaviour
                 else
                 {
                     SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패: " + response.error;
+                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패 ";
                 }
             }
+            LoginReset();
         }
+        
     }
     public void LoginMain(int num)
     {
-        if (SignUpComplete.GetComponentInChildren<Text>().text == "회원가입 성공")
+        if (SignUpComplete.GetComponentInChildren<Text>().text == "회원가입 성공"|| SignUpComplete.GetComponentInChildren<Text>().text == "로그인 실패")
         {
             SignUpPanel.SetActive(false);
             SignUpComplete.SetActive(false);
@@ -210,7 +180,19 @@ public class DatabaseManager : MonoBehaviour
             SignUpPanel.SetActive(false);
             SignUpComplete.SetActive(false);
         }
-       
+        SignReset();
         SignUpComplete.GetComponentInChildren<Text>().text = null;
+    }
+
+    void SignReset()
+    {
+        id.text = null;
+        password.text = null;
+        nickname.text = null;
+    }
+    void LoginReset()
+    {
+        loginIdInput.text = null;
+        loginPasswordInput.text = null;
     }
 }

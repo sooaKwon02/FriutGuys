@@ -28,6 +28,7 @@ TagManager:
   - HEAD
   - USEITEM1
   - USEITEM2
+  - ErrorBox
   layers:
   - Default
   - TransparentFX

@@ -852,6 +852,7 @@ MonoBehaviour:
   gameMoney: 0
   cashMoney: 0
   score: 0
+  goalIn: 0
   pv: {fileID: 0}
 --- !u!1 &5594008465144471513
 GameObject:
