@@ -36,7 +36,7 @@ public class StartGameManager : MonoBehaviour
                 if (players[i] != null)
                 {
                     players[i].transform.position = pos[i].transform.position;
-                    pv[i] = players[i].GetComponent<PhotonView>();
+                    //pv[i] = players[i].GetComponent<PhotonView>();
                 }
                 else 
                 {
