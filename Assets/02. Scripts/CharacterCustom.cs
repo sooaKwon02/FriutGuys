@@ -36,8 +36,11 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         {
             p = FindObjectOfType<SaveLoad>().player;
         }
-       if(pv.IsMine)
-        StartCoroutine(CustomPlayer());
+        if (pv.IsMine)
+        {
+            StartCoroutine(CustomPlayer());
+            FindObjectOfType<PlayerCon>().CreatePanel(pv);
+        }
     }
  
 

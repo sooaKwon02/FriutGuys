@@ -8,17 +8,22 @@ using ExitGames.Client.Photon;
 
 public class PlayerCon : MonoBehaviourPunCallbacks
 {
-    public Text userName;
     public GameObject userInfo;
     public Transform userPanel;
     public GameObject startButton;
     public GameObject readyButton;
     public Text playerCountText;
+    public GameObject UserInfoPanel;
 
     public bool isReady = false;
 
     private void Awake()
     {
+      
+    }
+    private void Start()
+    {       
+       
         if (PhotonNetwork.IsMasterClient)
         {
             //들어오면 플레이어 생성
@@ -32,12 +37,20 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             readyButton.SetActive(true);
             readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame);
         }
-        RoomOptions roomOption = new RoomOptions;
+        GetConnectPlayerCount();
     }
-
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+       
+        Debug.Log(newPlayer.ToStringFull());
+        GetConnectPlayerCount();
         CheckAllPlayersReady();
+    }
+
+    void GetConnectPlayerCount()
+    {
+        Room currRoom = PhotonNetwork.CurrentRoom;
+        playerCountText.text = currRoom.PlayerCount.ToString() + " / " + currRoom.MaxPlayers.ToString();
     }
 
     public void LeaveGame()
@@ -92,7 +105,25 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         //    photonView.RPC("CheckAllPlayersReady", RpcTarget.MasterClient);
         //}
         isReady = !isReady;
-        photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.NickName, isReady);
+        Debug.Log("ButtonClick" +  isReady);
+        PhotonView[] pvs = FindObjectsOfType<PhotonView>();
+        
+        foreach(PhotonView pv in pvs)
+        {
+            if(pv.IsMine)
+            {
+               foreach(UserInfo info in FindObjectsOfType<UserInfo>())
+                {
+                    if(pv.GetComponent<CharacterCustom>().name==info.nickname)
+                    {
+                        info.isReady = isReady;
+                        info.DisplayPlayerInfo(); 
+                        readyButton.GetComponent<PhotonView>().RPC("SetPlayerReady", RpcTarget.OthersBuffered, pv.GetComponent<CharacterCustom>().name, isReady);
+                    }
+                }
+            }
+        }
+      
     }
 
     [PunRPC]
@@ -143,14 +174,17 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             Debug.Log("모든 플레이어가 준비함");
         }
     }
-    //public override void OnJoinedRoom()
-    //{
-    //    if (!PhotonNetwork.IsMasterClient)
-    //    {
-    //        StartCoroutine(CreatePlayer());
-    //        readyText.text = "준비";
-    //    }
-    //}
+    public override void OnJoinedRoom()
+    {
+        Debug.Log(GameObject.FindGameObjectsWithTag("Player").Length);
+        Debug.Log(FindObjectsOfType<PhotonView>().Length);
+        //if (!PhotonNetwork.IsMasterClient)
+        //{
+        //    StartCoroutine(CreatePlayer());
+        //    readyButton.SetActive(true);
+        //    readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame);
+        //}
+    }
     //public override void OnPlayerEnteredRoom(Player newPlayer)
     //{
     //    Debug.Log("asd");
@@ -184,7 +218,6 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     //    }
     //    CheckAllPlayersReady();
     //}
-
     IEnumerator CreatePlayer()
     {
         yield return new WaitForSeconds(1f);
@@ -192,13 +225,29 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         {
             GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
 
-            GameObject userInfoPanel = PhotonNetwork.Instantiate("UserInfoPanel", Vector3.zero, Quaternion.identity);
-
-            SaveLoad saveLoadScript = FindObjectOfType<SaveLoad>();
-            string nickname = saveLoadScript.nickName;
-
-            PhotonView photonView = userInfoPanel.GetComponent<PhotonView>();
-            photonView.RPC("UpdateNickname", RpcTarget.AllBuffered, nickname);
         }
+    }
+    public void CreatePanel(PhotonView view)
+    {
+        GameObject userInfoPanel = Instantiate(UserInfoPanel, Vector3.zero, Quaternion.identity);
+
+        SaveLoad saveLoadScript = FindObjectOfType<SaveLoad>();
+        string nickname = saveLoadScript.nickName;
+
+        UserInfo ui = userInfoPanel.GetComponent<UserInfo>();
+        ui.nickname = nickname;
+        ui.DisplayPlayerInfo();
+        view.RPC("UpdateNickname", RpcTarget.OthersBuffered, ui.nickname);
+
+
+    }
+
+    [PunRPC]
+    void UpdateNickname(string playerName)
+    {
+        GameObject userInfoPanel = Instantiate(UserInfoPanel, Vector3.zero, Quaternion.identity);
+        UserInfo ui = userInfoPanel.GetComponent<UserInfo>();
+        ui.nickname = playerName;
+        ui.DisplayPlayerInfo();
     }
 }

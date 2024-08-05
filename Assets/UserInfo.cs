@@ -31,35 +31,22 @@ public class UserInfo : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            if (!photonView.IsMine)
-            {
-                kickGame.SetActive(true);
-            }
-            else
-            {
-                kickGame.SetActive(false);
-            }
+            //userName.color = Color.blue;
+           
+                kickGame.SetActive(true);            
+           
+                //kickGame.SetActive(false);
+            
         }
         else
         {
-            //isReady = false;
             kickGame.SetActive(false);
         }
 
     }
 
-    //public void SetReady()
-    //{
-    //    isReady = true;
-    //}
-
-    [PunRPC]
-    void UpdateNickname(string playerName)
-    {
-        nickname = playerName;
-        DisplayPlayerInfo();
-        //PlayerCon.instance.CheckAllPlayersReady();
-    }
+   
+   
 
     //private void Awake()
     //{
