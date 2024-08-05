@@ -1755,7 +1755,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3969211abb5fedc478c75b6829d81703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userName: {fileID: 0}
   userInfo: {fileID: 6179415956667228489, guid: 69a1bd09110c40340b751a5c0da4141b, type: 3}
   userPanel: {fileID: 1309742344}
   startButton: {fileID: 1998845981}

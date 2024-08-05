@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class UserInfo : MonoBehaviourPunCallbacks
 {
-    //[HideInInspector]
     public Text userName;
     public GameObject readyGame;
     public GameObject kickGame;
@@ -35,6 +34,7 @@ public class UserInfo : MonoBehaviourPunCallbacks
            
                 kickGame.SetActive(true);            
            
+                //
                 //kickGame.SetActive(false);
             
         }

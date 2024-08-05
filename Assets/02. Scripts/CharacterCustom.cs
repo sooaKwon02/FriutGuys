@@ -30,7 +30,6 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     private void Awake()
     {
         if (GetComponent<PhotonView>()) { pv = GetComponent<PhotonView>(); }
-
     }
     private void Start()
     {

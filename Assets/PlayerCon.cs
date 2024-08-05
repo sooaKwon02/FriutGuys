@@ -17,23 +17,17 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     public bool isReady = false;
 
-    private void Awake()
-    {
-      
-    }
     private void Start()
-    {       
-       
+    {
+        StartCoroutine(CreatePlayer());
         if (PhotonNetwork.IsMasterClient)
         {
             //들어오면 플레이어 생성
-            StartCoroutine(CreatePlayer());
-            startButton.SetActive(true);
+            //startButton.SetActive(true);
             startButton.GetComponent<Button>().onClick.AddListener(StartGame);
         }
         else
         {
-            StartCoroutine(CreatePlayer());
             readyButton.SetActive(true);
             readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame);
         }
@@ -41,7 +35,6 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-       
         Debug.Log(newPlayer.ToStringFull());
         GetConnectPlayerCount();
         CheckAllPlayersReady();
@@ -68,42 +61,6 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     public void ReadyGame()
     {
-        //if (!PhotonNetwork.IsMasterClient)
-        //{
-        //    if (FindObjectOfType<UserInfo>())
-        //    {
-        //        UserInfo[] _infos = FindObjectsOfType<UserInfo>();
-        //        foreach (UserInfo _info in _infos)
-        //        {
-        //            if (_info.userName.text == playerName)
-        //            {
-        //                isReady = !_info.isReady;
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    if (FindObjectOfType<UserInfo>())
-        //    {
-        //        UserInfo[] _infos = FindObjectsOfType<UserInfo>();
-        //        foreach (UserInfo _info in _infos)
-        //        {
-        //            if (_info.readyCheck == true)
-        //            {
-        //                _info.Ready(true);
-        //            }
-        //        }
-        //    }
-        //}
-
-        //UserInfo userinfo = FindObjectOfType<UserInfo>();
-        //if (userinfo != null)
-        //{
-        //    userinfo.SetReady();
-        //    photonView.RPC("CheckAllPlayersReady", RpcTarget.MasterClient);
-        //}
         isReady = !isReady;
         Debug.Log("ButtonClick" +  isReady);
         PhotonView[] pvs = FindObjectsOfType<PhotonView>();
@@ -126,7 +83,6 @@ public class PlayerCon : MonoBehaviourPunCallbacks
       
     }
 
-    [PunRPC]
     public void SetPlayerReady(string playerName, bool ready)
     {
         UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
@@ -142,7 +98,6 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         CheckAllPlayersReady();
     }
 
-    [PunRPC]
     public void CheckAllPlayersReady()
     {
         UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
@@ -170,7 +125,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            startButton.GetComponent<Button>().interactable = true;
+            startButton.SetActive(true);
             Debug.Log("모든 플레이어가 준비함");
         }
     }
@@ -178,46 +133,8 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     {
         Debug.Log(GameObject.FindGameObjectsWithTag("Player").Length);
         Debug.Log(FindObjectsOfType<PhotonView>().Length);
-        //if (!PhotonNetwork.IsMasterClient)
-        //{
-        //    StartCoroutine(CreatePlayer());
-        //    readyButton.SetActive(true);
-        //    readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame);
-        //}
     }
-    //public override void OnPlayerEnteredRoom(Player newPlayer)
-    //{
-    //    Debug.Log("asd");
-    //    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-    //    foreach (GameObject player in players) 
-    //    {
-    //        PhotonView pv=GetComponent<PhotonView>();
-    //        if(pv.IsMine)
-    //            player.GetComponentInChildren<Camera>().enabled = true;
-    //        else
-    //            player.GetComponentInChildren<Camera>().enabled = false;
-    //    }
 
-    //}
-
-    //[PunRPC]
-    //void UpdateReady(Player newPlayer, bool ready)
-    //{
-    //    if (FindObjectOfType<UserInfo>())
-    //    {
-    //        UserInfo[] _info = FindObjectsOfType<UserInfo>();
-    //        foreach (UserInfo _if in _info)
-    //        {
-    //            if (_if.userName.text == newPlayer.NickName)
-    //            {
-    //                _if.isReady = ready;
-    //                _if.DisplayPlayerInfo();
-    //                break;
-    //            }
-    //        }
-    //    }
-    //    CheckAllPlayersReady();
-    //}
     IEnumerator CreatePlayer()
     {
         yield return new WaitForSeconds(1f);
