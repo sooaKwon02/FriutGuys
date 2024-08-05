@@ -119,10 +119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userName: {fileID: 6179415958173349899}
-  readyGame: {fileID: 6179415956853227898}
+  readyGame: {fileID: 6179415956853227896}
   kickGame: {fileID: 6179415958115982456}
   isReady: 0
-  nickname: 
 --- !u!1 &6179415956853227898
 GameObject:
   m_ObjectHideFlags: 0

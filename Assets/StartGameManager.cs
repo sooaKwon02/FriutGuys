@@ -33,11 +33,14 @@ public class StartGameManager : MonoBehaviour
         {
             for (int i = 0; i < pos.Length; i++)
             {
-                if (players[i] == null || pos[i] == null) { continue; }
-                else 
+                if (players[i] != null)
                 {
                     players[i].transform.position = pos[i].transform.position;
-                    pv[i]=players[i].GetComponent<PhotonView>();
+                    pv[i] = players[i].GetComponent<PhotonView>();
+                }
+                else 
+                {
+                    break;
                 }
             }
             yield return new WaitForSeconds(3f);

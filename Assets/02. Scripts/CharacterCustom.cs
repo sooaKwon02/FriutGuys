@@ -3,10 +3,10 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor.XR;
 
 public class CharacterCustom : MonoBehaviourPunCallbacks
 {
+    public string nickName;
     public PlayerItem body;
 
     public PlayerItem glove1;
@@ -30,22 +30,38 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     private void Awake()
     {
         if (GetComponent<PhotonView>()) { pv = GetComponent<PhotonView>(); }
+        nickName = FindObjectOfType<SaveLoad>().nickName;
+
     }
     private void Start()
     {
         if (FindObjectOfType<SaveLoad>())
         {
             p = FindObjectOfType<SaveLoad>().player;
+        }    
+        if(pv != null&&pv.IsMine)
+        {
+            pv.RPC("UserInfoSet", RpcTarget.AllBuffered, nickName);
         }
-        if (pv != null)
-        {           
-            if (pv.IsMine)
+    }
+
+  
+    [PunRPC]
+    void SetPlayerReady(string _nick)
+    {
+        foreach (UserInfo info in FindObjectsOfType<UserInfo>())
+        {
+            if (info.userName.text == _nick)
             {
-                StartCoroutine(CustomPlayer());
-                FindObjectOfType<PlayerCon>().CreatePanel(pv);
+                info.Ready();
             }
         }
-       
+    }
+    [PunRPC]
+    void UserInfoSet(string _nick)
+    {
+        if(FindObjectOfType<PlayerCon>())
+        FindObjectOfType<PlayerCon>().UserInfoSet( _nick);
     }
  
 
