@@ -36,19 +36,11 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         {
             p = FindObjectOfType<SaveLoad>().player;
         }
-        if (PhotonNetwork.InRoom)
-        {
-            if (pv.IsMine) { StartCoroutine(CustomPlayer()); }                
-        }
-        else if(!PhotonNetwork.InRoom)
+        if (pv.IsMine)
         {
             StartCoroutine(CustomPlayer());
+            FindObjectOfType<PlayerCon>().CreatePanel(pv);
         }
-        else
-        {
-            Debug.Log("?");
-        }
-       
     }
  
 
