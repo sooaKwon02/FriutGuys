@@ -33,6 +33,7 @@ public class SaveLoad : MonoBehaviour
     [System.Serializable]
     public class INVEN
     {
+        public string id;
         public int num;
         public string name;
     }
@@ -46,7 +47,7 @@ public class SaveLoad : MonoBehaviour
     public string ID;
     public string nickName;
     public PLAYER player;
-    INVENTYPE inventype;
+    public INVENTYPE inventype;
     public Inventory inventory;
     Item item;
     
@@ -216,26 +217,14 @@ public class SaveLoad : MonoBehaviour
         {
             yield return www.SendWebRequest();
 
-            // 서버 응답을 로그로 출력하여 실제 내용을 확인합니다
             Debug.Log("Server Response: " + www.downloadHandler.text);
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                try
-                {
-                    // JSON 객체를 INVENTYPE으로 역직렬화합니다
-                    var responseText = www.downloadHandler.text;
-                    var inventoryData = JsonConvert.DeserializeObject<INVENTYPE>(responseText);
-                    ProcessFetchedData(inventoryData);
-                }
-                catch (JsonSerializationException ex)
-                {
-                    Debug.LogError("JSON Serialization Error: " + ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError("Unexpected Error: " + ex.Message);
-                }
+                var responseText = www.downloadHandler.text;
+                var inventoryData = JsonConvert.DeserializeObject<INVENTYPE>(responseText);
+                inventype = new INVENTYPE();
+                ProcessFetchedData(inventoryData);
             }
             else
             {
@@ -245,15 +234,10 @@ public class SaveLoad : MonoBehaviour
     }
     private void ProcessFetchedData(INVENTYPE results)
     {
-        foreach (var item in results.useInven)
+        for (int i = 0; i < results.useInven.Length; i++)
         {
-            Debug.Log($"Use Item Num: {item.num}, Item Name: {item.name}");
-        }
-
-        // 패션 아이템을 처리합니다
-        foreach (var item in results.fashionInven)
-        {
-            Debug.Log($"Fashion Item Num: {item.num}, Item Name: {item.name}");
-        }
+            inventype.useInven[i]=results.useInven[i];  
+        }   
+        for(int i=0;i<results.useInven.Length;i++)
     }
 }
