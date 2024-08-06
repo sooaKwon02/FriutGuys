@@ -15,16 +15,26 @@ public class StartGameManager : MonoBehaviour
     int count;
     GameObject[] players;
     GameObject error;
+
+    private Text gameTxt;
+
     private void Awake()
     {
         error = GameObject.FindGameObjectWithTag("ErrorBox");
+        gameTxt = GameObject.FindGameObjectWithTag("GAME_TXT").GetComponent<Text>();
     }
     private void Start()
     {
+        Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
+
+        gameTxt.transform.SetParent(canvas.transform);
+
         players = GameObject.FindGameObjectsWithTag("Player");
         count = 0;
         goalCount = currentPlayers / 2;
         StartCoroutine(SpawnSet());
+        StartCoroutine(GameCount());
+        Invoke("GameStart", 3.5f);
     }
     IEnumerator SpawnSet()
     {
@@ -35,12 +45,39 @@ public class StartGameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
     }
 
-    IEnumerator GameStart()
+    IEnumerator GameCount()
     {
-        error.SetActive(true);
-        error.GetComponentInChildren<Text>().text = "���ӽ���";
-        yield return new WaitForSeconds(10f);
+        //error.SetActive(true);
+        //error.GetComponentInChildren<Text>().text = "���ӽ���";
+        //yield return new WaitForSeconds(10f);
+
+        PlayerCtrl[] playerCtrl = FindObjectsOfType<PlayerCtrl>();
+
+        foreach (PlayerCtrl playerCtrls in playerCtrl)
+        {
+            playerCtrls.moveSpeed = 0;
+        }
+
+        for (int i = 3; i > 0; i--)
+        {
+            gameTxt.text = i.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        gameTxt.text = "Go!";
+
     }
+
+    void GameStart()
+    {
+        gameTxt.enabled = false;
+        PlayerCtrl[] playerCtrl = FindObjectsOfType<PlayerCtrl>();
+
+        foreach (PlayerCtrl playerCtrls in playerCtrl)
+        {
+            playerCtrls.moveSpeed = 5.0f;
+        }
+    }
+
     IEnumerator GameOver()
     {
         foreach (GameObject player in players)
