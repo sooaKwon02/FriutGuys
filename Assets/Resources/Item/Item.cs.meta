@@ -3,7 +3,13 @@ guid: d2e39e3d60c867f42984d80c57f9ef35
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - sprite: {instanceID: 0}
+  - mesh: {instanceID: 0}
+  - prefab: {instanceID: 0}
+  - priceImg: {instanceID: 0}
+  - cashImg: {fileID: 21300008, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  - gameMoneyImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

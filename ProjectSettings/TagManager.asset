@@ -29,6 +29,7 @@ TagManager:
   - USEITEM1
   - USEITEM2
   - ErrorBox
+  - Death Ball
   layers:
   - Default
   - TransparentFX
@@ -65,4 +66,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ErrorBox
+    uniqueID: 4183919597
     locked: 0

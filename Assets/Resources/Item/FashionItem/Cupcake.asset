@@ -17,5 +17,10 @@ MonoBehaviour:
   mesh: {fileID: 7320373469446664815, guid: 1e563b9fd9b1e414b9c8323cf0f2c89d, type: 3}
   prefab: {fileID: 919132149155446097, guid: 1e563b9fd9b1e414b9c8323cf0f2c89d, type: 3}
   itemType: 1
-  price: 1000
+  price: 0
+  gameMoneyPrice: 10000
+  cashPrice: 1000
   priceImg: {fileID: 21300008, guid: 857d6effbb662ec47a4731bb5bcf5fe9, type: 3}
+  cashImg: {fileID: 0}
+  gameMoneyImg: {fileID: 0}
+  moneyType: 0
