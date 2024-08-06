@@ -21,6 +21,8 @@ public class DatabaseManager : MonoBehaviour
     public InputField nickname;
     public GameObject SignUpComplete;
     public GameObject SignUpPanel;
+    public int isActive=1;
+    Text resText;
     [HideInInspector]
     public string idtext;
     [HideInInspector]
@@ -30,6 +32,7 @@ public class DatabaseManager : MonoBehaviour
 
     private void Awake()
     {
+        resText=SignUpComplete.GetComponentInChildren<Text>();
         saveload = FindObjectOfType<SaveLoad>();
         inven = FindObjectOfType<Inventory>();
     }
@@ -63,7 +66,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = dll.SignUp;
+        string serverURL = dll.SignUpMine;
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
@@ -76,12 +79,12 @@ public class DatabaseManager : MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 SignUpComplete.SetActive(true);
-                SignUpComplete.GetComponentInChildren<Text>().text= "서버에 연결할 수 없습니다";
+                resText.text = "서버에 연결할 수 없습니다";
             }
             else
             {
                 SignUpComplete.SetActive(true);
-                SignUpComplete.GetComponentInChildren<Text>().text = www.downloadHandler.text.ToString();
+                resText.text = www.downloadHandler.text.ToString();
             }
         }
     }  
@@ -112,43 +115,31 @@ public class DatabaseManager : MonoBehaviour
     {
         public bool success;
         public string nickname;
-        public string error;
+        public string result;
     }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLogin; 
+        string serverURL = dll.GameLoginMine; 
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);
-
+        form.AddField("isActive", 1);
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
         {
             yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
+            LoginResponse response = JsonUtility.FromJson<LoginResponse>(www.downloadHandler.text);
+            if (response.success)
             {
+                saveload.SetGame(id, response.nickname);
+                saveload.LoadData();
+                saveload.LoadInven();
                 SignUpComplete.SetActive(true);
-                SignUpComplete.GetComponentInChildren<Text>().text = "네트워크 오류";
+                resText.text = "로그인 성공";
             }
             else
             {
-                string responseText = www.downloadHandler.text;
-                LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseText);
-
-                if (response.success)
-                {
-                    saveload.SetNickName(id, response.nickname);
-                    saveload.LoadData();
-                    saveload.LoadInven();
-
-                    SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 성공";
-                }
-                else
-                {
-                    SignUpComplete.SetActive(true);
-                    SignUpComplete.GetComponentInChildren<Text>().text = "로그인 실패 ";
-                }
+                SignUpComplete.SetActive(true);
+                resText.text = response.result;
             }
             LoginReset();
         }
@@ -156,27 +147,22 @@ public class DatabaseManager : MonoBehaviour
     }
     public void LoginMain(int num)
     {
-        if (SignUpComplete.GetComponentInChildren<Text>().text == "회원가입 성공"|| SignUpComplete.GetComponentInChildren<Text>().text == "로그인 실패")
-        {
-            SignUpPanel.SetActive(false);
-            SignUpComplete.SetActive(false);
-        }
-        else if (SignUpComplete.GetComponentInChildren<Text>().text == "로그인 성공")
+        if (resText.text == "로그인 성공")
         {
             SceneManager.LoadScene(2);
         }
-        else if (SignUpComplete.GetComponentInChildren<Text>().text != null)
+        else if (num == 1)
         {
             SignUpPanel.SetActive(true);
             SignUpComplete.SetActive(false);
-        }
-        if( num==1)
+        }        
+        else
         {
             SignUpPanel.SetActive(false);
             SignUpComplete.SetActive(false);
         }
         SignReset();
-        SignUpComplete.GetComponentInChildren<Text>().text = null;
+        resText.text = null;
     }
 
     void SignReset()
