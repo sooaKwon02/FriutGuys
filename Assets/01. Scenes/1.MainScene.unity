@@ -1298,7 +1298,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1659,6 +1659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0.1.0f
+  type: 0
 --- !u!4 &231713279
 Transform:
   m_ObjectHideFlags: 0
@@ -1667,7 +1668,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231713277}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6732,7 +6733,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7998,7 +7999,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036775618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1170.9357, y: 498.99948, z: -107.13352}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14375,7 +14376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &1367956256911071318
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15239,7 +15240,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 7db32ba3f0ac5434a9ef310ce15e6f5b, type: 2}
   itemImg: {fileID: 1367956257515792753}
   priceImg: {fileID: 1367956257391612326}
-  price: {fileID: 1367956255864297798}
+  priceText: {fileID: 1367956255864297798}
 --- !u!222 &1367956257689641737
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28893,7 +28894,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7311666950696290869}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1125.4745, y: 765.0785, z: -27.11581}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -30842,7 +30843,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 491e652b3f53fcc4cbd545d8bd4b6785, type: 2}
   itemImg: {fileID: 8184660402912402021}
   priceImg: {fileID: 8184660403022029490}
-  price: {fileID: 8184660403475475026}
+  priceText: {fileID: 8184660403475475026}
 --- !u!222 &8184660402740776989
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31107,7 +31108,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 021473e774041384f979d4377382e0f6, type: 2}
   itemImg: {fileID: 8184660402990467196}
   priceImg: {fileID: 8184660403082113195}
-  price: {fileID: 8184660403433977931}
+  priceText: {fileID: 8184660403433977931}
 --- !u!1 &8184660402818155017
 GameObject:
   m_ObjectHideFlags: 0
@@ -31954,7 +31955,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 9e0e88a34608c7143b42a5989f2c7716, type: 2}
   itemImg: {fileID: 8184660402616921245}
   priceImg: {fileID: 8184660402776708170}
-  price: {fileID: 8184660403263839402}
+  priceText: {fileID: 8184660403263839402}
 --- !u!222 &8184660403057501925
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32414,7 +32415,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: e1880fcbbf23a15488a2d1f6d7bf2bda, type: 2}
   itemImg: {fileID: 8184660403573314160}
   priceImg: {fileID: 8184660403430140583}
-  price: {fileID: 8184660403077358151}
+  priceText: {fileID: 8184660403077358151}
 --- !u!222 &8184660403164962192
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33117,7 +33118,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 0aa536097f4a2f249b8551c495775823, type: 2}
   itemImg: {fileID: 8184660403306079560}
   priceImg: {fileID: 8184660403164962207}
-  price: {fileID: 8184660402812179839}
+  priceText: {fileID: 8184660402812179839}
 --- !u!1 &8184660403404336957
 GameObject:
   m_ObjectHideFlags: 0
@@ -33436,7 +33437,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 2502b5243b7e49c4d99c62ea4b929124, type: 2}
   itemImg: {fileID: 8184660403394853305}
   priceImg: {fileID: 8184660403202539886}
-  price: {fileID: 8184660402750015886}
+  priceText: {fileID: 8184660402750015886}
 --- !u!222 &8184660403500053441
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33605,7 +33606,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 41ded53f11f3b174f920f5dd7dcfc932, type: 2}
   itemImg: {fileID: 8184660403257864041}
   priceImg: {fileID: 8184660403351590846}
-  price: {fileID: 8184660402629713758}
+  priceText: {fileID: 8184660402629713758}
 --- !u!222 &8184660403624518929
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33707,7 +33708,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: ff454ceb1d18b9c4e967d9878d45818e, type: 2}
   itemImg: {fileID: 8184660403205983148}
   priceImg: {fileID: 8184660403399537531}
-  price: {fileID: 8184660402645023643}
+  priceText: {fileID: 8184660402645023643}
 --- !u!1 &8184660403638305241
 GameObject:
   m_ObjectHideFlags: 0
@@ -33871,7 +33872,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 2242a9454c44bc84cab75e2964b06eb3, type: 2}
   itemImg: {fileID: 8184660404136742678}
   priceImg: {fileID: 8184660403945437121}
-  price: {fileID: 8184660402552340257}
+  priceText: {fileID: 8184660402552340257}
 --- !u!222 &8184660403783599911
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34040,7 +34041,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 64512595b76ef314c8e6d5a71c361884, type: 2}
   itemImg: {fileID: 8184660404171163808}
   priceImg: {fileID: 8184660404044705911}
-  price: {fileID: 8184660402517522583}
+  priceText: {fileID: 8184660402517522583}
 --- !u!1 &8184660403802857952
 GameObject:
   m_ObjectHideFlags: 0
@@ -34209,7 +34210,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 5b3ef11265ee45f48b140b3fd75844f1, type: 2}
   itemImg: {fileID: 8184660403983542758}
   priceImg: {fileID: 8184660404094177585}
-  price: {fileID: 8184660402399091153}
+  priceText: {fileID: 8184660402399091153}
 --- !u!1 &8184660403830580800
 GameObject:
   m_ObjectHideFlags: 0
@@ -34429,7 +34430,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: a835a88fe6461b743887afc25ddd4e18, type: 2}
   itemImg: {fileID: 8184660403947418663}
   priceImg: {fileID: 8184660404138691824}
-  price: {fileID: 8184660402444780560}
+  priceText: {fileID: 8184660402444780560}
 --- !u!222 &8184660403840679519
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34673,7 +34674,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 9e5bf07658c118249beb78732d4a0c6f, type: 2}
   itemImg: {fileID: 8184660404036604741}
   priceImg: {fileID: 8184660404179790738}
-  price: {fileID: 8184660402385085298}
+  priceText: {fileID: 8184660402385085298}
 --- !u!222 &8184660403932092733
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35067,7 +35068,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 49693f78a0fc89d4cba463014c45656e, type: 2}
   itemImg: {fileID: 8184660403876665653}
   priceImg: {fileID: 8184660403802857954}
-  price: {fileID: 8184660402241988866}
+  priceText: {fileID: 8184660402241988866}
 --- !u!222 &8184660404041634637
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35166,7 +35167,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 9b2e9aade99b7db4781dcd006288b42e, type: 2}
   itemImg: {fileID: 8184660403891208191}
   priceImg: {fileID: 8184660403783599912}
-  price: {fileID: 8184660402256416712}
+  priceText: {fileID: 8184660402256416712}
 --- !u!222 &8184660404064925063
 CanvasRenderer:
   m_ObjectHideFlags: 0

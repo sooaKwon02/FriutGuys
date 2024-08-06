@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
       
     }
     
-    void IDPanelSet()
+    public void IDPanelSet()
     {
         nicknamePanelText.text=saveload.nickName;
         CashPanelText.text=saveload.player.cashMoney.ToString();

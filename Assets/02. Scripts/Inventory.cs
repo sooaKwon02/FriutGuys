@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
-using Newtonsoft.Json;
-using System.Text;
-using UnityEditorInternal.Profiling.Memory.Experimental;
-using System.Net;
 
 public class Inventory : MonoBehaviour
 {
@@ -49,14 +44,19 @@ public class Inventory : MonoBehaviour
         if (num == 0&&saveload.player.cashMoney>100)
         {
             saveload.player.cashMoney -= 100;
+            GetComponent<GameManager>().IDPanelSet();
             InstanceAdd();
-            
         }
         else if(num==1&&saveload.player.gameMoney>1000)
         {
             saveload.player.gameMoney -= 1000;
+            GetComponent<GameManager>().IDPanelSet();
             InstanceAdd();
-        }               
+        }
+        else
+        {
+            GetComponent<GameManager>().ErrorSend("머니가 부족합니다");
+        }
     }
     void InstanceAdd()
     {

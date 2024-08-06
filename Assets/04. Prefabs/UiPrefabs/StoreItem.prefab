@@ -243,7 +243,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 36efd3300c6d74241b2006f1867b3d2b, type: 2}
   itemImg: {fileID: 7164723095900509261}
   priceImg: {fileID: 7164723096060308634}
-  price: {fileID: 7164723097486959738}
+  priceText: {fileID: 7164723097486959738}
 --- !u!1 &7164723097114173072
 GameObject:
   m_ObjectHideFlags: 0

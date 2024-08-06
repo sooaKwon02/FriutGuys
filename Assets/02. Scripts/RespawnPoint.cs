@@ -6,6 +6,7 @@ public class RespawnPoint : MonoBehaviour
 {
     public RespawnManager RespawnManager;
     float rand;
+    Vector3 pos;
     private void Update()
     {
         rand = Random.Range(-10.0f, 10.0f);
@@ -14,9 +15,8 @@ public class RespawnPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Vector3 pos = new Vector3(transform.position.x + rand, transform.position.y, transform.position.z);
-            Debug.Log(pos);
-            StartCoroutine(RespawnManager.RespawnInfo(pos));
+            pos = new Vector3(transform.position.x + rand, transform.position.y, transform.position.z);
+            other.GetComponent<PlayerCtrl>().point=pos;
         }
     }
 }

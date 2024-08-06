@@ -1,10 +1,8 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
@@ -32,7 +30,9 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     public float jumpForce = 5.0f;
 
     private float jumpCooltimeTimer = 0.0f;
-
+    //리스폰 포인트
+    [HideInInspector]
+    public Vector3 point;
     [SerializeField]
     bool isGround = false;
     [SerializeField]
@@ -419,5 +419,19 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     //        }
     //    }
     //}
+
+    public void RespawnPointSet()
+    {
+        if(pv.IsMine)
+        {
+            transform.position = point;
+            pv.RPC("OtherRespawnSet", RpcTarget.Others, this.transform, point);
+        }        
+    }
+    [PunRPC]
+    void OtherRespawnSet(Transform player,Vector3 _point)
+    {
+        player.position = _point;
+    }
 }
     

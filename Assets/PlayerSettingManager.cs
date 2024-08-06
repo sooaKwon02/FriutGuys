@@ -10,6 +10,12 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
     public static PlayerSettingManager Instance { get; private set; }
     private string playerName;
     public string version = "0.1.0f";
+    public enum GAME_TYPE
+    {
+        RACING,
+        BATTLE,
+    }
+    public GAME_TYPE type;
 
     private void Awake()
     {
