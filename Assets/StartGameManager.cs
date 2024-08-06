@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class StartGameManager : MonoBehaviour
 {
-    int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+    int currentPlayers ;
     public Transform[] pos;
     public Collider goal;
 
@@ -20,6 +20,10 @@ public class StartGameManager : MonoBehaviour
 
     private void Awake()
     {
+        if( PhotonNetwork.CurrentRoom.PlayerCount!=0)
+        {
+            currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        }
         error = GameObject.FindGameObjectWithTag("ErrorBox");
         gameTxt = GameObject.FindGameObjectWithTag("GAME_TXT").GetComponent<Text>();
     }
