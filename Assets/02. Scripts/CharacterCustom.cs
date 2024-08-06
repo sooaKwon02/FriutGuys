@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class CharacterCustom : MonoBehaviourPunCallbacks
 {
@@ -23,36 +24,37 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     public int cashMoney;
     public int score;
     public bool goalIn;
-    //�÷��̾� ����
+
     SaveLoad.PLAYER p;
     public PhotonView pv;
 
     private void Awake()
     {
-        if (GetComponent<PhotonView>()) { pv = GetComponent<PhotonView>(); }
+        if (GetComponent<PhotonView>())
+        { 
+            pv = GetComponent<PhotonView>(); 
+        }
         nickName = FindObjectOfType<SaveLoad>().nickName;
 
     }
     private void Start()
     {
-        if (FindObjectOfType<SaveLoad>()&&pv==null)
+        if (FindObjectOfType<SaveLoad>() && pv == null)
         {
             p = FindObjectOfType<SaveLoad>().player;
             StartCoroutine(CustomPlayer());
-        }    
-        else if(FindObjectOfType<SaveLoad>()&&pv.IsMine)
+        }
+        else if (FindObjectOfType<SaveLoad>() && pv.IsMine)
         {
             p = FindObjectOfType<SaveLoad>().player;
             StartCoroutine(CustomPlayer());
             pv.RPC("UserInfoSet", RpcTarget.AllBuffered, nickName);
         }
         else
-        {
             Debug.Log("?");
-        }
     }
 
-  
+    //Lobby 
     [PunRPC]
     void SetPlayerReady(string _nick)
     {
@@ -64,13 +66,39 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
             }
         }
     }
+
     [PunRPC]
     void UserInfoSet(string _nick)
     {
         if(FindObjectOfType<PlayerCon>())
         FindObjectOfType<PlayerCon>().UserInfoSet( _nick);
     }
- 
+
+    [PunRPC]
+    void DestroyUserInfo(string _nick)
+    {
+        UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
+        foreach (UserInfo userInfo in userInfos)
+        {
+            if (userInfo.userName.text == _nick)
+            {
+                Destroy(userInfo.gameObject);
+                break;
+            }
+        }
+    }
+
+    //마스터 클라이언트에서 처리
+    [PunRPC]
+    void KickPlayerRPC(string _nick)
+    {
+        //_nick과 현재 클라이언트의 이름이 같을 경우
+        if(PhotonNetwork.NickName == _nick)
+        {
+            //나가잇
+            PhotonNetwork.LeaveRoom();
+        }
+    }
 
     IEnumerator CustomPlayer()
     {
@@ -116,6 +144,7 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     {
         PhotonView[] views = FindObjectsOfType<PhotonView>();
         foreach (PhotonView _pv in views)
+        {
             if (_pv.ViewID == viewID)
             {
                 Debug.Log(viewID);
@@ -137,5 +166,6 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
                 _pv.GetComponent<CharacterCustom>().head.transform.localRotation = new Quaternion(headRotX, headRotY, headRotZ, 1);
                 _pv.GetComponent<CharacterCustom>().tail.transform.localRotation = new Quaternion(tailRotX, tailRotY, tailRotZ, 1);
             }
+        }
     }
 }

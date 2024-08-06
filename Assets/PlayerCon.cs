@@ -11,6 +11,8 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     public string nickName;
     public GameObject userInfo;
     public Transform userPanel;
+
+    public Button kickButton;
     public GameObject startButton;
     public GameObject readyButton;
     public Text playerCountText;
@@ -24,12 +26,19 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     {
         StartCoroutine(CreatePlayer());
         startButton.SetActive(true);
-        if (PhotonNetwork.IsMasterClient) { startButton.GetComponent<Button>().onClick.AddListener(CheckAllPlayersReady); }
-        else { readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame); }
+        if (PhotonNetwork.IsMasterClient) 
+        { 
+            startButton.GetComponent<Button>().onClick.AddListener(CheckAllPlayersReady);
+        }
+        else 
+        {
+            readyButton.GetComponent<Button>().onClick.AddListener(ReadyGame); 
+        }
         GetConnectPlayerCount();
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
-    {       
+    {
+        Debug.Log(" name : " + newPlayer.NickName);
         GetConnectPlayerCount();
     }
 
@@ -41,7 +50,13 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     public void LeaveGame()
     {
+        RemoveUserInfoPanel();
         PhotonNetwork.LeaveRoom();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        GetConnectPlayerCount();
     }
 
     public void ReadyGame()
@@ -56,10 +71,9 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         }
     }
 
-
     public void CheckAllPlayersReady()
     {
-        int count=0;
+        int count = 0;
         UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
         foreach (UserInfo userif in userInfos)
         {
@@ -68,7 +82,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
                 count++;
             }      
         }
-        if (PhotonNetwork.IsMasterClient&&count== PhotonNetwork.CurrentRoom.MaxPlayers-1)
+        if (PhotonNetwork.IsMasterClient && count == PhotonNetwork.CurrentRoom.MaxPlayers - 1)
         {
             PhotonNetwork.CurrentRoom.IsVisible = false;
             PhotonNetwork.LoadLevel(4);
@@ -76,12 +90,11 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        Debug.Log(GameObject.FindGameObjectsWithTag("Player").Length);
-        Debug.Log(FindObjectsOfType<PhotonView>().Length);    
-        base.OnJoinedRoom();
+        //    Debug.Log(GameObject.FindGameObjectsWithTag("Player").Length);
+        //    Debug.Log(FindObjectsOfType<PhotonView>().Length);
+        //    base.OnJoinedRoom();
     }
-    
-   
+
     IEnumerator CreatePlayer()
     {
         yield return new WaitForSeconds(1f);
@@ -93,9 +106,9 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     public void UserInfoSet(string _name)
     {
-        
-            GameObject userInfoPanel = Instantiate(UserInfoPanel);
-            userInfoPanel.GetComponent<UserInfo>().DisplayPlayerInfo(_name);
+        GameObject userInfoPanel = Instantiate(UserInfoPanel);
+        userInfoPanel.GetComponent<UserInfo>().DisplayPlayerInfo(_name);
+
         if (PhotonNetwork.IsMasterClient)
         {
             startButton.SetActive(true);
@@ -105,6 +118,33 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         {
             startButton.SetActive(false);
             readyButton.SetActive(true);
+        }
+    }
+
+    void RemoveUserInfoPanel()
+    {
+        PhotonView[] pvs = FindObjectsOfType<PhotonView>();
+        foreach (PhotonView _pv in pvs)
+        {
+            if (_pv.IsMine)
+            {
+                _pv.RPC("DestroyUserInfo", RpcTarget.AllBuffered, nickName);
+            }
+        }
+    }
+
+    public void KickPlayer(string name)
+    {
+        //마스터 클라이언트일때
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonView[] pvs = FindObjectsOfType<PhotonView>();
+            foreach (PhotonView _pv in pvs)
+            {
+                //포톤뷰에다 RPC를 쏴
+                _pv.RPC("KickPlayerRPC", RpcTarget.AllBuffered, name);
+                RemoveUserInfoPanel();
+            }
         }
     }
 }

@@ -13,17 +13,24 @@ public class UserInfo : MonoBehaviourPunCallbacks
 
     [HideInInspector]
     public bool isReady;
-    //private SaveLoad saveLoadScript;
+    [HideInInspector]
+    public bool isKick;
+
     private Transform userPanel;
 
     private void Awake()
     {
         isReady = false;
         readyGame.enabled = false;
+        kickGame.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            PlayerCon playerCon = FindObjectOfType<PlayerCon>();
+            playerCon.KickPlayer(userName.text);
+        });
         userPanel = GameObject.FindGameObjectWithTag("UserInfoPanel").transform;
         transform.SetParent(userPanel.transform);
-        
     }
+
     public void DisplayPlayerInfo(string _nick)
     {
         userName.text = _nick;
@@ -36,17 +43,18 @@ public class UserInfo : MonoBehaviourPunCallbacks
             kickGame.SetActive(false);
         }
     } 
+
     public void Ready()
     {
         if (!isReady)
         {
             isReady = true;
-            readyGame.enabled=true;
+            readyGame.enabled = true;
         }
         else
         {
             isReady = false;
-            readyGame.enabled=false;
+            readyGame.enabled = false;
         }
-    }   
+    }
 }

@@ -8,7 +8,7 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    string myName = "UserName";
+    //string myName;
     public InputField roomNameInput;
     public InputField fullRoomInput;
     public InputField passwordInput;
@@ -40,18 +40,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
 
         roomListButtonPrefabs.GetComponent<RectTransform>().pivot = new Vector3(0.0f, 1.0f);
+        SaveLoad saveLoadScript = FindObjectOfType<SaveLoad>();
+        
+        PhotonNetwork.NickName = saveLoadScript.nickName;
     }
 
     public override void OnJoinedLobby()
     {
         Debug.Log("Join Lobby");
     }
-    //string GetUserId()
-    //{
-    //    string userId = PlayerPrefs.GetString("User_ID");
-
-    //    return userId;
-    //}
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
@@ -170,21 +167,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         createRoomFailPanel.SetActive(false);
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log("플레이어 입장 : " + newPlayer.NickName);
-        CheckRoomPlayerCount();
-    }
+    //public override void OnPlayerEnteredRoom(Player newPlayer)
+    //{
+        //Debug.Log("플레이어 입장 : " + newPlayer.NickName);
+        //CheckRoomPlayerCount();
+    //}
 
-    private void CheckRoomPlayerCount()
-    {
-        if (PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers)
-        {
-            Debug.Log("방 다 참");
-            PhotonNetwork.LeaveRoom();
-            StartCoroutine(RoomFull());
-        }
-    }
+    //private void CheckRoomPlayerCount()
+    //{
+    //    if (PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers)
+    //    {
+    //        Debug.Log("방 다 참");
+    //        PhotonNetwork.LeaveRoom();
+    //        StartCoroutine(RoomFull());
+    //    }
+    //}
 
     IEnumerator RoomFull()
     {
@@ -233,7 +230,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             {
                 pwPanel.gameObject.SetActive(true);
                 inputPw.onEndEdit.AddListener(enteredPassword => OnPasswordEntered(enteredPassword, roomInfo));
-
             }
         }
         else
