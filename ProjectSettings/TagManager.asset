@@ -30,6 +30,7 @@ TagManager:
   - USEITEM2
   - ErrorBox
   - Death Ball
+  - GAME_TXT
   layers:
   - Default
   - TransparentFX
