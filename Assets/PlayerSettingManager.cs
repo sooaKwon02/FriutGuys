@@ -54,14 +54,7 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
     
     public override void OnLeftRoom()
     {
-        StartCoroutine(LoadSceneAsync(2));
-        foreach (var obj in FindObjectsOfType<PhotonView>())
-        {
-            if (obj.IsMine)
-            {
-                PhotonNetwork.Destroy(obj.gameObject);
-            }
-        }
+        StartCoroutine(LoadSceneAsync(2));     
     }  
 
     private IEnumerator LoadSceneAsync(int sceneNum)

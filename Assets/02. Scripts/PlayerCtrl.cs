@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
-    PhotonView pv;
+    public PhotonView pv;
     private Rigidbody rb;
     public Animator anim;
     private CapsuleCollider coll;
@@ -31,7 +31,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     private float jumpCooltimeTimer = 0.0f;
     //리스폰 포인트
-    [HideInInspector]
     public Vector3 point;
     [SerializeField]
     bool isGround = false;
