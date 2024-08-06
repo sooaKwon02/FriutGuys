@@ -12,24 +12,9 @@ public class DatabaseManager : MonoBehaviour
 {
     SaveLoad saveload;
     Inventory inven;
-    public static DatabaseManager Instance { get; private set; }
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        SignUpComplete.SetActive(false);
-        saveload = FindObjectOfType<SaveLoad>();
-        inven = FindObjectOfType<Inventory>();
-    }
+
 
     public InputField id;
     public InputField password;
@@ -42,6 +27,16 @@ public class DatabaseManager : MonoBehaviour
     public string passwordtext;
     [HideInInspector]
     public string nicknametext;
+
+    private void Awake()
+    {
+        saveload = FindObjectOfType<SaveLoad>();
+        inven = FindObjectOfType<Inventory>();
+    }
+    private void Start()
+    {
+        SignUpComplete.SetActive(false);
+    }
     //=============================================================회원가입==============
     public void SignUpButton()
     {

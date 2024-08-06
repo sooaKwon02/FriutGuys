@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Custom : MonoBehaviour
 {
-    public Text FixedPartName;
+    public Text fixedPartName;
     public Text styleName;
     CharacterCustom custom;
     Transform player=null;
@@ -78,27 +78,27 @@ public class Custom : MonoBehaviour
         if (num == 0)
         {
             player = custom.body.transform;
-            FixedPartName.text = player.name;
+            fixedPartName.text = player.name;
         }
         else if (num == 1)
         {
             player = custom.glove1.transform;
-            FixedPartName.text = player.name;
+            fixedPartName.text = player.name;
         }
         else if (num == 2)
         {
             player = custom.glove2.transform;
-            FixedPartName.text = player.name;
+            fixedPartName.text = player.name;
         }
         else if (num == 3)
         {
             player = custom.head.transform;
-            FixedPartName.text = player.name;
+            fixedPartName.text = player.name;
         }
         else if (num == 4)
         {
             player = custom.tail.transform;
-            FixedPartName.text = player.name;
+            fixedPartName.text = player.name;
         }
         setSize = false;
         if (StyleCheck=="Rotation")
