@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
             { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
       
     }
+    
     void IDPanelSet()
     {
         nicknamePanelText.text=saveload.nickName;

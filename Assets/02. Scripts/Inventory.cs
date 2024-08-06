@@ -5,12 +5,16 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using System.Text;
+using UnityEditorInternal.Profiling.Memory.Experimental;
+using System.Net;
 
 public class Inventory : MonoBehaviour
 {
-    public GameObject useInventory;
-    public GameObject fashionInventory;
+    public GameObject useInventoryPanel;
+    public GameObject fashionInventoryPanel;
     public GameObject inventory;
+    public RectTransform useItem;
+    public RectTransform fashionItem;
 
     //============================================================== 아이템 스왑
     [HideInInspector]
@@ -19,45 +23,95 @@ public class Inventory : MonoBehaviour
     public Image image;
 
     SaveLoad saveload;
-    
+
+    public GameObject InvenAddPanel;
     private void Awake()
     {
         saveload = FindObjectOfType<SaveLoad>();
         saveload.inventory = GetComponent<Inventory>();
+        useItem = useInventoryPanel.transform.GetChild(0).GetComponent<RectTransform>();
+        fashionItem = fashionInventoryPanel.transform.GetChild(0).GetComponent<RectTransform>();
     }
     private void Start()
     {
+        useInventoryPanel.SetActive(false); 
+        fashionInventoryPanel.SetActive(true);
+        InvenAddPanel.SetActive(false);
         InventorySet(saveload.useNum, saveload.useName, saveload.fashionNum, saveload.fashionName);
     }
     public void InventorySwap(bool check)
     {
-        useInventory.SetActive(check);
-        fashionInventory.SetActive(!check);
+        useInventoryPanel.SetActive(check);
+        fashionInventoryPanel.SetActive(!check);
     }
-    public void InventoryAdd()
+    public void InventoryAdd(int num)
     {
-        GameObject inven = GameObject.FindGameObjectWithTag("Inventory");
-        GameObject obj = Instantiate(inventory);
-        obj.transform.SetParent(inven.GetComponent<RectTransform>(), false);
-        obj.tag = inven.name.ToString();         
+        if (num == 0&&saveload.player.cashMoney>100)
+        {
+            saveload.player.cashMoney -= 100;
+            InstanceAdd();
+            
+        }
+        else if(num==1&&saveload.player.gameMoney>1000)
+        {
+            saveload.player.gameMoney -= 1000;
+            InstanceAdd();
+        }               
+    }
+    void InstanceAdd()
+    {
+        if (fashionInventoryPanel.activeSelf)
+        {
+            GameObject obj = Instantiate(inventory);
+            obj.transform.SetParent(fashionItem.transform, false);
+            obj.tag = fashionItem.name;
+            Adds(fashionItem);
+        }
+        else if (useInventoryPanel.activeSelf)
+        {
+            GameObject obj = Instantiate(inventory);
+            obj.transform.SetParent(useItem.transform, false);
+            obj.tag = useItem.name;
+            Adds(useItem);
+        }
+    }
+    void Adds(RectTransform inven)
+    {
+        if (inven.childCount != 0)
+        {
+            Vector2 cellSize = inven.GetComponent<GridLayoutGroup>().cellSize;
+            int row = (inven.childCount / 5) + 1;            
+            inven.pivot = new Vector2(0f, 1f);
+            inven.sizeDelta = new Vector2(cellSize.x*4.4f, cellSize.y*row*1.2f);
+        }
+        else
+        {
+            inven.sizeDelta=Vector2.zero;
+        }
+    }
+    public void InvenAddSet(bool check)
+    {
+        InvenAddPanel.SetActive(check);
     }
     void InventorySet(int[] _useNum, string[] _useName, int[] _fashionNum, string[] _fashionName)
     {
         for(int i=0;i<_useNum.Length;i++)
         {
             GameObject obj = Instantiate(inventory);
-            obj.transform.SetParent(useInventory.GetComponent<RectTransform>(), false);
+            obj.transform.SetParent(useItem, false);
             Item item = Resources.Load<Item>("Item/UseItem/" + _useName[i]);
             obj.GetComponentInChildren<ItemData>().ItemGET(item);
-            obj.tag = useInventory.name.ToString();
+            obj.tag = useItem.name.ToString();
         }
         for (int i = 0; i < _fashionNum.Length; i++)
         {
             GameObject obj = Instantiate(inventory);
-            obj.transform.SetParent(fashionInventory.GetComponent<RectTransform>(), false);
+            obj.transform.SetParent(fashionItem, false);
+            obj.tag = fashionItem.name.ToString();
             Item item = Resources.Load<Item>("Item/FashionItem/" + _fashionName[i]);
             obj.GetComponentInChildren<ItemData>().ItemGET(item);
-            obj.tag = fashionInventory.name.ToString();
         }
+        Adds(useItem);
+        Adds(fashionItem);
     }
 }

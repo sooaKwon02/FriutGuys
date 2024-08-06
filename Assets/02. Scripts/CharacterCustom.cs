@@ -71,7 +71,12 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         FindObjectOfType<PlayerCon>().UserInfoSet( _nick);
     }
  
-
+    void InfoSet()
+    {
+        gameMoney = p.gameMoney;
+        cashMoney = p.cashMoney;
+        score=p.score;
+    }
     IEnumerator CustomPlayer()
     {
         body.ItemSet(Resources.Load<Item>("Item/FashionItem/" + p.body_name));
