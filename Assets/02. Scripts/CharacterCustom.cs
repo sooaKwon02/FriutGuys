@@ -95,8 +95,13 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         //_nick과 현재 클라이언트의 이름이 같을 경우
         if(PhotonNetwork.NickName == _nick)
         {
-            //나가잇
-            PhotonNetwork.LeaveRoom();
+            PlayerCon playerCon = FindObjectOfType<PlayerCon>();
+            if (PhotonNetwork.InRoom)
+            {
+                //나가잇
+                Debug.Log("나가잇");
+                PhotonNetwork.LeaveRoom();
+            }
         }
     }
 

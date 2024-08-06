@@ -124,7 +124,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         {
             if (_pv.IsMine)
             {
-                _pv.RPC("DestroyUserInfo", RpcTarget.AllBuffered, nickName);
+                _pv.RPC("DestroyUserInfo", RpcTarget.All, nickName);
             }
         }
     }
@@ -137,9 +137,9 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             PhotonView[] pvs = FindObjectsOfType<PhotonView>();
             foreach (PhotonView _pv in pvs)
             {
-                _pv.RPC("DestroyUserInfo", RpcTarget.AllBuffered, name);
                 //Æ÷Åæºä¿¡´Ù RPC¸¦ ½÷
-                _pv.RPC("KickPlayerRPC", RpcTarget.AllBuffered, name);
+                _pv.RPC("KickPlayerRPC", RpcTarget.All, name);
+                _pv.RPC("DestroyUserInfo", RpcTarget.All, name);
             }
         }
     }
