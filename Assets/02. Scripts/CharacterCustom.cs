@@ -98,8 +98,6 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
             PlayerCon playerCon = FindObjectOfType<PlayerCon>();
             if (PhotonNetwork.InRoom)
             {
-                //나가잇
-                Debug.Log("나가잇");
                 PhotonNetwork.LeaveRoom();
             }
         }

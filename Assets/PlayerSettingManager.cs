@@ -66,9 +66,4 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
             yield return null;
         }
     }
-    
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        Debug.Log("³ª°¨: " + otherPlayer.NickName);
-    }   
 }

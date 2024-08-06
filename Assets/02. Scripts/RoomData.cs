@@ -22,6 +22,5 @@ public class RoomData : MonoBehaviour
     {
         textRoomName.text = roomName;
         textConnectInfo.text = "(" + connectPlayer.ToString() + " / " +  maxPlayers.ToString() +  ")";
-        Debug.Log(maxPlayers);
     }
 }

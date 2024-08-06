@@ -45,10 +45,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = saveLoadScript.nickName;
     }
 
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("Join Lobby");
-    }
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
@@ -78,7 +74,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             bool isSucces = PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions, TypedLobby.Default);
 
-            Debug.Log("CreateRoom: " + isSucces);
         }
         else
         {
@@ -93,21 +88,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
 
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("Room 입장");
-    }
     private void OnPasswordEntered(string enteredPassword, RoomInfo room)
     {
         if (enteredPassword == roomPassword)
         {
-            Debug.Log("비밀번호 맞음");
             pwPanel.gameObject.SetActive(false);
             PhotonNetwork.JoinRoom(room.Name);
         }
         else
         {
-            Debug.Log("비밀번호 틀림");
             pwPanel.gameObject.SetActive(false);
             StartCoroutine(PWFail());
         }
@@ -123,7 +112,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         //비밀번호 있으면 비공개 --> roomoption false?로 해서 리스트에만 보이게 할 수 있지 않을까 
         //준비 다 하고 시작한 방은 들어가지 못하게 --> 어차피 인원차면 못들어감
-        //PhotonNetwork.JoinRandomRoom();
         JoinRandomRoomNoPw();
     }
 
@@ -148,7 +136,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("입장 가능한 방이 없습니다.");
             StartCoroutine(JoinRoomFail());
         }
 
@@ -156,7 +143,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("랜덤 방 없음 " + message);
         StartCoroutine(JoinRoomFail());
     }
 
@@ -166,22 +152,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2);
         createRoomFailPanel.SetActive(false);
     }
-
-    //public override void OnPlayerEnteredRoom(Player newPlayer)
-    //{
-        //Debug.Log("플레이어 입장 : " + newPlayer.NickName);
-        //CheckRoomPlayerCount();
-    //}
-
-    //private void CheckRoomPlayerCount()
-    //{
-    //    if (PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers)
-    //    {
-    //        Debug.Log("방 다 참");
-    //        PhotonNetwork.LeaveRoom();
-    //        StartCoroutine(RoomFull());
-    //    }
-    //}
 
     IEnumerator RoomFull()
     {
@@ -202,7 +172,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
        foreach(RoomInfo _room in roomList)
        {
-            Debug.Log(_room.Name);
             GameObject room = (GameObject)Instantiate(roomListButtonPrefabs);
             room.transform.SetParent(scrollContents.transform, false);
 
@@ -213,7 +182,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             roomData.DisplayRoomData();
 
-            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(_room); Debug.Log("Room Click " + roomData.roomName); });
+            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(_room);});
 
             scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
             scrollContents.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20f);
@@ -236,11 +205,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             pwPanel.gameObject.SetActive(false);
             PhotonNetwork.JoinRoom(roomInfo.Name);
-            Debug.Log("비밀번호 없음");
         }
     }
-
-    public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
-    {
-    }    
 }
