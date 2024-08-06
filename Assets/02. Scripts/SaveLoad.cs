@@ -170,25 +170,25 @@ public class SaveLoad : MonoBehaviour
     }
     public IEnumerator InvenSaveCoroutine()
     {
-        inventype.fashionInven = new INVEN[inventory.fashionInventory.transform.childCount];
-        inventype.useInven = new INVEN[inventory.useInventory.transform.childCount];
+        inventype.fashionInven = new INVEN[inventory.fashionItem.transform.childCount];
+        inventype.useInven = new INVEN[inventory.useItem.transform.childCount];
         string url = "http://61.99.10.173//fruitsGuys/PlayerInvenSave.php";
-        for (int i = 0; i < inventory.fashionInventory.transform.childCount; i++)
+        for (int i = 0; i < inventory.fashionItem.transform.childCount; i++)
         {
-            if (inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionInventory.transform.childCount > 0)
+            if (inventory.fashionItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionItem.transform.childCount > 0)
             {
-                item = inventory.fashionInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
+                item = inventory.fashionItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
                 inventype.fashionInven[i] = new INVEN { num = i, name = item.name };
             }
             else
                 inventype.fashionInven[i] = new INVEN { num = i, name = "" };
 
         }
-        for (int i = 0; i < inventory.useInventory.transform.childCount; i++)
+        for (int i = 0; i < inventory.useItem.transform.childCount; i++)
         {
-            if (inventory.useInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.useInventory.transform.childCount > 0)
+            if (inventory.useItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.useItem.transform.childCount > 0)
             {
-                item = inventory.useInventory.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
+                item = inventory.useItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item;
                 inventype.useInven[i] = new INVEN { num = i, name = item.name };
             }
             else

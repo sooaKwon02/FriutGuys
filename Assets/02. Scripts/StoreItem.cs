@@ -26,6 +26,7 @@ public class StoreItem : MonoBehaviour
     public void GetButton()
     {
         GameObject[] inven = GameObject.FindGameObjectsWithTag(item.itemType.ToString());
+      
         GetItems(inven);
     }
     void GetItems(GameObject[] inven)

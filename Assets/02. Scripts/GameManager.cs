@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
     public GameObject audioPanel;
     public GameObject keyboardPanel;
 
+    public Text nicknamePanelText;
+    public Text CashPanelText;
+    public Text GameMoneyPanelText;
+
+
     public GameObject roomListPanel;
     public GameObject playButtonPanel;
     public GameObject SearchRoomPanel;
@@ -46,6 +51,9 @@ public class GameManager : MonoBehaviour
         settingMenuPanel.SetActive(false);
         saveload = FindObjectOfType<SaveLoad>();
         ActiveMenu(true);
+        IDPanelSet();
+
+
     }
     private void Update()
     {
@@ -55,6 +63,13 @@ public class GameManager : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))
             { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
       
+    }
+    
+    void IDPanelSet()
+    {
+        nicknamePanelText.text=saveload.nickName;
+        CashPanelText.text=saveload.player.cashMoney.ToString();
+        GameMoneyPanelText.text=saveload.player.gameMoney.ToString();
     }
 
     void ActiveMenu(bool active)
