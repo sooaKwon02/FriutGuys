@@ -77,10 +77,10 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         UserInfo[] userInfos = FindObjectsOfType<UserInfo>();
         foreach (UserInfo userif in userInfos)
         {
-            if(userif.isReady)
+            if (userif.isReady)
             {
                 count++;
-            }      
+            }
         }
         if (PhotonNetwork.IsMasterClient && count == PhotonNetwork.CurrentRoom.MaxPlayers - 1)
         {
@@ -88,19 +88,15 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel(4);
         }
     }
-    public override void OnJoinedRoom()
-    {
-        //    Debug.Log(GameObject.FindGameObjectsWithTag("Player").Length);
-        //    Debug.Log(FindObjectsOfType<PhotonView>().Length);
-        //    base.OnJoinedRoom();
-    }
 
     IEnumerator CreatePlayer()
     {
         yield return new WaitForSeconds(1f);
         if (PhotonNetwork.IsConnectedAndReady)
         {
-            GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+            float xDir = Random.Range(-10f, 10f);
+            float zDir = Random.Range(-10f, 10f);
+            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(xDir, 0, zDir), Quaternion.identity);
         }
     }
 
@@ -121,7 +117,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         }
     }
 
-    void RemoveUserInfoPanel()
+    public void RemoveUserInfoPanel()
     {
         PhotonView[] pvs = FindObjectsOfType<PhotonView>();
         foreach (PhotonView _pv in pvs)
@@ -141,9 +137,9 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             PhotonView[] pvs = FindObjectsOfType<PhotonView>();
             foreach (PhotonView _pv in pvs)
             {
+                _pv.RPC("DestroyUserInfo", RpcTarget.AllBuffered, name);
                 //Æ÷Åæºä¿¡´Ù RPC¸¦ ½÷
                 _pv.RPC("KickPlayerRPC", RpcTarget.AllBuffered, name);
-                RemoveUserInfoPanel();
             }
         }
     }

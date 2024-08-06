@@ -37,6 +37,10 @@ public class UserInfo : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             kickGame.SetActive(true);
+            if (PhotonNetwork.MasterClient.NickName == _nick)
+            {
+                kickGame.SetActive(false);
+            }
         }
         else
         {
