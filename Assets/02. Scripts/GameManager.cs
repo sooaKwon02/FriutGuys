@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         useItemPanel.SetActive(false);
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
+        settingPanel.SetActive(false);
         saveload = FindObjectOfType<SaveLoad>();
         ActiveMenu(true);
         IDPanelSet();
@@ -169,6 +170,7 @@ public class GameManager : MonoBehaviour
     public void RankPanelOnOff(bool check)
     {
         rankPanel.SetActive(check);
+        saveload.LoadScore();
         ActiveMenu(!check);
     }
     
