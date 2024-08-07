@@ -14,12 +14,13 @@ public class StartGameManager : MonoBehaviour
     int goalCount;
     int count;
     GameObject[] players;
-    GameObject error;
 
     private Text gameTxt;
 
-    GameObject[] playerTxt;
-
+    int watchIndex = -1;
+    Camera cam;
+    //int index;
+    //PlayerCtrl nextPlayer;
     private void Awake()
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount != 0)
@@ -31,7 +32,7 @@ public class StartGameManager : MonoBehaviour
     private void Start()
     {
         Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
-        //playerTxt = GameObject.FindGameObjectsWithTag("PLAYER_TXT");
+
         gameTxt.transform.SetParent(canvas.transform);
 
         players = GameObject.FindGameObjectsWithTag("Player");
@@ -42,7 +43,7 @@ public class StartGameManager : MonoBehaviour
         }
 
         count = 0;
-        goalCount = currentPlayers / 2;
+        goalCount = currentPlayers;
 
         StartCoroutine(SpawnSet());
         StartCoroutine(GameCount());
@@ -54,6 +55,15 @@ public class StartGameManager : MonoBehaviour
         if (count >= goalCount)
         {
             StartCoroutine(GameoverMsg());
+        }
+
+        if(cam.transform.parent == null)
+        {
+            Watching();
+            //cam.transform.position = new Vector3(0, -0.71f, -6.15f);
+            //cam.transform.rotation = nextPlayer.cam.transform.rotation;
+            //cam.transform.SetParent(nextPlayer.cam.transform);
+            //cam.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
         }
     }
 
@@ -144,8 +154,12 @@ public class StartGameManager : MonoBehaviour
                 playerCtrl.isGoalin = true;
 
                 ShowMessage(playerCtrl, "성공!");
-                Watching(other);
 
+                cam = other.gameObject.GetComponentInChildren<Camera>();
+                cam.gameObject.transform.parent = null;
+                cam.transform.position = Vector3.zero;
+                cam.transform.rotation = Quaternion.identity;
+                
                 StartCoroutine(Active(other));
             }
             else
@@ -159,41 +173,37 @@ public class StartGameManager : MonoBehaviour
     IEnumerator Active(Collider other)
     {
         yield return new WaitForSeconds(0.5f);
-        other.gameObject.SetActive(false); 
+        other.gameObject.SetActive(false);
     }
 
-    int watchIndex = -1;
-    void Watching(Collider other)
+    void Watching()
     {
         //카메라를 떼어서 
-        Camera cam = other.gameObject.GetComponentInChildren<Camera>();
-        //마우스 버튼을 누르면
         if (Input.GetMouseButtonDown(1))
         {
+            Debug.Log("Watching");
+            //포톤뷰로 찾아오는걸 구현해봐
             PlayerCtrl[] playersCtrl = FindObjectsOfType<PlayerCtrl>();
-                //PlayerCtrl nextPlayer = playersCtrl[nextNum];
 
-                //foreach(PlayerCtrl players in playersCtrl)
-                //{
-                //    if (!players.isGoalin)
-                //    {
-                //        cam.transform.position = players.cam.transform.position;
-                //        cam.transform.rotation = players.cam.transform.rotation;
-                //    }
-                //}
-                int startIndex = (watchIndex + 1) % playersCtrl.Length;
-                for (int i = 0; i < playersCtrl.Length; i++)
+            //원형배열
+            int startIndex = (watchIndex + 1) % playersCtrl.Length;
+            for (int i = 0; i < playersCtrl.Length; i++)
+            {
+                int index = (startIndex + i) % playersCtrl.Length;
+
+                if (!playersCtrl[index].isGoalin)
                 {
-                    int index = (startIndex + i) % playersCtrl.Length;
-                    if (!playersCtrl[index].isGoalin) 
+                    PlayerCtrl nextPlayer = playersCtrl[index];
+                    if (nextPlayer.cam != null)
                     {
-                        PlayerCtrl nextPlayer = playersCtrl[index];
-                        cam.transform.position = nextPlayer.cam.transform.position;
-                        cam.transform.rotation = nextPlayer.cam.transform.rotation;
+                        cam.transform.SetParent(nextPlayer.cam.transform);
+                        cam.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
                         watchIndex = index;
                     }
+                    return;
                 }
-            
+            }
+
         }
     }
 
