@@ -15,12 +15,12 @@ MonoBehaviour:
   _name: Donut
   sprite: {fileID: 21300000, guid: af57cefb9e21e441da779138dfbfc9d1, type: 3}
   mesh: {fileID: 3340957000141638778, guid: 20fc9c5e71adb0443bff79e76235884b, type: 3}
-  prefab: {fileID: 2622223880219897584, guid: 71be32ea5846afd419e33241296bc486, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 20fc9c5e71adb0443bff79e76235884b, type: 3}
   itemType: 1
-  price: 100
+  price: 0
   gameMoneyPrice: 1000
   cashPrice: 100
-  priceImg: {fileID: 21300008, guid: 857d6effbb662ec47a4731bb5bcf5fe9, type: 3}
+  priceImg: {fileID: 0}
   cashImg: {fileID: 21300008, guid: 857d6effbb662ec47a4731bb5bcf5fe9, type: 3}
   gameMoneyImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   moneyType: 0

@@ -15,12 +15,12 @@ MonoBehaviour:
   _name: Apple
   sprite: {fileID: 21300000, guid: 2aa6ab62866ce4439ab7303f7da55e51, type: 3}
   mesh: {fileID: -472147775963580301, guid: 12bf7c0de8c3b5b4bb67f4f585d5a093, type: 3}
-  prefab: {fileID: 388876489497171537, guid: d0ddd93953187fd4195f9cea4a7b8a56, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 12bf7c0de8c3b5b4bb67f4f585d5a093, type: 3}
   itemType: 0
-  price: 1000
+  price: 0
   gameMoneyPrice: 1000
   cashPrice: 100
-  priceImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  priceImg: {fileID: 0}
   cashImg: {fileID: 21300008, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   gameMoneyImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   moneyType: 1

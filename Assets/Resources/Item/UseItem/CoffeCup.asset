@@ -15,12 +15,12 @@ MonoBehaviour:
   _name: CoffeCup
   sprite: {fileID: 21300000, guid: e0654092146b349cdbf2909a9205bca0, type: 3}
   mesh: {fileID: -1016011637710242029, guid: 5e87ddfd4564feb4689769f649055178, type: 3}
-  prefab: {fileID: 2830233848371693089, guid: 6b5c801f5ca0b3e4aa2780dbe3ba0538, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 5e87ddfd4564feb4689769f649055178, type: 3}
   itemType: 0
-  price: 1000
+  price: 0
   gameMoneyPrice: 1000
   cashPrice: 100
-  priceImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  priceImg: {fileID: 0}
   cashImg: {fileID: 21300008, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   gameMoneyImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   moneyType: 1
