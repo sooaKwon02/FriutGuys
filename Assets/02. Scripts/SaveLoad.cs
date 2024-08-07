@@ -65,19 +65,31 @@ public class SaveLoad : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-
-
-
+    private void Start()
+    {
+    }
     private void OnApplicationQuit()
     {
         SaveData();
-        SaveInven();
+        SaveInven(); 
+        StartCoroutine(UpdateIsActiveStatus(1));
     }
-
-    public void SetNickName(string _id, string _nick)
+    IEnumerator UpdateIsActiveStatus(int isActive)
+    {
+        string url= "http://61.99.10.173/fruitsGuys/IsActive.php";
+        WWWForm form = new WWWForm();
+        form.AddField("id", ID);
+        form.AddField("isActive", isActive);
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        {
+            yield return www.SendWebRequest();
+        }
+    }
+    public void SetGame(string _id, string _nick)
     {
         ID = _id;
         nickName = _nick;
+        StartCoroutine(UpdateIsActiveStatus(0));
     }
 
     public void SaveData()
@@ -172,7 +184,7 @@ public class SaveLoad : MonoBehaviour
     {
         inventype.fashionInven = new INVEN[inventory.fashionItem.transform.childCount];
         inventype.useInven = new INVEN[inventory.useItem.transform.childCount];
-        string url = "http://61.99.10.173//fruitsGuys/PlayerInvenSave.php";
+        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
         for (int i = 0; i < inventory.fashionItem.transform.childCount; i++)
         {
             if (inventory.fashionItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionItem.transform.childCount > 0)
@@ -311,5 +323,5 @@ public class SaveLoad : MonoBehaviour
                 inventype.fashionInven[i] = new INVEN { num = fashionNum[i], name = fashionName[i] };
             }
         }
-    }
+    }   
 }
