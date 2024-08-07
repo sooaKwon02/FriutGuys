@@ -48,7 +48,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     //private FixedJoint fixedJoint;
     //private bool isGrab = false;
 
-    //public GameObject failedText;
+    public Text playerTxt;
 
     Vector3 currPos = Vector3.zero;
     Quaternion currRot = Quaternion.identity;
