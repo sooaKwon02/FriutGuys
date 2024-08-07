@@ -762,6 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674b1cb0488cc6a4e9f2b02536fc997b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pv: {fileID: 0}
   anim: {fileID: 0}
   cam: {fileID: 3323184940998535190}
   player: {fileID: 7054785656221380520}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
-    PhotonView pv;
+    public PhotonView pv;
     private Rigidbody rb;
     public Animator anim;
     private CapsuleCollider coll;
@@ -31,7 +31,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     private float jumpCooltimeTimer = 0.0f;
     //리스폰 포인트
-    [HideInInspector]
     public Vector3 point;
     [SerializeField]
     bool isGround = false;
@@ -74,8 +73,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         DontDestroyOnLoad(this);
         pv = GetComponent<PhotonView>();
-        PhotonNetwork.SendRate = 120;
-        pv.Synchronization = ViewSynchronization.Unreliable;
+        PhotonNetwork.SendRate = 10;
+        pv.Synchronization = ViewSynchronization.ReliableDeltaCompressed;
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
@@ -429,7 +428,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public void RespawnPointSet()
     {
-        if(pv.IsMine)
+        if (pv.IsMine)
         {
             transform.position = point;
             pv.RPC("OtherRespawnSet", RpcTarget.Others, point);

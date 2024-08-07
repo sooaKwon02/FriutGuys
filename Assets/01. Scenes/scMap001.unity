@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08058223, g: 0.09996879, b: 0.3012974, a: 1}
+  m_IndirectSpecularColor: {r: 0.14087974, g: 0.11314524, b: 0.31283417, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -938,7 +938,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20, y: 1, z: 1}
+  m_Size: {x: 20, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: -2}
 --- !u!114 &152401268
 MonoBehaviour:
@@ -952,7 +952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2bfd7bf348afb408d593ec4a4197f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnManager: {fileID: 984618049}
 --- !u!1 &154593744
 GameObject:
   m_ObjectHideFlags: 0
@@ -8672,7 +8671,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20.348103, y: 1, z: 1}
+  m_Size: {x: 20.348103, y: 5, z: 1}
   m_Center: {x: -0.32477808, y: 0, z: -2.3362818}
 --- !u!114 &1532215997
 MonoBehaviour:
@@ -8686,7 +8685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2bfd7bf348afb408d593ec4a4197f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnManager: {fileID: 984618049}
 --- !u!4 &1534272088 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7267733459998278534, guid: ffeaf054dd9d46a49bcc0ecabe5d5978, type: 3}
@@ -8766,7 +8764,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20, y: 1, z: 1}
+  m_Size: {x: 20, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: -2.3362818}
 --- !u!114 &1540851422
 MonoBehaviour:
@@ -8780,7 +8778,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2bfd7bf348afb408d593ec4a4197f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnManager: {fileID: 984618049}
 --- !u!1001 &1543049344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10546,7 +10543,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20.246264, y: 1, z: 1}
+  m_Size: {x: 20.246264, y: 5, z: 1}
   m_Center: {x: -0.005581856, y: 0, z: -2.3362818}
 --- !u!114 &1866539251
 MonoBehaviour:
@@ -10560,7 +10557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2bfd7bf348afb408d593ec4a4197f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnManager: {fileID: 984618049}
 --- !u!1 &1891672081 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0cee50ed89b959148a657e2f27cbd773, type: 3}
@@ -10868,7 +10864,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20.281967, y: 1, z: 1}
+  m_Size: {x: 20.281967, y: 5, z: 1}
   m_Center: {x: -0.17290163, y: 0, z: -2.3362818}
 --- !u!114 &1990549180
 MonoBehaviour:
@@ -10882,7 +10878,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2bfd7bf348afb408d593ec4a4197f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnManager: {fileID: 984618049}
 --- !u!1 &1991549980
 GameObject:
   m_ObjectHideFlags: 0
@@ -10993,7 +10988,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000814793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 152401266}
