@@ -64,8 +64,13 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public bool isGoalin = false;
 
+    public Image[] useItem;
+    CharacterCustom custom;
     void Awake()
     {
+        
+        custom=GetComponent<CharacterCustom>();
+
         myTr = GetComponent<Transform>();
 
         currPos = myTr.position;
@@ -80,6 +85,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         coll = GetComponent<CapsuleCollider>();
         //failedText.SetActive(false);
         isGoalin = false;
+    }   
+    void Start()
+    {
+        ItemImageSet();
     }
 
     void Update()
@@ -88,6 +97,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             LookAround();
             CheckGround();
+            UseItem();
             if (Input.GetKeyDown(KeyCode.Space) && isGround && pv.IsMine && !isColl)
             {
                 isJump = true;
@@ -134,6 +144,30 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             Sliding();
             Jump();
         }
+    }
+    void UseItem()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ItemSwap();
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            Instantiate(custom.item1.item.prefab);
+            custom.item1.ItemSet(null);
+        }
+    }  
+    void ItemSwap()
+    {
+        PlayerItem item = custom.item1;
+        custom.item1=custom.item2;
+        custom.item2 = item;
+        ItemImageSet();
+    }
+    void ItemImageSet()
+    {
+        useItem[0].sprite = custom.item1.item.sprite;
+        useItem[1].sprite = custom.item2.item.sprite;
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -442,5 +476,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             transform.position = _point;
         }
     }
+  
 }
     

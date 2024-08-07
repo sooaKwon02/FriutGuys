@@ -15,12 +15,12 @@ MonoBehaviour:
   _name: Pepper
   sprite: {fileID: 21300000, guid: af9dcf356be2749228f23fff1cc8b7fb, type: 3}
   mesh: {fileID: 6187883067242612374, guid: 0483fbf3fcdb60740a9db9ef1f6598ff, type: 3}
-  prefab: {fileID: 919132149155446097, guid: 0483fbf3fcdb60740a9db9ef1f6598ff, type: 3}
+  prefab: {fileID: 1271865576400040978, guid: 6887084a4d02b064fbd55a21a809634f, type: 3}
   itemType: 1
-  price: 0
+  price: 100
   gameMoneyPrice: 1000
   cashPrice: 100
-  priceImg: {fileID: 0}
+  priceImg: {fileID: 21300008, guid: 857d6effbb662ec47a4731bb5bcf5fe9, type: 3}
   cashImg: {fileID: 21300008, guid: 857d6effbb662ec47a4731bb5bcf5fe9, type: 3}
   gameMoneyImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   moneyType: 0

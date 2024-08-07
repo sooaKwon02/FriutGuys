@@ -179,7 +179,6 @@ public class StartGameManager : MonoBehaviour
         {
             scCtrl.moveSpeed = 0f;
             scCtrl.isColl = true;
-            scCtrl.playerTxt.transform.parent.gameObject.SetActive(true);
             scCtrl.playerTxt.text = msg;
         }
     }
