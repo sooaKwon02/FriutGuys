@@ -23,7 +23,6 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     public int gameMoney;
     public int cashMoney;
     public int score;
-    public bool goalIn;
 
     SaveLoad.PLAYER p;
     public PhotonView pv;

@@ -39,7 +39,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     bool isJump = false;
 
     bool isMove = false;
-    bool isColl = false;
+    public bool isColl = false;
 
     public GameObject slideCollider;
 
@@ -63,6 +63,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public Transform holdPosition;//, pushPosition;
 
+    public bool isGoalin = false;
+
     void Awake()
     {
         myTr = GetComponent<Transform>();
@@ -77,7 +79,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         coll = GetComponent<CapsuleCollider>();
-        //failedText.SetActive(false);    
+        //failedText.SetActive(false);
+        isGoalin = false;
     }
 
     void Update()
@@ -336,18 +339,22 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             StartCoroutine(ReMove());
 
         }
-        if (coll.transform.tag == "Bullet")
-        {
-            Destroy(coll.gameObject);
-            pv.RPC("Des", RpcTarget.Others, coll);
-        }
-        if (coll.transform.tag == "Bullet")
-        {
-            Destroy(coll.gameObject);
-            pv.RPC("Des", RpcTarget.Others, coll);
-        }
+
+        //if (coll.transform.tag == "Bullet")
+        //{
+        //    Destroy(coll.gameObject);
+        //    pv.RPC("Des", RpcTarget.Others, coll);
+        //}
     }
-    [PunRPC]
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Finish"))
+    //    {
+    //        isGoalin = true;
+    //    }
+    //}
+    //[PunRPC]
     void Des(GameObject obj)
     {
         Destroy(obj);
@@ -425,13 +432,16 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         if(pv.IsMine)
         {
             transform.position = point;
-            pv.RPC("OtherRespawnSet", RpcTarget.Others, this.transform, point);
+            pv.RPC("OtherRespawnSet", RpcTarget.Others, point);
         }        
     }
     [PunRPC]
-    void OtherRespawnSet(Transform player,Vector3 _point)
+    void OtherRespawnSet(Vector3 _point)
     {
-        player.position = _point;
+        if (!pv.IsMine)
+        {
+            transform.position = _point;
+        }
     }
 }
     

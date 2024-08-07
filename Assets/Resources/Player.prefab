@@ -770,8 +770,10 @@ MonoBehaviour:
   slideSpeed: 5
   slideCooltime: 1
   jumpForce: 5
+  point: {x: 0, y: 0, z: 0}
   isGround: 0
   isJump: 0
+  isColl: 0
   slideCollider: {fileID: 3323184941708508654}
   pullForce: 0
   pullStrength: 0
@@ -780,6 +782,7 @@ MonoBehaviour:
   pullRadius: 1.5
   targetObject: {fileID: 0}
   holdPosition: {fileID: 0}
+  isGoalin: 0
 --- !u!136 &3323184941572198166
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -853,7 +856,6 @@ MonoBehaviour:
   gameMoney: 0
   cashMoney: 0
   score: 0
-  goalIn: 0
   pv: {fileID: 0}
 --- !u!1 &5594008465144471513
 GameObject:

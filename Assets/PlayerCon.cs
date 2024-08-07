@@ -85,16 +85,16 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient && count == PhotonNetwork.CurrentRoom.MaxPlayers - 1)
         {
             PhotonNetwork.CurrentRoom.IsVisible = false;
-            int num = Random.Range(4, 6);
-            if(num>=4&&num<6)
-            {
-                PlayerSettingManager.Instance.type=PlayerSettingManager.GAME_TYPE.RACING;
-            }
-            else if(num>=6&&num<7)
-            {
-                PlayerSettingManager.Instance.type = PlayerSettingManager.GAME_TYPE.BATTLE;
-            }
-            PhotonNetwork.LoadLevel(num);
+            //int num = Random.Range(4, 6);
+            //if(num>=4&&num<6)
+            //{
+            //    PlayerSettingManager.Instance.type=PlayerSettingManager.GAME_TYPE.RACING;
+            //}
+            //else if(num>=6&&num<7)
+            //{
+            //    PlayerSettingManager.Instance.type = PlayerSettingManager.GAME_TYPE.BATTLE;
+            //}
+            PhotonNetwork.LoadLevel(4);
         }
     }
 

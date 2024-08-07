@@ -32,6 +32,7 @@ public class StartGameManager : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
         count = 0;
         goalCount = currentPlayers / 2;
+
         StartCoroutine(SpawnSet());
         StartCoroutine(GameCount());
         Invoke("GameStart", 3.5f);
@@ -56,6 +57,7 @@ public class StartGameManager : MonoBehaviour
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
             playerCtrls.moveSpeed = 0;
+            playerCtrls.isColl = true;
         }
 
         for (int i = 3; i > 0; i--)
@@ -75,14 +77,17 @@ public class StartGameManager : MonoBehaviour
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
             playerCtrls.moveSpeed = 5.0f;
+            playerCtrls.isColl = false;
         }
     }
 
     IEnumerator GameOver()
     {
+        gameTxt.enabled = true;
+        gameTxt.text = "탈락";
         foreach (GameObject player in players)
         {
-           if(!player.GetComponent<CharacterCustom>().goalIn)
+           if(!player.GetComponent<PlayerCtrl>().isGoalin)
            {
                 if (PhotonNetwork.IsMasterClient)
                 {                    
@@ -98,13 +103,16 @@ public class StartGameManager : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag=="Player")
+        if(other.CompareTag("Player"))
         {
             if(count<goalCount)
             {
+                gameTxt.enabled = true;
+                gameTxt.text = "성공!";
                 count++;
-                other.GetComponent<CharacterCustom>().goalIn = true;
-                other.GetComponent<Rigidbody>().velocity = new Vector3(0, other.GetComponent<Rigidbody>().velocity.y, 0);
+                Debug.Log("count : " + count);
+                other.GetComponent<PlayerCtrl>().isGoalin = true;
+                //other.GetComponent<Rigidbody>().velocity = new Vector3(0, other.GetComponent<Rigidbody>().velocity.y, 0);
                 other.GetComponent<PlayerCtrl>().enabled = false;
             }
             else
