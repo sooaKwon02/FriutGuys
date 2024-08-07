@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class CameraSwap : MonoBehaviour
 {
-    private void Awake()
+    private void OnEnable()
     {
         if (gameObject.GetComponent<PhotonView>() != null && gameObject.GetComponent<PhotonView>().IsMine)
         {
