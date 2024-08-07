@@ -48,27 +48,12 @@ public class StartGameManager : MonoBehaviour
         StartCoroutine(GameCount());
         Invoke("GameStart", 3.5f);
     }
+
     private void Update()
     {
         if (count >= goalCount)
         {
             StartCoroutine(GameoverMsg());
-        }
-    }
-
-    IEnumerator GameoverMsg()
-    {
-        gameTxt.text = "라운드 종료";
-
-        foreach (GameObject player in players)
-        {
-            if (player.activeSelf)
-            {
-                PlayerCtrl playerScript = player.GetComponent<PlayerCtrl>();
-                yield return new WaitForSeconds(0.5f);
-                gameTxt.text = "";
-                ShowMessage(playerScript, "탈락!");
-            }
         }
     }
 
@@ -113,6 +98,21 @@ public class StartGameManager : MonoBehaviour
         }
     }
 
+    IEnumerator GameoverMsg()
+    {
+        gameTxt.text = "라운드 종료";
+
+        foreach (GameObject player in players)
+        {
+            if (player.activeSelf)
+            {
+                PlayerCtrl playerScript = player.GetComponent<PlayerCtrl>();
+                yield return new WaitForSeconds(0.5f);
+                gameTxt.text = "";
+                ShowMessage(playerScript, "탈락!");
+            }
+        }
+    }
     IEnumerator GameOver()
     {
         foreach (GameObject player in players)
@@ -144,6 +144,7 @@ public class StartGameManager : MonoBehaviour
                 playerCtrl.isGoalin = true;
 
                 ShowMessage(playerCtrl, "성공!");
+                Watching(other);
 
                 StartCoroutine(Active(other));
             }
@@ -157,21 +158,45 @@ public class StartGameManager : MonoBehaviour
 
     IEnumerator Active(Collider other)
     {
-        //카메라를 떼어서 
-        Camera cam = other.gameObject.GetComponentInChildren<Camera>();
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            
-            //마우스버튼을 누르면
-            //살아있는 플레이어의 카메라 transform, rotation을 받음.
-            
-
-
-        }
         yield return new WaitForSeconds(0.5f);
         other.gameObject.SetActive(false); 
     }
+
+    int watchIndex = -1;
+    void Watching(Collider other)
+    {
+        //카메라를 떼어서 
+        Camera cam = other.gameObject.GetComponentInChildren<Camera>();
+        //마우스 버튼을 누르면
+        if (Input.GetMouseButtonDown(1))
+        {
+            PlayerCtrl[] playersCtrl = FindObjectsOfType<PlayerCtrl>();
+                //PlayerCtrl nextPlayer = playersCtrl[nextNum];
+
+                //foreach(PlayerCtrl players in playersCtrl)
+                //{
+                //    if (!players.isGoalin)
+                //    {
+                //        cam.transform.position = players.cam.transform.position;
+                //        cam.transform.rotation = players.cam.transform.rotation;
+                //    }
+                //}
+                int startIndex = (watchIndex + 1) % playersCtrl.Length;
+                for (int i = 0; i < playersCtrl.Length; i++)
+                {
+                    int index = (startIndex + i) % playersCtrl.Length;
+                    if (!playersCtrl[index].isGoalin) 
+                    {
+                        PlayerCtrl nextPlayer = playersCtrl[index];
+                        cam.transform.position = nextPlayer.cam.transform.position;
+                        cam.transform.rotation = nextPlayer.cam.transform.rotation;
+                        watchIndex = index;
+                    }
+                }
+            
+        }
+    }
+
 
     void ShowMessage(PlayerCtrl scCtrl, string msg)
     {
