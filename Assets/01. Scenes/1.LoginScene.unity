@@ -3224,6 +3224,7 @@ MonoBehaviour:
   id: {fileID: 438150183}
   password: {fileID: 1307015715}
   nickname: {fileID: 3092036}
+  LoginPanel: {fileID: 437747346}
   SignUpComplete: {fileID: 820887722}
   SignUpPanel: {fileID: 1859387487}
   isActive: 1

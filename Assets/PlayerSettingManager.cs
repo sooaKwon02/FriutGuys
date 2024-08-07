@@ -48,6 +48,8 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            FindObjectOfType<SaveLoad>().SaveInven();
+            FindObjectOfType<SaveLoad>().SaveData();
             StartCoroutine(LoadSceneAsync(3));
         }
     }   

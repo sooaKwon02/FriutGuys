@@ -71,7 +71,10 @@ public class SaveLoad : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-        SaveInven(); 
+        if(inventory != null)
+        {
+            SaveInven();
+        }
         StartCoroutine(UpdateIsActiveStatus(1));
     }
     IEnumerator UpdateIsActiveStatus(int isActive)

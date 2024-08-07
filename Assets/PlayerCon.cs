@@ -64,7 +64,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         PhotonView[] pvs = FindObjectsOfType<PhotonView>();
         foreach (PhotonView _pv in pvs)
         {
-            if (_pv.IsMine)
+            if (_pv.IsMine&&_pv.GetComponent<CharacterCustom>())
             {
                 _pv.RPC("SetPlayerReady", RpcTarget.AllBuffered, nickName);
             }

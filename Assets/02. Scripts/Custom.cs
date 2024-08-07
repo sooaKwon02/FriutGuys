@@ -58,6 +58,7 @@ public class Custom : MonoBehaviour
     }
     void Set()
     {
+        setSize = false;
         if (StyleCheck == "Rotation")
         {
             min = -180f; max = 180f;
@@ -100,7 +101,6 @@ public class Custom : MonoBehaviour
             player = custom.tail.transform;
             fixedPartName.text = player.name;
         }
-        setSize = false;
         if (StyleCheck=="Rotation")
         {
             sliderX.value = player.localRotation.eulerAngles.x;

@@ -15,10 +15,10 @@ public class DatabaseManager : MonoBehaviour
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
 
-
     public InputField id;
     public InputField password;
     public InputField nickname;
+    public GameObject LoginPanel;
     public GameObject SignUpComplete;
     public GameObject SignUpPanel;
     public int isActive=1;
@@ -38,6 +38,7 @@ public class DatabaseManager : MonoBehaviour
     }
     private void Start()
     {
+        LoginPanel.SetActive(true); 
         SignUpComplete.SetActive(false);
     }
     //=============================================================회원가입==============
@@ -133,8 +134,8 @@ public class DatabaseManager : MonoBehaviour
                 saveload.SetGame(id, response.nickname);
                 saveload.LoadData();
                 saveload.LoadInven();
-                SignUpComplete.SetActive(true);
-                resText.text = "로그인 성공";
+                LoginPanel.SetActive(false);
+                StartCoroutine(Success());
             }
             else
             {
@@ -145,13 +146,14 @@ public class DatabaseManager : MonoBehaviour
         }
         
     }
-    public void LoginMain(int num)
+    IEnumerator Success()
     {
-        if (resText.text == "로그인 성공")
-        {
-            SceneManager.LoadScene(2);
-        }
-        else if (num == 1)
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(2);
+    }
+    public void LoginMain(int num)
+    {       
+        if (num == 1)
         {
             SignUpPanel.SetActive(true);
             SignUpComplete.SetActive(false);

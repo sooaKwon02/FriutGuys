@@ -1,8 +1,10 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using static SaveLoad;
 
 public class StoreItem : MonoBehaviour
 {
@@ -23,25 +25,18 @@ public class StoreItem : MonoBehaviour
         itemImg.sprite = item.sprite;
         priceImg.sprite = item.priceImg;
         priceText.text = item.price.ToString();
-    }   
+    }
     public void GetButton()
     {
-        if(item.moneyType==Item.MoneyType.Cash)
+        SaveLoad.PLAYER player = FindObjectOfType<SaveLoad>().player;
+        bool isCash = item.moneyType == Item.MoneyType.Cash;
+        bool isGameMoney = item.moneyType == Item.MoneyType.GameMoney;
+
+        if ((isCash && player.cashMoney >= item.price) || (isGameMoney && player.gameMoney >= item.price))
         {
-            int money = FindObjectOfType<SaveLoad>().player.cashMoney;
-            BuyTry(money);
-        }
-        else if(item.moneyType==Item.MoneyType.GameMoney)
-        {
-            int money=FindObjectOfType<SaveLoad>().player.gameMoney;
-            BuyTry(money);           
-        }        
-    }
-    void BuyTry(int money)
-    {
-        if (item.price >= money)
-        {
-            money -= item.price;
+            if (isCash) player.cashMoney -= item.price;
+            if (isGameMoney) player.gameMoney -= item.price;
+
             FindObjectOfType<GameManager>().IDPanelSet();
             GameObject[] inven = GameObject.FindGameObjectsWithTag(item.itemType.ToString());
             GetItems(inven);
@@ -51,6 +46,7 @@ public class StoreItem : MonoBehaviour
             FindObjectOfType<GameManager>().ErrorSend("머니가 부족합니다");
         }
     }
+
     void GetItems(GameObject[] inven)
     {
         foreach(GameObject obj in inven)

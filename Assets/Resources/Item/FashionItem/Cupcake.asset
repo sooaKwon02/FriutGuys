@@ -15,12 +15,12 @@ MonoBehaviour:
   _name: Cupcake
   sprite: {fileID: 21300000, guid: db7fb36807d8146d5a12e66428f099c0, type: 3}
   mesh: {fileID: 7320373469446664815, guid: 1e563b9fd9b1e414b9c8323cf0f2c89d, type: 3}
-  prefab: {fileID: 919132149155446097, guid: 1e563b9fd9b1e414b9c8323cf0f2c89d, type: 3}
+  prefab: {fileID: 6458366771143363155, guid: d8cf39e351e7c82408a1ea1822811ad9, type: 3}
   itemType: 1
-  price: 1000
+  price: 100
   gameMoneyPrice: 1000
   cashPrice: 100
-  priceImg: {fileID: 0}
+  priceImg: {fileID: 21300008, guid: 857d6effbb662ec47a4731bb5bcf5fe9, type: 3}
   cashImg: {fileID: 21300008, guid: 857d6effbb662ec47a4731bb5bcf5fe9, type: 3}
   gameMoneyImg: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   moneyType: 0

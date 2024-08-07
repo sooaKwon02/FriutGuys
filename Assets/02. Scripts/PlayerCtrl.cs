@@ -64,8 +64,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public bool isGoalin = false;
 
+    public CharacterCustom custom;
+ 
     void Awake()
     {
+
+
         myTr = GetComponent<Transform>();
 
         currPos = myTr.position;
@@ -81,6 +85,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         //failedText.SetActive(false);
         isGoalin = false;
     }
+    void Start()
+    {
+        custom = GetComponent<CharacterCustom>();     
+    }
 
     void Update()
     {
@@ -92,6 +100,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             {
                 isJump = true;
             }
+            custom.UseItem();
             Slide();
             //잡기 아직 멀음..
             //Grab();
@@ -135,6 +144,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             Jump();
         }
     }
+   
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //로컬 플레이어의 위치 정보를 송신
@@ -432,7 +442,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             transform.position = point;
             pv.RPC("OtherRespawnSet", RpcTarget.Others, point);
-        }        
+        }
     }
     [PunRPC]
     void OtherRespawnSet(Vector3 _point)
@@ -442,5 +452,5 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             transform.position = _point;
         }
     }
+
 }
-    
