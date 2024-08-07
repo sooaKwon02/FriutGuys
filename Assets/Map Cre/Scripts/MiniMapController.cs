@@ -6,121 +6,92 @@ public class MiniMapController : MonoBehaviour
 {
     public static MiniMapController Instance;
 
+    [Header("References")]
     [SerializeField]
-    private Vector2 worldSize;
-
-    [SerializeField]
-    private RectTransform scrollViewRectTransform;
+    private MiniMapBoundaries boundaries;
 
     [SerializeField]
-    private RectTransform contentRectTransform;
+    private Transform miniMap;
 
     [SerializeField]
-    private MiniMapIcon minimapIconPrefab;
+    private GameObject miniMapIcons;
 
-    private Matrix4x4 transformationMatrix;
+    [Header("World Player & MiniMap Player")]
+    [SerializeField]
+    private Transform[] worldTransforms;
 
-    private readonly float zoomSpeed = 0.1f;
-    private readonly float maxZoom = 3.0f;
-    private readonly float minZoom = 1.0f;
+    [SerializeField]
+    private RectTransform[] imageTransforms;
 
-    Dictionary<MiniMapWorldObject, MiniMapIcon> miniMapWorldObjectsLookup = new Dictionary<MiniMapWorldObject, MiniMapIcon>();
+    private RectTransform MapTransform => transform as RectTransform;
+
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        CalculateTransformationMatrix();
+        InitializeWorldTransforms();
+        InitializeImageTransforms();
     }
 
     private void Update()
     {
-        float zoom = Input.GetAxis("Mouse ScrollWheel");
-        ZoomMap(zoom);
-        UpdateMiniMapIcons();
+        UpdateMiniMap();
     }
 
-    public void RegisterMinimapWorldObject(MiniMapWorldObject miniMapWorldObject)
+    private void RegisterMiniMapObject()
     {
-        var minimapIcon = Instantiate(minimapIconPrefab);
-        minimapIcon.transform.SetParent(contentRectTransform);
-        minimapIcon.transform.SetParent(contentRectTransform);
-        minimapIcon.Image.sprite = miniMapWorldObject.MiniMapIcon;
-        miniMapWorldObjectsLookup[miniMapWorldObject] = minimapIcon;
+        GameObject miniMapIcon = Instantiate(miniMapIcons);
+        miniMapIcon.transform.SetParent(miniMap);
     }
 
-    public void RemoveMinimapWorldObject(MiniMapWorldObject minimapWorldObject)
+    private void InitializeWorldTransforms()
     {
-        if (miniMapWorldObjectsLookup.TryGetValue(minimapWorldObject, out MiniMapIcon icon))
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        worldTransforms = new Transform[playerObjects.Length];
+        for (int i = 0; i < playerObjects.Length; i++)
         {
-            miniMapWorldObjectsLookup.Remove(minimapWorldObject);
-            Destroy(icon.gameObject);
-        }
-    }
-    
-    private void ZoomMap(float zoom)
-    {
-        if (zoom == 0)
-        {
-            return;
-        }
-
-        float currentMapScale = contentRectTransform.localScale.x;
-        float zoomAmount = (zoom > 0 ? zoomSpeed : -zoomSpeed) * currentMapScale;
-        float newScale = currentMapScale + zoomAmount;
-        float clampedScale = Mathf.Clamp(newScale, minZoom, maxZoom);
-        contentRectTransform.localScale = Vector3.one * clampedScale;
-    }
-
-    private void UpdateMiniMapIcons()
-    {
-        float iconScale = 1 / contentRectTransform.transform.localScale.x;
-
-        foreach (var kvp in miniMapWorldObjectsLookup)
-        {
-            var miniMapWorldObject = kvp.Key;
-            var miniMapIcon = kvp.Value;
-            var mapPosition = WorldPositionToMapPosition(miniMapWorldObject.transform.position);
-
-            miniMapIcon.RectTransform.anchoredPosition = mapPosition;
-            var rotation = miniMapWorldObject.transform.rotation.eulerAngles;
-            miniMapIcon.IconRectTransform.localRotation = Quaternion.AngleAxis(-rotation.y, Vector3.forward);
-            miniMapIcon.IconRectTransform.localScale = Vector3.one * iconScale;
+            worldTransforms[i] = playerObjects[i].transform;
+            RegisterMiniMapObject();
         }
     }
 
-    private Vector2 WorldPositionToMapPosition(Vector3 worldPos)
+    private void InitializeImageTransforms()
     {
-        var pos = new Vector2(worldPos.x, worldPos.z);
-        return transformationMatrix.MultiplyPoint3x4(pos);
+        GameObject[] imageObjects = GameObject.FindGameObjectsWithTag("MiniMap Icon");
+        imageTransforms = new RectTransform[imageObjects.Length];
+        for (int i = 0; i < imageObjects.Length; i++)
+        {
+            imageTransforms[i] = (RectTransform)imageObjects[i].transform;
+        }
     }
 
-    private void CalculateTransformationMatrix()
+    private void UpdateMiniMap()
     {
-        var minimapSize = contentRectTransform.rect.size;
-        var worldSize = new Vector2(this.worldSize.x, this.worldSize.y);
+        if (worldTransforms.Length == 0 || imageTransforms.Length == 0) return;
 
-        Debug.Log(minimapSize);
-        Debug.Log(worldSize);
+        for (int i = 0; i < worldTransforms.Length; i++)
+        {
+            if (i >= imageTransforms.Length) break;
 
-        var translation = minimapSize / 2.0f;
-        var scaleRatio = minimapSize / worldSize;
+            Vector2 position = FindInterfacePoint(worldTransforms[i].position);
+            imageTransforms[i].anchoredPosition = position;
+        }
+    }
 
-        Debug.Log(translation);
-        Debug.Log(scaleRatio);
-
-        //translation.x = 0f;
-        //translation.y = -400.0f;
-
-        transformationMatrix = Matrix4x4.TRS(translation, Quaternion.identity, scaleRatio);
-
-        Debug.Log(transformationMatrix);
-
-        //  {scaleRatio.x,   0,              0,   translation.x},
-        //  {  0,            scaleRatio.y,   0,   translation.y},
-        //  {  0,            0,              1,               0},
-        //  {  0,            0,              0,               1}
+    private Vector2 FindInterfacePoint(Vector3 worldPosition)
+    {
+        Vector2 normalizedPosition = boundaries.FindNormalizedPosition(worldPosition);
+        return Rect.NormalizedToPoint(MapTransform.rect, normalizedPosition);
     }
 }
