@@ -17,10 +17,10 @@ public class ScreenSetting : MonoBehaviour
     private const string ScreenSizeKey = "Screen";
     private const string SizeXKey = "sizeX";
     private const string SizeYKey = "sizeY";
-
+    
     private void Start()
     {
-        mask.enabled = true;
+        mask.enabled = false;
         LoadSettings();
         RectSizeChange(sizeX, sizeY, on);
     }
@@ -102,7 +102,6 @@ public class ScreenSetting : MonoBehaviour
                 sizeText.text = "2560 | 1440";
                 break;
             default:
-                Debug.LogWarning("Unknown size button number: " + num);
                 break;
         }
         SaveSettings();

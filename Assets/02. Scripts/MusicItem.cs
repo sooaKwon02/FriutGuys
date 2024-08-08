@@ -17,8 +17,6 @@ public class MusicItem : MonoBehaviour
     {
         musicName.text = _name;
         num = _num;
-        Debug.Log(musicName.text);
-        Debug.Log(num);
     }
    
     void MusicPlay()

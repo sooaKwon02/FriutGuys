@@ -11,6 +11,8 @@ using static System.Net.WebRequestMethods;
 
 public class SaveLoad : MonoBehaviour
 {
+    public string ID;
+    public string nickName;
     [System.Serializable]
     public class PLAYER
     {
@@ -47,31 +49,42 @@ public class SaveLoad : MonoBehaviour
         public INVEN[] useInven;
         public INVEN[] fashionInven;
     }
-    public string ID;
-    public string nickName;
+
+    [System.Serializable]
+    public class ScoreEntry
+    {
+        public string id;
+        public int score;
+    }
+
+    [System.Serializable]
+    public class ScoreList
+    {
+        public ScoreEntry[] entries;
+    }
+
+    public ScoreList rankList;
+
+    Item item;
     public PLAYER player;
     public INVENTYPE inventype = null;
     public Inventory inventory;
-
     public int[] useNum = new int[0];
     public string[] useName = new string[0];
     public int[] fashionNum = new int[0];
     public string[] fashionName = new string[0];
 
-    Item item;
-
-
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-    }
-    private void Start()
-    {
-    }
+    }  
     private void OnApplicationQuit()
     {
         SaveData();
-        SaveInven(); 
+        if(inventory != null)
+        {
+            SaveInven();
+        }
         StartCoroutine(UpdateIsActiveStatus(1));
     }
     IEnumerator UpdateIsActiveStatus(int isActive)
@@ -102,7 +115,6 @@ public class SaveLoad : MonoBehaviour
         string url = "http://61.99.10.173/fruitsGuys/PlayerItemSave.php";
         if (c == null)
         {
-            Debug.LogError("CharacterCustom not found!");
             yield break;
         }
         WWWForm form = new WWWForm();
@@ -323,5 +335,24 @@ public class SaveLoad : MonoBehaviour
                 inventype.fashionInven[i] = new INVEN { num = fashionNum[i], name = fashionName[i] };
             }
         }
-    }   
+    }
+    public void LoadScore()
+    {
+        StartCoroutine(LoadTotalScore());
+    }
+    IEnumerator LoadTotalScore()
+    {
+        string url = "http://61.99.10.173/fruitsGuys/TotalScore.php";
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();            ;
+            ScoreList scoreList = JsonUtility.FromJson<ScoreList>(www.downloadHandler.text);
+            foreach (ScoreEntry entry in scoreList.entries)
+            {
+                rankList.entries = scoreList.entries;
+            }
+        }
+    }
+ 
+
 }

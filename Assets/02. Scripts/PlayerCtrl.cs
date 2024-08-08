@@ -64,12 +64,11 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public bool isGoalin = false;
 
-    public Image[] useItem;
-    CharacterCustom custom;
+    public CharacterCustom custom;
+ 
     void Awake()
     {
-        
-        custom=GetComponent<CharacterCustom>();
+
 
         myTr = GetComponent<Transform>();
 
@@ -85,10 +84,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         coll = GetComponent<CapsuleCollider>();
         //failedText.SetActive(false);
         isGoalin = false;
-    }   
+    }
     void Start()
     {
-        ItemImageSet();
+        custom = GetComponent<CharacterCustom>();     
     }
 
     void Update()
@@ -97,11 +96,11 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             LookAround();
             CheckGround();
-            UseItem();
             if (Input.GetKeyDown(KeyCode.Space) && isGround && pv.IsMine && !isColl)
             {
                 isJump = true;
             }
+            custom.UseItem();
             Slide();
             //잡기 아직 멀음..
             //Grab();
@@ -145,30 +144,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             Jump();
         }
     }
-    void UseItem()
-    {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            ItemSwap();
-        }
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            Instantiate(custom.item1.item.prefab);
-            custom.item1.ItemSet(null);
-        }
-    }  
-    void ItemSwap()
-    {
-        PlayerItem item = custom.item1;
-        custom.item1=custom.item2;
-        custom.item2 = item;
-        ItemImageSet();
-    }
-    void ItemImageSet()
-    {
-        useItem[0].sprite = custom.item1.item.sprite;
-        useItem[1].sprite = custom.item2.item.sprite;
-    }
+   
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //로컬 플레이어의 위치 정보를 송신
@@ -466,7 +442,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             transform.position = point;
             pv.RPC("OtherRespawnSet", RpcTarget.Others, point);
-        }        
+        }
     }
     [PunRPC]
     void OtherRespawnSet(Vector3 _point)
@@ -476,6 +452,5 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             transform.position = _point;
         }
     }
-  
+
 }
-    

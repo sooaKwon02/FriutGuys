@@ -3,7 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class CharacterCustom : MonoBehaviourPunCallbacks
 {
@@ -26,6 +26,8 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
 
     SaveLoad.PLAYER p;
     public PhotonView pv;
+    public Image[] useItem;
+    public ThrowUp throwUp;
 
     private void Awake()
     {
@@ -33,24 +35,62 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         { 
             pv = GetComponent<PhotonView>(); 
         }
-        nickName = FindObjectOfType<SaveLoad>().nickName;
+        if(FindObjectOfType<SaveLoad>())
+        {
+            p = FindObjectOfType<SaveLoad>().player;
+            nickName = FindObjectOfType<SaveLoad>().nickName;
+        }
 
-    }
+    }   
     private void Start()
     {
-        if (FindObjectOfType<SaveLoad>() && pv == null)
+        if (pv == null)
         {
-            p = FindObjectOfType<SaveLoad>().player;
             StartCoroutine(CustomPlayer());
         }
-        else if (FindObjectOfType<SaveLoad>() && pv.IsMine)
+        else if (pv != null && pv.IsMine)
         {
-            p = FindObjectOfType<SaveLoad>().player;
             StartCoroutine(CustomPlayer());
             pv.RPC("UserInfoSet", RpcTarget.AllBuffered, nickName);
         }
-        else
-            Debug.Log("?");
+        else { Debug.Log("?"); }
+        if (FindObjectOfType<PlayerCtrl>()&&pv.IsMine)
+        {
+            ItemImageSet();
+        }
+    }
+   public void UseItem()
+   {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ItemSwap();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (item1.item.name != null)
+            {
+                Animator animator = GetComponentInChildren<Animator>();
+
+                throwUp.ItemSet(Resources.Load<Item>("Item/UseItem/" + item1.item.name));
+                item1.ItemSet(null);
+                ItemSwap();
+                animator.SetTrigger("Throw");
+            }           
+        }
+   }
+    void ItemSwap()
+    {
+        Item item = item1.item;
+        item1.ItemSet(item2.item);
+        item2.ItemSet(item);
+        ItemImageSet();
+    }
+    void ItemImageSet()
+    {
+        if (item1.item != null) { useItem[0].enabled = true; useItem[0].sprite = item1.item.sprite; }
+        else { useItem[0].enabled = false; }
+        if (item2.item != null) { useItem[1].enabled = true; useItem[1].sprite = item2.item.sprite; }
+        else { useItem[1].enabled = false; }
     }
 
     //Lobby 
