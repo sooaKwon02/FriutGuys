@@ -170,7 +170,6 @@ public class GameManager : MonoBehaviour
     public void RankPanelOnOff(bool check)
     {
         rankPanel.SetActive(check);
-        saveload.LoadScore();
         ActiveMenu(!check);
     }
     

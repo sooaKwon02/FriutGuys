@@ -61,7 +61,7 @@ public class Custom : MonoBehaviour
         setSize = false;
         if (StyleCheck == "Rotation")
         {
-            min = -180f; max = 180f;
+            min = 0f; max = 180f;
             ValueSet();
         }
         else if (StyleCheck == "Scale")

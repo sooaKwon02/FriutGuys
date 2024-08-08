@@ -67,11 +67,15 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Animator animator = GetComponentInChildren<Animator>();
-            throwUp.ItemSet(Resources.Load<Item>("Item/UseItem/" + item1.item.name));
-            item1.ItemSet(null);
-            ItemSwap();
-            animator.SetTrigger("Throw");
+            if (item1.item.name != null)
+            {
+                Animator animator = GetComponentInChildren<Animator>();
+
+                throwUp.ItemSet(Resources.Load<Item>("Item/UseItem/" + item1.item.name));
+                item1.ItemSet(null);
+                ItemSwap();
+                animator.SetTrigger("Throw");
+            }           
         }
    }
     void ItemSwap()
