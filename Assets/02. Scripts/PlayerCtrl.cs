@@ -49,7 +49,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     //private bool isGrab = false;
 
     public Text playerTxt;
-
+    public Image camHide;
     Vector3 currPos = Vector3.zero;
     Quaternion currRot = Quaternion.identity;
     float jumpY;
@@ -66,6 +66,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public CharacterCustom custom;
  
+    public bool cookie=false;
     void Awake()
     {
 
@@ -348,12 +349,35 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             StartCoroutine(ReMove());
 
         }
+        if(cookie&&coll.transform.GetComponentInParent<PhotonView>().tag=="Player")
+        {
+            coll.rigidbody.AddForce(rb.velocity, ForceMode.Impulse);
+        }
 
         //if (coll.transform.tag == "Bullet")
         //{
         //    Destroy(coll.gameObject);
         //    pv.RPC("Des", RpcTarget.Others, coll);
         //}
+    }
+    public IEnumerator BuffTime()
+    {
+        float speedSet1 = moveSpeed;
+        float speedSet2 = slideSpeed;
+        float JumpSet = jumpForce;
+        Vector3 physics = Physics.gravity;
+        yield return new WaitForSeconds(10f);
+        cookie = false;
+        moveSpeed = speedSet1;
+        slideSpeed = speedSet2;
+        jumpForce=JumpSet;
+        rb.AddForce(physics, ForceMode.Acceleration);
+    }
+    public IEnumerator DeBuffTime()
+    {
+        yield return new WaitForSeconds(10f);
+        moveSpeed = 5f;
+        camHide.color = new Color(0, 0, 0, 0);      
     }
 
     //void OnTriggerEnter(Collider other)

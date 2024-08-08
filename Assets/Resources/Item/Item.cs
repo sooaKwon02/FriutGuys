@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName ="Item",menuName ="item")]
 public class Item : ScriptableObject
@@ -17,7 +18,15 @@ public class Item : ScriptableObject
     public Sprite cashImg;
     public Sprite gameMoneyImg;
     public MoneyType moneyType;
-
+    public ITEM_STYLE useitemType;
+    public float speed;
+    public enum ITEM_STYLE
+    {
+        Buff,
+        Debuff,
+        Trap,
+        Bomb
+    }
     public enum ItemType
     {
         UseItem,
@@ -40,8 +49,23 @@ public class Item : ScriptableObject
             price = gameMoneyPrice;
             priceImg = gameMoneyImg;
         }
-
+        if (useitemType == ITEM_STYLE.Buff)
+        {
+            speed = 0;
+        }
+        else if (useitemType == ITEM_STYLE.Debuff)
+        {
+            speed = 1000;
+        }
+        else if (useitemType == ITEM_STYLE.Trap)
+        {
+            speed = 200;
+        }
+        else if (useitemType == ITEM_STYLE.Bomb)
+        {
+            speed = 700;
+        }
     }
 
-
+  
 }

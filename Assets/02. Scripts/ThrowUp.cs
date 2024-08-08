@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ThrowUp : MonoBehaviour
@@ -9,7 +7,12 @@ public class ThrowUp : MonoBehaviour
     public Item item;
     public MeshFilter mesh;
 
-    public Transform throwDir;
+    public Transform[] throwDir;
+    Animator animator;
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     public void ItemSet(Item _item)
     {
         item = _item;
@@ -19,16 +22,44 @@ public class ThrowUp : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-           GameObject obj= PhotonNetwork.Instantiate("Prefabs/"+item.name, throwDir.position, Quaternion.identity);
+           GameObject obj= PhotonNetwork.Instantiate("Prefabs/"+item.name, ThrowDir().position, Quaternion.identity);
             obj.transform.localScale = new Vector3(5f, 5f, 5f);
             if (obj.GetComponent<Rigidbody>() == null)
             {
                 Rigidbody rb=obj.AddComponent<Rigidbody>();
-                rb.AddForce(throwDir.forward*500);
+                rb.AddForce(ThrowDir().forward * item.speed);
             }
             mesh.sharedMesh = null;
-            
         }
+    }
 
+    Transform ThrowDir()
+    {
+        if (item.useitemType == Item.ITEM_STYLE.Buff)       
+            return throwDir[0];      
+        else if(item.useitemType == Item.ITEM_STYLE.Debuff)
+            return throwDir[1];
+        else if (item.useitemType == Item.ITEM_STYLE.Trap)
+            return throwDir[2];
+        else 
+            return throwDir[3];
+    }
+    public void ThrowAnim(Item.ITEM_STYLE item)
+    {
+        switch (item)
+        {
+            case Item.ITEM_STYLE.Buff:
+                animator.SetTrigger("Buff");
+                break;
+            case Item.ITEM_STYLE.Debuff:
+                animator.SetTrigger("Debuff");
+                break;
+            case Item.ITEM_STYLE.Trap:
+                animator.SetTrigger("Trap");
+                break;
+            case Item.ITEM_STYLE.Bomb:
+                animator.SetTrigger("Bomb");
+                break;
+        }
     }
 }
