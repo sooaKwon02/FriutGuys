@@ -187,7 +187,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
             scrollContents.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20f);
        }
-       
     }
 
     void OnClickRoomItem(RoomInfo roomInfo)

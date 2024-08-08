@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/scMap001.unity
     guid: ffba5851fe4afdf4985e54f3cb76da7d
+  - enabled: 1
+    path: Assets/01. Scenes/scMap002.unity
+    guid: 586ccc6d3ac1a8946b3ce1a38634501e
   m_configObjects: {}

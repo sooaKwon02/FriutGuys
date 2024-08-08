@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StartGameManager : MonoBehaviour
 {
@@ -19,8 +20,7 @@ public class StartGameManager : MonoBehaviour
 
     int watchIndex = -1;
     Camera cam;
-    //int index;
-    //PlayerCtrl nextPlayer;
+
     private void Awake()
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount != 0)
@@ -29,6 +29,7 @@ public class StartGameManager : MonoBehaviour
         }
         gameTxt = GameObject.FindGameObjectWithTag("GAME_TXT").GetComponent<Text>();
     }
+
     private void Start()
     {
         Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
@@ -43,7 +44,7 @@ public class StartGameManager : MonoBehaviour
         }
 
         count = 0;
-        goalCount = currentPlayers;
+        goalCount = currentPlayers / 2;
 
         StartCoroutine(SpawnSet());
         StartCoroutine(GameCount());
@@ -52,18 +53,14 @@ public class StartGameManager : MonoBehaviour
 
     private void Update()
     {
-        if (count >= goalCount)
-        {
-            StartCoroutine(GameoverMsg());
-        }
+        //if (count >= goalCount)
+        //{
+        //    StartCoroutine(GameoverMsg());
+        //}
 
-        if(cam.transform.parent == null)
+        if (Input.GetMouseButtonDown(0))
         {
             Watching();
-            //cam.transform.position = new Vector3(0, -0.71f, -6.15f);
-            //cam.transform.rotation = nextPlayer.cam.transform.rotation;
-            //cam.transform.SetParent(nextPlayer.cam.transform);
-            //cam.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
         }
     }
 
@@ -117,29 +114,39 @@ public class StartGameManager : MonoBehaviour
             if (player.activeSelf)
             {
                 PlayerCtrl playerScript = player.GetComponent<PlayerCtrl>();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
                 gameTxt.text = "";
                 ShowMessage(playerScript, "탈락!");
             }
         }
     }
+
     IEnumerator GameOver()
     {
-        foreach (GameObject player in players)
+        yield return new WaitForSeconds(5f);
+
+        PhotonView[] pview = FindObjectsOfType<PhotonView>();
+        foreach (PhotonView pv in pview)
         {
-           if(!player.GetComponent<PlayerCtrl>().isGoalin)
-           {
-                if (PhotonNetwork.IsMasterClient)
-                {                    
-                    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
-                }
-                else
-                {
-                    PhotonNetwork.LeaveRoom();
-                }                
+            if (pv.GetComponent<PlayerCtrl>().isGoalin)
+            {
+                //if (PhotonNetwork.IsMasterClient)
+                //{
+                //    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
+                //}
+                //else
+                //{
+                //    PhotonNetwork.LeaveRoom();
+                // 마스터 클라이언트가 변경되었을때 콜백
+                // public override void OnMasterClientSwitched(Player newMasterClient)
+                PhotonNetwork.LoadLevel(5);
+                //SceneManager.LoadScene(5);
+            }
+            else
+            {
+                PhotonNetwork.LeaveRoom();
             }
         }
-        yield return new WaitForSeconds(5f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -157,20 +164,18 @@ public class StartGameManager : MonoBehaviour
 
                 cam = other.gameObject.GetComponentInChildren<Camera>();
                 cam.gameObject.transform.parent = null;
-                cam.transform.position = Vector3.zero;
-                cam.transform.rotation = Quaternion.identity;
                 
-                StartCoroutine(Active(other));
+                StartCoroutine(OffPlayer(other));
             }
-            else
+            if (count >= goalCount)
             {
-                //StartCoroutine(GameOver());
+                StartCoroutine(GameoverMsg());
+                StartCoroutine(GameOver());
             }
-            
         }
     }
 
-    IEnumerator Active(Collider other)
+    IEnumerator OffPlayer(Collider other)
     {
         yield return new WaitForSeconds(0.5f);
         other.gameObject.SetActive(false);
@@ -178,35 +183,34 @@ public class StartGameManager : MonoBehaviour
 
     void Watching()
     {
-        //카메라를 떼어서 
-        if (Input.GetMouseButtonDown(1))
+        //카메라 값 초기화
+        cam.transform.position = Vector3.zero;
+        cam.transform.rotation = Quaternion.identity;
+
+        PhotonView[] pv = FindObjectsOfType<PhotonView>();
+        int startIndex = (watchIndex + 1) % pv.Length;
+        for (int i = 0; i < pv.Length; i++)
         {
-            Debug.Log("Watching");
-            //포톤뷰로 찾아오는걸 구현해봐
-            PlayerCtrl[] playersCtrl = FindObjectsOfType<PlayerCtrl>();
-
             //원형배열
-            int startIndex = (watchIndex + 1) % playersCtrl.Length;
-            for (int i = 0; i < playersCtrl.Length; i++)
-            {
-                int index = (startIndex + i) % playersCtrl.Length;
+            int index = (startIndex + i) % pv.Length;
 
-                if (!playersCtrl[index].isGoalin)
+            //if (pv[index].gameObject.activeSelf)
+            if (!pv[index].GetComponent<PlayerCtrl>().isGoalin)
+            {
+                PhotonView nextPlayer = pv[index];
+                if (nextPlayer.GetComponent<PlayerCtrl>().cam != null)
                 {
-                    PlayerCtrl nextPlayer = playersCtrl[index];
-                    if (nextPlayer.cam != null)
-                    {
-                        cam.transform.SetParent(nextPlayer.cam.transform);
-                        cam.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
-                        watchIndex = index;
-                    }
+                    cam.transform.SetParent(nextPlayer.GetComponent<PlayerCtrl>().cam.transform);
+                    cam.transform.localPosition = new Vector3(0, 4f, -6.15f);
+                    cam.transform.rotation = Quaternion.Euler(40f, 0f, 0f);
+                    //cam.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
+                    //cam.transform.rotation = Quaternion.Euler(40f, 0f, 0f); -->안해도됨 어차피 000이라
+                    watchIndex = index;
                     return;
                 }
             }
-
         }
     }
-
 
     void ShowMessage(PlayerCtrl scCtrl, string msg)
     {
