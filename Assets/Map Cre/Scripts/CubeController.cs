@@ -7,8 +7,6 @@ public class CubeController : MonoBehaviour
     private Renderer cubeRenderer;
     private Animator cubeAnimator;
 
-    public GameObject effect;
-
     private void Awake()
     {
         cubeRenderer = GetComponent<Renderer>();
@@ -32,7 +30,7 @@ public class CubeController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Instantiate(effect, transform.position, transform.rotation);
+            EffectController.instance.GetEffect(transform.position);
             Destroy(gameObject);
         }
     }
