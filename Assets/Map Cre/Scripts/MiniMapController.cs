@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MiniMapController : MonoBehaviour
 {
-    public static MiniMapController Instance;
-
     [Header("References")]
     [SerializeField]
     private MiniMapBoundaries boundaries;
@@ -16,27 +14,10 @@ public class MiniMapController : MonoBehaviour
     [SerializeField]
     private GameObject miniMapIcons;
 
-    [Header("World Player & MiniMap Player")]
-    [SerializeField]
     private Transform[] worldTransforms;
-
-    [SerializeField]
     private RectTransform[] imageTransforms;
 
     private RectTransform MapTransform => transform as RectTransform;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
@@ -49,9 +30,9 @@ public class MiniMapController : MonoBehaviour
         UpdateMiniMap();
     }
 
-    private void RegisterMiniMapObject()
+    private void RegisterMiniMapObjects()
     {
-        GameObject miniMapIcon = Instantiate(miniMapIcons);
+        GameObject miniMapIcon = Instantiate(miniMapIcons) as GameObject;
         miniMapIcon.transform.SetParent(miniMap);
     }
 
@@ -59,10 +40,11 @@ public class MiniMapController : MonoBehaviour
     {
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
         worldTransforms = new Transform[playerObjects.Length];
+
         for (int i = 0; i < playerObjects.Length; i++)
         {
             worldTransforms[i] = playerObjects[i].transform;
-            RegisterMiniMapObject();
+            RegisterMiniMapObjects();
         }
     }
 
@@ -70,6 +52,7 @@ public class MiniMapController : MonoBehaviour
     {
         GameObject[] imageObjects = GameObject.FindGameObjectsWithTag("MiniMap Icon");
         imageTransforms = new RectTransform[imageObjects.Length];
+
         for (int i = 0; i < imageObjects.Length; i++)
         {
             imageTransforms[i] = (RectTransform)imageObjects[i].transform;
@@ -78,11 +61,12 @@ public class MiniMapController : MonoBehaviour
 
     private void UpdateMiniMap()
     {
-        if (worldTransforms.Length == 0 || imageTransforms.Length == 0) return;
-
         for (int i = 0; i < worldTransforms.Length; i++)
         {
-            if (i >= imageTransforms.Length) break;
+            if (i >= imageTransforms.Length)
+            {
+                break;
+            }
 
             Vector2 position = FindInterfacePoint(worldTransforms[i].position);
             imageTransforms[i].anchoredPosition = position;

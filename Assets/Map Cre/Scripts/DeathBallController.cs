@@ -9,6 +9,7 @@ public class DeathBallController : MonoBehaviour
 
     public Transform[] spawnPoints;
     public GameObject deathBallPrefab;
+    public Transform deathBallStorage;
 
     List<GameObject> deathBalls = new List<GameObject>();
 
@@ -27,7 +28,7 @@ public class DeathBallController : MonoBehaviour
         for (int i = 0; i < deathBallCount; i++)
         {
             GameObject deathBall = Instantiate(deathBallPrefab) as GameObject;
-            deathBall.transform.parent = transform;
+            deathBall.transform.SetParent(deathBallStorage);
             deathBall.SetActive(false);
             deathBalls.Add(deathBall);
         }
@@ -49,7 +50,7 @@ public class DeathBallController : MonoBehaviour
         if (reqDeathBall == null)
         {
             GameObject newDeathBall = Instantiate(deathBallPrefab) as GameObject;
-            newDeathBall.transform.parent = transform;
+            newDeathBall.transform.SetParent(deathBallStorage);
             deathBalls.Add(newDeathBall);
             reqDeathBall = newDeathBall;
         }
