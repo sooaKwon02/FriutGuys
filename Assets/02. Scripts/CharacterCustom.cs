@@ -1,4 +1,3 @@
-using Photon.Realtime;
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -67,15 +66,19 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (item1.item.name != null)
+            if (item1.item!= null)
             {
                 Animator animator = GetComponentInChildren<Animator>();
 
+                throwUp.ThrowAnim(item1.item.useitemType);
                 throwUp.ItemSet(Resources.Load<Item>("Item/UseItem/" + item1.item.name));
                 item1.ItemSet(null);
                 ItemSwap();
-                animator.SetTrigger("Throw");
-            }           
+            }   
+            else
+            {
+                
+            }
         }
    }
     void ItemSwap()

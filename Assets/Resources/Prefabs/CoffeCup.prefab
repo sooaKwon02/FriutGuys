@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6180576804846699617}
   - component: {fileID: -3389984133930752858}
   - component: {fileID: 3812039431836658786}
+  - component: {fileID: 9176214617364700884}
   m_Layer: 0
   m_Name: CoffeCup
   m_TagString: Untagged
@@ -136,3 +137,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!114 &9176214617364700884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2830233848371693089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0119e12c9380744bbf9daf4efa1821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 2502b5243b7e49c4d99c62ea4b929124, type: 2}

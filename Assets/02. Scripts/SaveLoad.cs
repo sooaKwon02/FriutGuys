@@ -53,7 +53,7 @@ public class SaveLoad : MonoBehaviour
     [System.Serializable]
     public class ScoreEntry
     {
-        public string id;
+        public string nickname;
         public int score;
     }
 
@@ -89,7 +89,7 @@ public class SaveLoad : MonoBehaviour
     }
     IEnumerator UpdateIsActiveStatus(int isActive)
     {
-        string url= "http://61.99.10.173/fruitsGuys/IsActive.php";
+        string url= "http://192.168.35.229/fruitsGuys/IsActive.php";
         WWWForm form = new WWWForm();
         form.AddField("id", ID);
         form.AddField("isActive", isActive);
@@ -112,7 +112,7 @@ public class SaveLoad : MonoBehaviour
     private IEnumerator SaveDataCoroutine()
     {
         CharacterCustom c = FindObjectOfType<CharacterCustom>();
-        string url = "http://61.99.10.173/fruitsGuys/PlayerItemSave.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerItemSave.php";
         if (c == null)
         {
             yield break;
@@ -177,7 +177,7 @@ public class SaveLoad : MonoBehaviour
     }
     private IEnumerator LoadDataCoroutine()
     {
-        string url = "http://61.99.10.173/fruitsGuys/PlayerItemLoad.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerItemLoad.php";
         WWWForm form = new WWWForm();
         form.AddField("id", ID);
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -196,7 +196,7 @@ public class SaveLoad : MonoBehaviour
     {
         inventype.fashionInven = new INVEN[inventory.fashionItem.transform.childCount];
         inventype.useInven = new INVEN[inventory.useItem.transform.childCount];
-        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
         for (int i = 0; i < inventory.fashionItem.transform.childCount; i++)
         {
             if (inventory.fashionItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionItem.transform.childCount > 0)
@@ -237,7 +237,7 @@ public class SaveLoad : MonoBehaviour
     }
     private IEnumerator InvenLoadCoroutine()
     {
-        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenLoad.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenLoad.php";
         using (UnityWebRequest www = UnityWebRequest.Get($"{url}?id={UnityWebRequest.EscapeURL(ID)}"))
         {
             yield return www.SendWebRequest();
@@ -340,19 +340,28 @@ public class SaveLoad : MonoBehaviour
     {
         StartCoroutine(LoadTotalScore());
     }
+
     IEnumerator LoadTotalScore()
     {
-        string url = "http://61.99.10.173/fruitsGuys/TotalScore.php";
+        string url = "http://192.168.35.229/fruitsGuys/TotalScore.php";
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
-            yield return www.SendWebRequest();            ;
-            ScoreList scoreList = JsonUtility.FromJson<ScoreList>(www.downloadHandler.text);
-            foreach (ScoreEntry entry in scoreList.entries)
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
             {
+                ScoreList scoreList = JsonUtility.FromJson<ScoreList>(www.downloadHandler.text);
+                Debug.Log(www.downloadHandler.text);
+
+                // 예제: rankList를 업데이트 하는 부분
                 rankList.entries = scoreList.entries;
+            }
+            else
+            {
+                Debug.LogError("Error: " + www.error);
             }
         }
     }
- 
+
 
 }
