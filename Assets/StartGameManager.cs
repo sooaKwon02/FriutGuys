@@ -130,14 +130,15 @@ public class StartGameManager : MonoBehaviour
 
             if (player.GetComponent<PhotonView>().IsMine)
             {
-                if (playerCtrl.isGoalin)
-                {
-                    playerCtrl.gameObject.SetActive(true);
-                    PhotonNetwork.LoadLevel(5);
-                }
-                else if(!playerCtrl.isGoalin)
+                if (!playerCtrl.isGoalin)
                 {
                     PhotonNetwork.LeaveRoom();
+                }
+                else if(playerCtrl.isGoalin)
+                {
+                    yield return new WaitForSeconds(2f);
+                    playerCtrl.gameObject.SetActive(true);
+                    PhotonNetwork.LoadLevel(5);
                 }
             }
         }
