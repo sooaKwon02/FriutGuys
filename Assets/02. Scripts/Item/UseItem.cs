@@ -35,4 +35,19 @@ public class UseItem : MonoBehaviour
         yield return new WaitForSeconds(5f);
         PhotonNetwork.Destroy(gameObject);
     }
+    protected PhotonView PV(Collision col)
+    {
+        if (col.transform.GetComponentInParent<PhotonView>())
+        {
+            return col.gameObject.GetComponentInParent<PhotonView>();
+        }
+        else if (col.transform.GetComponent<PhotonView>())
+        {
+            return col.gameObject.GetComponent<PhotonView>();
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

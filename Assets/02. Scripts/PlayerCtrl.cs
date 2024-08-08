@@ -42,6 +42,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public GameObject slideCollider;
 
+    public GameObject Menu;
     //public float grabDistance = 2.0f;
     //private GameObject grabTarget;
     ////private SpringJoint springJoint;
@@ -103,6 +104,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             }
             custom.UseItem();
             Slide();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                MenuOnOff();
+            }
             //잡기 아직 멀음..
             //Grab();
             //GrabEnd();
@@ -132,7 +137,15 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             rb.velocity = velocity;
         }
     }
-
+    void MenuOnOff()
+    {
+        if (Menu.activeSelf)
+        {
+            Menu.SetActive(false);
+        }
+        else
+            Menu.SetActive(true);
+    }
     void FixedUpdate()
     {
         if (pv.IsMine)

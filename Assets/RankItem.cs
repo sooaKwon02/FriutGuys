@@ -10,7 +10,7 @@ public class RankItem : MonoBehaviour
 
     public void ScoreSet(SaveLoad.ScoreEntry entry)
     {
-        nickName.text = entry.id;
+        nickName.text = entry.nickname;
         score.text = entry.score.ToString();
     }
 
