@@ -42,8 +42,9 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
     }
-    //规立加====================================================
-   
+
+    //==============规立加=================
+    
     public override void OnCreatedRoom()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -56,7 +57,15 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
     
     public override void OnLeftRoom()
     {
-        StartCoroutine(LoadSceneAsync(2));     
+        if(SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            StartCoroutine(LoadSceneAsync(2));
+        }
+        else if (SceneManager.GetActiveScene().buildIndex > 3)
+        {
+            StartCoroutine(LoadSceneAsync(2));
+        }
+
     }  
 
     private IEnumerator LoadSceneAsync(int sceneNum)

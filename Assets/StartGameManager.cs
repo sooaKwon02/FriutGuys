@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StartGameManager : MonoBehaviour
 {
@@ -14,11 +15,11 @@ public class StartGameManager : MonoBehaviour
     int goalCount;
     int count;
     GameObject[] players;
-    GameObject error;
 
     private Text gameTxt;
 
-    GameObject[] playerTxt;
+    int watchIndex = -1;
+    Camera cam;
 
     private void Awake()
     {
@@ -28,10 +29,11 @@ public class StartGameManager : MonoBehaviour
         }
         gameTxt = GameObject.FindGameObjectWithTag("GAME_TXT").GetComponent<Text>();
     }
+
     private void Start()
     {
         Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
-        //playerTxt = GameObject.FindGameObjectsWithTag("PLAYER_TXT");
+
         gameTxt.transform.SetParent(canvas.transform);
 
         players = GameObject.FindGameObjectsWithTag("Player");
@@ -51,9 +53,14 @@ public class StartGameManager : MonoBehaviour
 
     private void Update()
     {
-        if (count >= goalCount)
+        //if (count >= goalCount)
+        //{
+        //    StartCoroutine(GameoverMsg());
+        //}
+
+        if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(GameoverMsg());
+            Watching();
         }
     }
 
@@ -107,29 +114,39 @@ public class StartGameManager : MonoBehaviour
             if (player.activeSelf)
             {
                 PlayerCtrl playerScript = player.GetComponent<PlayerCtrl>();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
                 gameTxt.text = "";
                 ShowMessage(playerScript, "탈락!");
             }
         }
     }
+
     IEnumerator GameOver()
     {
-        foreach (GameObject player in players)
+        yield return new WaitForSeconds(5f);
+
+        PhotonView[] pview = FindObjectsOfType<PhotonView>();
+        foreach (PhotonView pv in pview)
         {
-           if(!player.GetComponent<PlayerCtrl>().isGoalin)
-           {
-                if (PhotonNetwork.IsMasterClient)
-                {                    
-                    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
-                }
-                else
-                {
-                    PhotonNetwork.LeaveRoom();
-                }                
+            if (pv.GetComponent<PlayerCtrl>().isGoalin)
+            {
+                //if (PhotonNetwork.IsMasterClient)
+                //{
+                //    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
+                //}
+                //else
+                //{
+                //    PhotonNetwork.LeaveRoom();
+                // 마스터 클라이언트가 변경되었을때 콜백
+                // public override void OnMasterClientSwitched(Player newMasterClient)
+                PhotonNetwork.LoadLevel(5);
+                //SceneManager.LoadScene(5);
+            }
+            else
+            {
+                PhotonNetwork.LeaveRoom();
             }
         }
-        yield return new WaitForSeconds(5f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -144,59 +161,56 @@ public class StartGameManager : MonoBehaviour
                 playerCtrl.isGoalin = true;
 
                 ShowMessage(playerCtrl, "성공!");
-                Watching(other);
 
-                StartCoroutine(Active(other));
+                cam = other.gameObject.GetComponentInChildren<Camera>();
+                cam.gameObject.transform.parent = null;
+                
+                StartCoroutine(OffPlayer(other));
             }
-            else
+            if (count >= goalCount)
             {
-                //StartCoroutine(GameOver());
+                StartCoroutine(GameoverMsg());
+                StartCoroutine(GameOver());
             }
-            
         }
     }
 
-    IEnumerator Active(Collider other)
+    IEnumerator OffPlayer(Collider other)
     {
         yield return new WaitForSeconds(0.5f);
-        other.gameObject.SetActive(false); 
+        other.gameObject.SetActive(false);
     }
 
-    int watchIndex = -1;
-    void Watching(Collider other)
+    void Watching()
     {
-        //카메라를 떼어서 
-        Camera cam = other.gameObject.GetComponentInChildren<Camera>();
-        //마우스 버튼을 누르면
-        if (Input.GetMouseButtonDown(1))
-        {
-            PlayerCtrl[] playersCtrl = FindObjectsOfType<PlayerCtrl>();
-                //PlayerCtrl nextPlayer = playersCtrl[nextNum];
+        //카메라 값 초기화
+        cam.transform.position = Vector3.zero;
+        cam.transform.rotation = Quaternion.identity;
 
-                //foreach(PlayerCtrl players in playersCtrl)
-                //{
-                //    if (!players.isGoalin)
-                //    {
-                //        cam.transform.position = players.cam.transform.position;
-                //        cam.transform.rotation = players.cam.transform.rotation;
-                //    }
-                //}
-                int startIndex = (watchIndex + 1) % playersCtrl.Length;
-                for (int i = 0; i < playersCtrl.Length; i++)
+        PhotonView[] pv = FindObjectsOfType<PhotonView>();
+        int startIndex = (watchIndex + 1) % pv.Length;
+        for (int i = 0; i < pv.Length; i++)
+        {
+            //원형배열
+            int index = (startIndex + i) % pv.Length;
+
+            //if (pv[index].gameObject.activeSelf)
+            if (!pv[index].GetComponent<PlayerCtrl>().isGoalin)
+            {
+                PhotonView nextPlayer = pv[index];
+                if (nextPlayer.GetComponent<PlayerCtrl>().cam != null)
                 {
-                    int index = (startIndex + i) % playersCtrl.Length;
-                    if (!playersCtrl[index].isGoalin) 
-                    {
-                        PlayerCtrl nextPlayer = playersCtrl[index];
-                        cam.transform.position = nextPlayer.cam.transform.position;
-                        cam.transform.rotation = nextPlayer.cam.transform.rotation;
-                        watchIndex = index;
-                    }
+                    cam.transform.SetParent(nextPlayer.GetComponent<PlayerCtrl>().cam.transform);
+                    cam.transform.localPosition = new Vector3(0, 4f, -6.15f);
+                    cam.transform.rotation = Quaternion.Euler(40f, 0f, 0f);
+                    //cam.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
+                    //cam.transform.rotation = Quaternion.Euler(40f, 0f, 0f); -->안해도됨 어차피 000이라
+                    watchIndex = index;
+                    return;
                 }
-            
+            }
         }
     }
-
 
     void ShowMessage(PlayerCtrl scCtrl, string msg)
     {
