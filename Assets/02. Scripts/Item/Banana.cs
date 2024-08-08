@@ -6,6 +6,10 @@ using UnityEngine;
 public class Banana : UseItem
 {
     PhotonView pvMine;
+    private void Start()
+    {
+        
+    }
     private void Awake()
     {
         pvMine = GetComponent<PhotonView>();
@@ -14,7 +18,7 @@ public class Banana : UseItem
     {
         PhotonView pv=PV(collision);
 
-        if (pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
+        if ( pv!=null&&pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
         {
             pv.GetComponent<Rigidbody>().AddForce(pv.GetComponent<Rigidbody>().velocity * 2);
         }

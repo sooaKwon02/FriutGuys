@@ -17,7 +17,7 @@ public class Apple : UseItem
     protected override void OnCollisionEnter(Collision collision)
     {
         PhotonView pv = PV(collision);
-        if (pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
+        if (pv != null && pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
         {
             pv.GetComponent<PlayerCtrl>().DeBuffTime();
             pv.GetComponent<PlayerCtrl>().moveSpeed = 0;

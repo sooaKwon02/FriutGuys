@@ -13,23 +13,17 @@ public class Rank : MonoBehaviour
     private void Awake()
     {
 
-        saveLoad=FindObjectOfType<SaveLoad>();
+        saveLoad =FindObjectOfType<SaveLoad>();
     }
 
     private void OnEnable()
     {
         count = 0;
         saveLoad.LoadScore();
+        
         for(int i=0;i<saveLoad.rankList.entries.Length;i++)
         {
-            count++;
-            if (count <= 50)
-            {
-                GameObject obj = Instantiate(rankItem);
-                obj.transform.SetParent(rankContents.transform, false);
-                obj.GetComponent<RankItem>().ScoreSet(saveLoad.rankList.entries[i]);
-            }
-            else  break;                
+            rankContents.transform.GetChild(i).GetComponent<RankItem>().ScoreSet(saveLoad.rankList.entries[i]);
         }
     }
 }

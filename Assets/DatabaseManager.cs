@@ -134,6 +134,7 @@ public class DatabaseManager : MonoBehaviour
                 saveload.SetGame(id, response.nickname);
                 saveload.LoadData();
                 saveload.LoadInven();
+                saveload.LoadScore();
                 StartCoroutine(Success());
                 LoginPanel.SetActive(false);
             }
