@@ -69,7 +69,6 @@ public class StartGameManager : MonoBehaviour
 
     IEnumerator GameCount()
     {
-
         PlayerCtrl[] playerCtrl = FindObjectsOfType<PlayerCtrl>();
 
         foreach (PlayerCtrl playerCtrls in playerCtrl)
@@ -103,26 +102,42 @@ public class StartGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         PhotonView[] pview = FindObjectsOfType<PhotonView>();
-        foreach (PhotonView pv in pview)
+        //foreach (PhotonView pv in pview)
+        //{
+        //    if (pv.GetComponent<PlayerCtrl>().isGoalin)
+        //    {
+        //        //if (PhotonNetwork.IsMasterClient)
+        //        //{
+        //        //    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
+        //        //}
+        //        //else
+        //        //{
+        //        //    PhotonNetwork.LeaveRoom();
+        //        // 마스터 클라이언트가 변경되었을때 콜백
+        //        // public override void OnMasterClientSwitched(Player newMasterClient)
+        //        PhotonNetwork.LoadLevel(5);
+        //        //SceneManager.LoadScene(5);
+        //    }
+        //    else if(!pv.GetComponent<PlayerCtrl>().isGoalin)
+        //    {
+        //        //Destroy(cam.gameObject);
+        //        PhotonNetwork.LeaveRoom();
+        //    }
+        //}
+        foreach (GameObject player in players)
         {
-            if (pv.GetComponent<PlayerCtrl>().isGoalin)
+            PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
+
+            if (player.GetComponent<PhotonView>().IsMine)
             {
-                //if (PhotonNetwork.IsMasterClient)
-                //{
-                //    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
-                //}
-                //else
-                //{
-                //    PhotonNetwork.LeaveRoom();
-                // 마스터 클라이언트가 변경되었을때 콜백
-                // public override void OnMasterClientSwitched(Player newMasterClient)
-                PhotonNetwork.LoadLevel(5);
-                //SceneManager.LoadScene(5);
-            }
-            else if(!pv.GetComponent<PlayerCtrl>().isGoalin)
-            {
-                //Destroy(cam.gameObject);
-                PhotonNetwork.LeaveRoom();
+                if (playerCtrl.isGoalin)
+                {
+                    PhotonNetwork.LoadLevel(5);
+                }
+                else
+                {
+                    PhotonNetwork.LeaveRoom();
+                }
             }
         }
     }
@@ -149,7 +164,10 @@ public class StartGameManager : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(GameOver());
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -157,16 +175,16 @@ public class StartGameManager : MonoBehaviour
             count++;
             other.GetComponent<PlayerCtrl>().isGoalin = true;
             PhotonView[] pv = FindObjectsOfType<PhotonView>();
-            
+
             foreach (PhotonView pview in pv)
             {
                 //내 카메라 찾고
                 if (pview.IsMine && pview.GetComponent<PlayerCtrl>().isGoalin)
                 {
+                    //플레이어에게서 카메라를 뗸다
                     Camera.main.transform.parent = null;
                 }
             }
-            //Camera.main.transform.parent = null;
             if (count >= goalCount)
             {
                 StartCoroutine(GameoverMsg());
@@ -184,17 +202,22 @@ public class StartGameManager : MonoBehaviour
     void Watching()
     {
         PhotonView[] pv = FindObjectsOfType<PhotonView>();
+
         foreach(PhotonView pvs in pv)
         {
-            if (!pvs.GetComponent<PlayerCtrl>().isGoalin)
+            //내 플레이어일 때
+            if (pvs.IsMine)
             {
-                return;
+                //isGoalin이 false이면
+                if (!pvs.GetComponent<PlayerCtrl>().isGoalin)
+                {
+                    return;
+                }
             }
         }
-
+        //카메라 초기화
         Camera.main.transform.position = Vector3.zero;
         Camera.main.transform.rotation = Quaternion.identity;
-        //PhotonView[] pv = FindObjectsOfType<PhotonView>();
 
         //원형배열
         int startIndex = (watchIndex + 1) % pv.Length;

@@ -67,7 +67,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (byte.TryParse(fullRoomInput.text, out maxPlayers) && maxPlayers > 1 && maxPlayers < 17)
         {
             roomOptions.MaxPlayers = maxPlayers;
-            if(toggle.isOn)// !string.IsNullOrEmpty(passwordInput.text))
+            if(toggle.isOn)
             {
                 roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "Password", passwordInput.text } };
                 roomOptions.CustomRoomPropertiesForLobby = new string[] { "Password" };

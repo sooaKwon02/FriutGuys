@@ -146,7 +146,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             PhotonView[] pvs = FindObjectsOfType<PhotonView>();
             foreach (PhotonView _pv in pvs)
             {
-                //Æ÷Åæºä¿¡´Ù RPC¸¦ ½÷
+                //Æ÷Åæºä¿¡´Ù RPC¸¦ ½ð´Ù
                 _pv.RPC("KickPlayerRPC", RpcTarget.All, name);
                 _pv.RPC("DestroyUserInfo", RpcTarget.All, name);
             }
