@@ -12,14 +12,13 @@ public class StartGameManager : MonoBehaviour
     public Transform[] pos;
     public Collider goal;
 
-    int goalCount;
-    int count;
+    public int goalCount;
+    public int count;
     GameObject[] players;
 
     private Text gameTxt;
 
     int watchIndex = -1;
-    Camera cam;
 
     private void Awake()
     {
@@ -53,11 +52,6 @@ public class StartGameManager : MonoBehaviour
 
     private void Update()
     {
-        //if (count >= goalCount)
-        //{
-        //    StartCoroutine(GameoverMsg());
-        //}
-
         if (Input.GetMouseButtonDown(0))
         {
             Watching();
@@ -90,7 +84,6 @@ public class StartGameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         gameTxt.text = "Go!";
-
     }
 
     void GameStart()
@@ -102,22 +95,6 @@ public class StartGameManager : MonoBehaviour
         {
             playerCtrls.moveSpeed = 5.0f;
             playerCtrls.isColl = false;
-        }
-    }
-
-    IEnumerator GameoverMsg()
-    {
-        gameTxt.text = "라운드 종료";
-
-        foreach (GameObject player in players)
-        {
-            if (player.activeSelf)
-            {
-                PlayerCtrl playerScript = player.GetComponent<PlayerCtrl>();
-                yield return new WaitForSeconds(1f);
-                gameTxt.text = "";
-                ShowMessage(playerScript, "탈락!");
-            }
         }
     }
 
@@ -142,35 +119,58 @@ public class StartGameManager : MonoBehaviour
                 PhotonNetwork.LoadLevel(5);
                 //SceneManager.LoadScene(5);
             }
-            else
+            else if(!pv.GetComponent<PlayerCtrl>().isGoalin)
             {
+                //Destroy(cam.gameObject);
                 PhotonNetwork.LeaveRoom();
             }
         }
     }
 
+    IEnumerator GameoverMsg()
+    {
+        gameTxt.enabled = true;
+        gameTxt.text = "라운드 종료";
+        yield return new WaitForSeconds(3f);
+
+        foreach (GameObject player in players)
+        {
+            PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
+
+            if (player.GetComponent<PhotonView>().IsMine)
+            {
+                if (playerCtrl.isGoalin)
+                {
+                    gameTxt.text = "성공!";
+                }
+                else
+                {
+                    gameTxt.text = "실패!";
+                }
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            if(count < goalCount)
+            count++;
+            other.GetComponent<PlayerCtrl>().isGoalin = true;
+            PhotonView[] pv = FindObjectsOfType<PhotonView>();
+            
+            foreach (PhotonView pview in pv)
             {
-                count++;
-                Debug.Log("count : " + count);
-                PlayerCtrl playerCtrl = other.GetComponent<PlayerCtrl>();
-                playerCtrl.isGoalin = true;
-
-                ShowMessage(playerCtrl, "성공!");
-
-                cam = other.gameObject.GetComponentInChildren<Camera>();
-                cam.gameObject.transform.parent = null;
-                
-                StartCoroutine(OffPlayer(other));
+                //내 카메라 찾고
+                if (pview.IsMine && pview.GetComponent<PlayerCtrl>().isGoalin)
+                {
+                    Camera.main.transform.parent = null;
+                }
             }
+            //Camera.main.transform.parent = null;
             if (count >= goalCount)
             {
                 StartCoroutine(GameoverMsg());
-                StartCoroutine(GameOver());
+                StartCoroutine(OffPlayer(other));
             }
         }
     }
@@ -183,43 +183,37 @@ public class StartGameManager : MonoBehaviour
 
     void Watching()
     {
-        //카메라 값 초기화
-        cam.transform.position = Vector3.zero;
-        cam.transform.rotation = Quaternion.identity;
-
         PhotonView[] pv = FindObjectsOfType<PhotonView>();
+        foreach(PhotonView pvs in pv)
+        {
+            if (!pvs.GetComponent<PlayerCtrl>().isGoalin)
+            {
+                return;
+            }
+        }
+
+        Camera.main.transform.position = Vector3.zero;
+        Camera.main.transform.rotation = Quaternion.identity;
+        //PhotonView[] pv = FindObjectsOfType<PhotonView>();
+
+        //원형배열
         int startIndex = (watchIndex + 1) % pv.Length;
         for (int i = 0; i < pv.Length; i++)
         {
-            //원형배열
             int index = (startIndex + i) % pv.Length;
 
-            //if (pv[index].gameObject.activeSelf)
             if (!pv[index].GetComponent<PlayerCtrl>().isGoalin)
             {
                 PhotonView nextPlayer = pv[index];
                 if (nextPlayer.GetComponent<PlayerCtrl>().cam != null)
                 {
-                    cam.transform.SetParent(nextPlayer.GetComponent<PlayerCtrl>().cam.transform);
-                    cam.transform.localPosition = new Vector3(0, 4f, -6.15f);
-                    cam.transform.rotation = Quaternion.Euler(40f, 0f, 0f);
-                    //cam.transform.localPosition = new Vector3(0, -0.71f, -6.15f);
-                    //cam.transform.rotation = Quaternion.Euler(40f, 0f, 0f); -->안해도됨 어차피 000이라
+                    Camera.main.transform.SetParent(nextPlayer.GetComponent<PlayerCtrl>().cam.transform);
+                    Camera.main.transform.localPosition = new Vector3(0, 4f, -6.15f);
+                    Camera.main.transform.rotation = Quaternion.Euler(40f, 0f, 0f);
                     watchIndex = index;
                     return;
                 }
             }
-        }
-    }
-
-    void ShowMessage(PlayerCtrl scCtrl, string msg)
-    {
-        if (scCtrl != null && scCtrl.pv.IsMine)
-        {
-            scCtrl.moveSpeed = 0f;
-            scCtrl.isColl = true;
-            scCtrl.playerTxt.transform.parent.gameObject.SetActive(true);
-            scCtrl.playerTxt.text = msg;
         }
     }
 }

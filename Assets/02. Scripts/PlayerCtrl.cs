@@ -453,4 +453,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         }
     }
 
+    [PunRPC]
+    public void vic()
+    {
+        moveSpeed = 0f;
+        isColl = true;
+        playerTxt.text = isGoalin ? playerTxt.text = "성공" : playerTxt.text = "실패";  
+    }
+
 }

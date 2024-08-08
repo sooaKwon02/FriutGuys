@@ -4119,8 +4119,6 @@ MonoBehaviour:
   boundaries: {fileID: 345061059}
   miniMap: {fileID: 704105183}
   miniMapIcons: {fileID: 6979427160482192714, guid: ed4367fc1616a5a4ca3592f4cd4bd03d, type: 3}
-  worldTransforms: []
-  imageTransforms: []
 --- !u!114 &704105185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5569,6 +5567,8 @@ MonoBehaviour:
   - {fileID: 1616977848}
   - {fileID: 1334869963}
   goal: {fileID: 1365539606}
+  goalCount: 0
+  count: 0
 --- !u!4 &937747092
 Transform:
   m_ObjectHideFlags: 0
@@ -7790,7 +7790,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365539605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 22.6, z: 220}
+  m_LocalPosition: {x: 0, y: 0, z: 9.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1329445236}
@@ -9233,7 +9233,7 @@ GameObject:
   - component: {fileID: 1693877382}
   - component: {fileID: 1693877381}
   m_Layer: 5
-  m_Name: MiniMap Canvas
+  m_Name: Canvas
   m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
