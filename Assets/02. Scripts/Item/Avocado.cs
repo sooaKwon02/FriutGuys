@@ -7,7 +7,7 @@ public class Avocado : UseItem
 {
     PhotonView pvMine;
     public float explosionRadius = 20f; 
-    public float explosionForce = 700f;
+    public float explosionForce = 1500f;
     private void Awake()
     {
         pvMine = GetComponent<PhotonView>();
@@ -19,7 +19,7 @@ public class Avocado : UseItem
     protected override void OnCollisionEnter(Collision collision)
     {
         PhotonView pv = PV(collision);
-        if (pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
+        if (pv != null && pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
         {
             Explode();
         }

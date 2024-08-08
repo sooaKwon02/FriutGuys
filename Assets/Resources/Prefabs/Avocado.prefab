@@ -150,5 +150,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 9b2e9aade99b7db4781dcd006288b42e, type: 2}
-  explosionRadius: 5
-  explosionForce: 700
+  explosionRadius: 20
+  explosionForce: 1500
