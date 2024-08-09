@@ -1078,11 +1078,6 @@ MonoBehaviour:
   Menu: {fileID: 8804549425001952321}
   playerTxt: {fileID: 738663335936063404}
   camHide: {fileID: 227935919589567460}
-  pullForce: 0
-  pullStrength: 0
-  pushStrength: 0
-  pullRange: 1
-  pullRadius: 1.5
   targetObject: {fileID: 0}
   holdPosition: {fileID: 0}
   isGoalin: 0
@@ -2361,15 +2356,6 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: slide
-  - Type: 4
-    SynchronizeType: 1
-    Name: isCatch
-  - Type: 9
-    SynchronizeType: 1
-    Name: Catch
-  - Type: 9
-    SynchronizeType: 1
-    Name: NonCatch
   - Type: 9
     SynchronizeType: 0
     Name: Dizzy
@@ -2385,6 +2371,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: Buff
+  - Type: 4
+    SynchronizeType: 0
+    Name: isFall
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
