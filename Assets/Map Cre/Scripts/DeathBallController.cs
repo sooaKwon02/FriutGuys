@@ -34,7 +34,7 @@ public class DeathBallController : MonoBehaviour
         }
     }
 
-    public GameObject GetDeathBall()
+    private GameObject GetDeathBall()
     {
         GameObject reqDeathBall = null;
 
@@ -65,11 +65,9 @@ public class DeathBallController : MonoBehaviour
         {
             int randomIndex = Random.Range(0, spawnPoints.Length);
             Transform randomSpawnPoint = spawnPoints[randomIndex];
-
             GameObject deathBall = GetDeathBall();
             deathBall.transform.SetPositionAndRotation(randomSpawnPoint.position, randomSpawnPoint.rotation);
             deathBall.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
-
             spawnTimer = 0.0f;
         }
 

@@ -48,10 +48,10 @@ public class EffectController : MonoBehaviour
 
         if (reqEffect == null)
         {
-            GameObject newEnemy = Instantiate(effectPrefab) as GameObject;
-            newEnemy.transform.parent = transform;
-            effects.Add(newEnemy);
-            reqEffect = newEnemy;
+            GameObject newEffect = Instantiate(effectPrefab) as GameObject;
+            newEffect.transform.parent = transform;
+            effects.Add(newEffect);
+            reqEffect = newEffect;
         }
 
         reqEffect.SetActive(true);

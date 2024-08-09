@@ -20,7 +20,7 @@ public class ScreenSetting : MonoBehaviour
     
     private void Start()
     {
-        mask.enabled = false;
+        mask.enabled = true;
         LoadSettings();
         RectSizeChange(sizeX, sizeY, on);
     }
