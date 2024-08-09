@@ -383,7 +383,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     {
         stop = true;
         anim.speed = 0;
-        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
     }
 
 
