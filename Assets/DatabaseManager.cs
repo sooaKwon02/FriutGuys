@@ -67,7 +67,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator SignUp(string id, string password, string nickname)
     {
-        string serverURL = dll.SignUpMine;
+        string serverURL = dll.SignUp;
         string hash = CalculateSHA256Hash(id + password + nickname + secretKey);
         WWWForm form = new WWWForm();
         form.AddField("id", id);
@@ -120,7 +120,7 @@ public class DatabaseManager : MonoBehaviour
     }
     IEnumerator LoginRequest(string id, string password)
     {
-        string serverURL = dll.GameLoginMine; 
+        string serverURL = dll.GameLogin; 
         WWWForm form = new WWWForm();
         form.AddField("id", id);
         form.AddField("password", password);

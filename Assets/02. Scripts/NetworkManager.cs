@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -25,7 +26,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public GameObject pwPanel;
 
     private string roomPassword = "";
-    private List<RoomInfo> gameRoomList = new List<RoomInfo>();
+    public List<RoomInfo> gameRoomList = new List<RoomInfo>();
+    List<RoomInfo> re_list =new List<RoomInfo>();
     void Awake()
     {
         if (toggle != null)
@@ -39,12 +41,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             createRoomFailPanel.SetActive(false);
         }
 
-        roomListButtonPrefabs.GetComponent<RectTransform>().pivot = new Vector3(0.0f, 1.0f);
         SaveLoad saveLoadScript = FindObjectOfType<SaveLoad>();
         
         PhotonNetwork.NickName = saveLoadScript.nickName;
     }
-
+    private void Start()
+    {
+    }
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
@@ -162,33 +165,62 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        gameRoomList = roomList;
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("ROOM_ITEM"))
+        foreach (RoomData obj in scrollContents.transform.GetComponentsInChildren<RoomData>())
         {
-            Destroy(obj);
+            Destroy(obj.gameObject);
         }
-        int rowCount = 0;
-        scrollContents.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+        HashSet<string> existingRoomNames = new HashSet<string>(gameRoomList.Select(r => r.Name));
 
-       foreach(RoomInfo _room in roomList)
-       {
+        foreach (RoomInfo rm in roomList)
+        {
+            if (rm.PlayerCount > 0)
+            {
+                RoomInfo existingRoom = gameRoomList.FirstOrDefault(r => r.Name == rm.Name);
+                if (existingRoom != null)
+                {
+                    if (existingRoom.PlayerCount != rm.PlayerCount)
+                    {
+                        gameRoomList.Remove(existingRoom);
+                        gameRoomList.Add(rm);
+                    }
+                }
+                else
+                {
+                    gameRoomList.Add(rm);
+                }
+            }
+            else
+            {
+                RoomInfo roomToRemove = gameRoomList.FirstOrDefault(r => r.Name == rm.Name);
+                if (roomToRemove != null)
+                {
+                    gameRoomList.Remove(roomToRemove);
+                }
+            }
+        }
+        foreach (RoomInfo _room in gameRoomList)
+        {
             GameObject room = (GameObject)Instantiate(roomListButtonPrefabs);
             room.transform.SetParent(scrollContents.transform, false);
-
             RoomData roomData = room.GetComponent<RoomData>();
             roomData.roomName = _room.Name;
             roomData.connectPlayer = _room.PlayerCount;
             roomData.maxPlayers = _room.MaxPlayers;
-
             roomData.DisplayRoomData();
+            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(_room); });
+        }
 
-            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(_room);});
-
-            scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
-            scrollContents.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20f);
-       }
+        StartCoroutine(RoomListRectSet());
     }
-
+    IEnumerator RoomListRectSet()
+    {
+        yield return new WaitForSeconds(0.3f);
+        scrollContents.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+        scrollContents.GetComponent<RectTransform>().pivot = new Vector3(0.5f, 1.0f);
+        scrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(
+        scrollContents.GetComponent<GridLayoutGroup>().cellSize.x,
+        scrollContents.GetComponent<GridLayoutGroup>().cellSize.y * scrollContents.transform.childCount);
+    }
     void OnClickRoomItem(RoomInfo roomInfo)
     {
         if (roomInfo.CustomProperties.TryGetValue("Password", out object password))
