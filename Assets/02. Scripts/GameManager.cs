@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
         profilePanel.SetActive(false);
         settingMenuPanel.SetActive(false);
         settingPanel.SetActive(false);
+        roomListPanel.SetActive(false);
         saveload = FindObjectOfType<SaveLoad>();
         ActiveMenu(true);
         IDPanelSet();
