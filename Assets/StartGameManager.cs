@@ -101,7 +101,7 @@ public class StartGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        PhotonView[] pview = FindObjectsOfType<PhotonView>();
+        //PhotonView[] pview = FindObjectsOfType<PhotonView>();
         //foreach (PhotonView pv in pview)
         //{
         //    if (pv.GetComponent<PlayerCtrl>().isGoalin)
@@ -124,19 +124,21 @@ public class StartGameManager : MonoBehaviour
         //        PhotonNetwork.LeaveRoom();
         //    }
         //}
-        foreach (GameObject player in players)
+        foreach(GameObject player in players)
         {
             PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
 
             if (player.GetComponent<PhotonView>().IsMine)
             {
-                if (playerCtrl.isGoalin)
-                {
-                    PhotonNetwork.LoadLevel(5);
-                }
-                else
+                if (!playerCtrl.isGoalin)
                 {
                     PhotonNetwork.LeaveRoom();
+                }
+                else if(playerCtrl.isGoalin)
+                {
+                    yield return new WaitForSeconds(2f);
+                    playerCtrl.gameObject.SetActive(true);
+                    PhotonNetwork.LoadLevel(5);
                 }
             }
         }

@@ -243,13 +243,13 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         if (isJump)
         {
             jumpCooltimeTimer = 1.0f;
-            Vector3 jumpVel = Vector3.up * jumpForce;//Mathf.Sqrt(jumpForce * -Physics.gravity.y);
+            Vector3 jumpVel = Vector3.up * jumpForce;
             rb.AddForce(jumpVel, ForceMode.Impulse);
             anim.SetTrigger("Jump");
             isJump = false;
         }
     }
-
+    float timer = 0.0f;
     void CheckGround()
     {
         RaycastHit hit;
@@ -260,10 +260,24 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             if (hit.collider != null)
             {
                 isGround = true;
+                isColl = false;
+                timer = 0;
+                anim.SetBool("isFall", false);
                 return;
             }
         }
+        
         isGround = false;
+        if (!isGround) 
+        { 
+            timer += Time.deltaTime;
+            if(timer > 1.5f)
+            {
+                isColl = true;
+                anim.SetBool("isFall", true);
+            }
+        }
+        //timer = 0.0f;
     }
 
     void Slide()
