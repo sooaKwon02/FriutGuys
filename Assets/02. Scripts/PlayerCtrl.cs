@@ -329,7 +329,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             }
         }
     }
-
+   
     void OnCollisionEnter(Collision coll)
     {
         if (coll.gameObject.CompareTag("Obstacle"))
@@ -343,9 +343,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             StartCoroutine(ReMove());
 
         }
-        if(cookie&&coll.transform.GetComponentInParent<PhotonView>().tag=="Player")
+        if(coll.transform.CompareTag("Player")||coll.transform.CompareTag("SlideCollider"))
         {
-            coll.rigidbody.AddForce(rb.velocity, ForceMode.Impulse);
+            if(cookie)
+            {
+                coll.rigidbody.AddForce(rb.velocity, ForceMode.Impulse);
+            }
         }
     }
     public IEnumerator BuffTime()

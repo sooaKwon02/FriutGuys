@@ -71,9 +71,8 @@ public class PlayerSettingManager : MonoBehaviourPunCallbacks
     private IEnumerator LoadSceneAsync(int sceneNum)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNum);
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
+        yield return null;
+
+
     }
 }
