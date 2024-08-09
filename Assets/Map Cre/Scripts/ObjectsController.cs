@@ -105,15 +105,15 @@ public class ObjectsController : MonoBehaviour
         {
             int randomIndex = Random.Range(0, spawnPoints.Length);
             Transform randomSpawnPoint = spawnPoints[randomIndex];
-            random = Random.Range(0, 3);
+            random = Random.Range(0, 4);
 
-            if (random == 0 || random == 1)
+            if (random == 0 || random == 1 || random == 2)
             {
                 GameObject objectsCivilian = GetCivilian();
                 objectsCivilian.transform.SetPositionAndRotation(randomSpawnPoint.position, randomSpawnPoint.rotation);
             }
 
-            else if (random == 2)
+            else if (random == 3)
             {
                 GameObject objectsPoliceOfficer = GetPoliceOfficer();
                 objectsPoliceOfficer.transform.SetPositionAndRotation(randomSpawnPoint.position, randomSpawnPoint.rotation);
