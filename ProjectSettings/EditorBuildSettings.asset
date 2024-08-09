@@ -23,4 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/scMap002.unity
     guid: 586ccc6d3ac1a8946b3ce1a38634501e
-  m_configObjects: {}
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b71861d721f291841abd2ce1f0b22136, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4759c1e9e01c4d84fa9b7de4a27e16f1, type: 2}
