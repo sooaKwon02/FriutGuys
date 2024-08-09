@@ -15,7 +15,7 @@ public class ObjectsFireController : MonoBehaviour
     private Transform objectsCore;
     private Transform firePosition;
 
-    private bool canFire = false;
+    private bool canFire;
 
     private void Awake()
     {
@@ -36,13 +36,10 @@ public class ObjectsFireController : MonoBehaviour
 
         if (Physics.Raycast(ray, out raycastHit, 50.0f))
         {
-            if (raycastHit.collider.CompareTag("Player"))
+            if (raycastHit.collider.CompareTag("Player") && canFire == false)
             {
-                if (canFire == false)
-                {
-                    canFire = true;
-                    StartCoroutine(FireRoutine());
-                }
+                canFire = true;
+                StartCoroutine(FireRoutine());
             }
         }
     }
@@ -57,6 +54,12 @@ public class ObjectsFireController : MonoBehaviour
 
         yield return new WaitForSeconds(3.0f);
         canFire = false;
+        StopCoroutine(FireRoutine());
+    }
 
+    private void OnDisable()
+    {
+        canFire = false;
+        StopAllCoroutines();
     }
 }

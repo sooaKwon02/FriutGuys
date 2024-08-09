@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MolotovCocktailController : MonoBehaviour
 {
-    private readonly float spawnDelay = 5.0f;
+    private readonly float spawnDelay = 3.0f;
     private float spawnTimer = 0.0f;
 
     public Transform[] spawnPoints;
