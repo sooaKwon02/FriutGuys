@@ -15,6 +15,7 @@ public class StartGameManager : MonoBehaviour
     public int goalCount;
     public int count;
     GameObject[] players;
+    PlayerCtrl playerCtrl;
 
     private Text gameTxt;
 
@@ -176,57 +177,21 @@ public class StartGameManager : MonoBehaviour
         {
             count++;
             other.GetComponent<PlayerCtrl>().isGoalin = true;
-            PhotonView[] pv = FindObjectsOfType<PhotonView>();
 
-            foreach (PhotonView pview in pv)
-            {
-                //내 카메라 찾고
-                if (pview.IsMine && pview.GetComponent<PlayerCtrl>().isGoalin)
-                {
-                    //플레이어에게서 카메라를 뗸다
-                    Camera.main.transform.parent = null;
-                }
-            }
             if (count >= goalCount)
             {
                 StartCoroutine(GameoverMsg());
-                StartCoroutine(OffPlayer(other));
+                other.gameObject.SetActive(false);
             }
         }
     }
-
-    IEnumerator OffPlayer(Collider other)
-    {
-        yield return new WaitForSeconds(0.5f);
-        other.gameObject.SetActive(false);
-    }
-
     void Watching()
     {
-        PhotonView[] pv = FindObjectsOfType<PhotonView>();
-
-        foreach(PhotonView pvs in pv)
-        {
-            //내 플레이어일 때
-            if (pvs.IsMine)
-            {
-                //isGoalin이 false이면
-                if (!pvs.GetComponent<PlayerCtrl>().isGoalin)
-                {
-                    return;
-                }
-            }
-        }
-        //카메라 초기화
-        Camera.main.transform.position = Vector3.zero;
-        Camera.main.transform.rotation = Quaternion.identity;
-
-        //원형배열
+        PhotonView[] pv = FindObjectsOfType<PhotonView>();    
         int startIndex = (watchIndex + 1) % pv.Length;
         for (int i = 0; i < pv.Length; i++)
         {
             int index = (startIndex + i) % pv.Length;
-
             if (!pv[index].GetComponent<PlayerCtrl>().isGoalin)
             {
                 PhotonView nextPlayer = pv[index];

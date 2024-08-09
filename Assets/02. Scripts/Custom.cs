@@ -10,7 +10,7 @@ public class Custom : MonoBehaviour
 {
     public Text fixedPartName;
     public Text styleName;
-    CharacterCustom custom;
+    LobbyCharacterCustom custom;
     Transform player=null;
     SaveLoad.PLAYER p; 
     string StyleCheck= "Scale";
@@ -25,7 +25,7 @@ public class Custom : MonoBehaviour
 
     private void Awake()
     {              
-        custom = FindObjectOfType<CharacterCustom>();
+        custom = FindObjectOfType<LobbyCharacterCustom>();
         if (FindObjectOfType<SaveLoad>())
             p = FindObjectOfType<SaveLoad>().player; 
       

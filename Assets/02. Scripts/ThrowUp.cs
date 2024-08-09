@@ -20,13 +20,13 @@ public class ThrowUp : MonoBehaviour
     }
     public void Throw()
     {
-        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom && GetComponentInParent<PhotonView>().IsMine)
         {
-           GameObject obj= PhotonNetwork.Instantiate("Prefabs/"+item.name, ThrowDir().position, Quaternion.identity);
+            GameObject obj = PhotonNetwork.Instantiate("Prefabs/" + item.name, ThrowDir().position, Quaternion.identity);
             obj.transform.localScale = new Vector3(5f, 5f, 5f);
             if (obj.GetComponent<Rigidbody>() == null)
             {
-                Rigidbody rb=obj.AddComponent<Rigidbody>();
+                Rigidbody rb = obj.AddComponent<Rigidbody>();
                 rb.AddForce(ThrowDir().forward * item.speed);
             }
             mesh.sharedMesh = null;

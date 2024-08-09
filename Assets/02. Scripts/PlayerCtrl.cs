@@ -327,42 +327,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             }
         }
     }
-
-    public void GetPullObject()
-    {
-        targetObject = null;
-        RaycastHit hit;
-
-        if (Physics.Raycast(holdPosition.transform.position, holdPosition.transform.forward, out hit, pullRange))
-        {
-            targetObject = hit.collider;
-            Debug.Log(targetObject);
-        }
-    }
-    public void PullForce()
-    {
-        if (targetObject != null)
-        {
-            anim.SetBool("isCatch", true);
-            if (targetObject.GetComponent<Rigidbody>() && v < 0)
-            {
-                Vector3 dir = holdPosition.position - targetObject.transform.position;
-                dir.y = 0;
-                //moveSpeed = moveSpeed / 2.0f;
-                //rotSpeed = 0;
-                targetObject.GetComponent<Rigidbody>().velocity = dir * pullStrength * Time.deltaTime;
-            }
-            else if (targetObject.GetComponent<Rigidbody>() && v > 0)
-            {
-                Vector3 dir = targetObject.transform.position - holdPosition.position;
-                dir.y = 0;
-                //moveSpeed = moveSpeed / 2.0f;
-                //rotSpeed = 0;
-                targetObject.GetComponent<Rigidbody>().velocity = dir * pullStrength * Time.deltaTime;
-            }
-        }
-    }
-
+   
     void OnCollisionEnter(Collision coll)
     {
         if (coll.gameObject.CompareTag("Obstacle"))
@@ -376,9 +341,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             StartCoroutine(ReMove());
 
         }
-        if(cookie&&coll.transform.GetComponentInParent<PhotonView>().tag=="Player")
+        if(coll.transform.CompareTag("Player")||coll.transform.CompareTag("SlideCollider"))
         {
-            coll.rigidbody.AddForce(rb.velocity, ForceMode.Impulse);
+            if(cookie)
+            {
+                coll.rigidbody.AddForce(rb.velocity, ForceMode.Impulse);
+            }
         }
 
         //if (coll.transform.tag == "Bullet")
