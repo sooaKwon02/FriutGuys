@@ -162,16 +162,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        //Debug.Log($"OnRoomListUpdate called with {roomList.Count} rooms.");
         gameRoomList = roomList;
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("ROOM_ITEM"))
+        
+        foreach (RoomData obj in scrollContents.GetComponentsInChildren<RoomData>())
         {
-            Destroy(obj);
+            Destroy(obj.gameObject);
         }
         int rowCount = 0;
         scrollContents.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
 
-       foreach(RoomInfo _room in roomList)
-       {
+        StartCoroutine(UpdateRoom(roomList, rowCount));
+    }
+
+    IEnumerator UpdateRoom(List<RoomInfo> roomList, int rowCount)
+    {
+        yield return new WaitForSeconds(1.0f);
+        foreach (RoomInfo _room in roomList)
+        {
+            Debug.Log(_room);
             GameObject room = (GameObject)Instantiate(roomListButtonPrefabs);
             room.transform.SetParent(scrollContents.transform, false);
 
@@ -182,11 +191,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             roomData.DisplayRoomData();
 
-            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(_room);});
+            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(_room); });
 
             scrollContents.GetComponent<GridLayoutGroup>().constraintCount = ++rowCount;
             scrollContents.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20f);
-       }
+        }
     }
 
     void OnClickRoomItem(RoomInfo roomInfo)
