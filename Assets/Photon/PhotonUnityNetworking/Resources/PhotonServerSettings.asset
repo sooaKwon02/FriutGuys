@@ -65,6 +65,15 @@ MonoBehaviour:
   - KickPlayerRPC
   - OtherRespawnSet
   - vic
+  - DeBuff
+  - DeBuffHide
+  - SpeedUp
+  - JumpUp
+  - PowerUp
+  - DeBuffJump
+  - DeBuffSlide
+  - DeBuffSpeed
+  - ExplodeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

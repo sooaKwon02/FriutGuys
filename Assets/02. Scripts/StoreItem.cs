@@ -43,7 +43,7 @@ public class StoreItem : MonoBehaviour
         }
         else
         {
-            FindObjectOfType<GameManager>().ErrorSend("머니가 부족합니다");
+           StartCoroutine(FindObjectOfType<GameManager>().ErrorSend("머니가 부족합니다"));
         }
     }
 

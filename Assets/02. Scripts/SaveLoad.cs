@@ -89,7 +89,7 @@ public class SaveLoad : MonoBehaviour
     }
     IEnumerator UpdateIsActiveStatus(int isActive)
     {
-        string url= "http://61.99.10.173/fruitsGuys/IsActive.php";
+        string url= "http://192.168.35.229/fruitsGuys/IsActive.php";
         WWWForm form = new WWWForm();
         form.AddField("id", ID);
         form.AddField("isActive", isActive);
@@ -111,54 +111,49 @@ public class SaveLoad : MonoBehaviour
     }
     private IEnumerator SaveDataCoroutine()
     {
-        CharacterCustom c = FindObjectOfType<CharacterCustom>();
-        string url = "http://61.99.10.173/fruitsGuys/PlayerItemSave.php";
-        if (c == null)
-        {
-            yield break;
-        }
+        string url = "http://192.168.35.229/fruitsGuys/PlayerItemSave.php";     
         WWWForm form = new WWWForm();
         form.AddField("id", ID);
 
         form.AddField("body_name", player.body_name);
-        form.AddField("body_x", c.body.transform.localScale.x.ToString());
-        form.AddField("body_y", c.body.transform.localScale.y.ToString());
-        form.AddField("body_z", c.body.transform.localScale.z.ToString());
-        form.AddField("body_rotX", c.body.transform.localRotation.x.ToString());
-        form.AddField("body_rotY", c.body.transform.localRotation.y.ToString());
-        form.AddField("body_rotZ", c.body.transform.localRotation.z.ToString());
+        form.AddField("body_x", player.body_x.ToString("F2"));
+        form.AddField("body_y", player.body_y.ToString("F2"));
+        form.AddField("body_z", player.body_z.ToString("F2"));
+        form.AddField("body_rotX", player.body_rotX.ToString("000"));
+        form.AddField("body_rotY", player.body_rotY.ToString("000"));
+        form.AddField("body_rotZ", player.body_rotZ.ToString("000"));
 
         form.AddField("glove1_name", player.glove1_name);
-        form.AddField("glove1_x", c.glove1.transform.localScale.x.ToString());
-        form.AddField("glove1_y", c.glove1.transform.localScale.y.ToString());
-        form.AddField("glove1_z", c.glove1.transform.localScale.z.ToString());
-        form.AddField("glove1_rotX", c.glove1.transform.localRotation.x.ToString());
-        form.AddField("glove1_rotY", c.glove1.transform.localRotation.y.ToString());
-        form.AddField("glove1_rotZ", c.glove1.transform.localRotation.z.ToString());
+        form.AddField("glove1_x", player.glove1_x.ToString("F2"));
+        form.AddField("glove1_y", player.glove1_y.ToString("F2"));
+        form.AddField("glove1_z", player.glove1_z.ToString("F2"));
+        form.AddField("glove1_rotX", player.glove1_rotX.ToString("000"));
+        form.AddField("glove1_rotY", player.glove1_rotY.ToString("000"));
+        form.AddField("glove1_rotZ", player.glove1_rotZ.ToString("000"));
 
         form.AddField("glove2_name", player.glove2_name);
-        form.AddField("glove2_x", c.glove2.transform.localScale.x.ToString());
-        form.AddField("glove2_y", c.glove2.transform.localScale.y.ToString());
-        form.AddField("glove2_z", c.glove2.transform.localScale.z.ToString());
-        form.AddField("glove2_rotX", c.glove2.transform.localRotation.x.ToString());
-        form.AddField("glove2_rotY", c.glove2.transform.localRotation.y.ToString());
-        form.AddField("glove2_rotZ", c.glove2.transform.localRotation.z.ToString());
+        form.AddField("glove2_x", player.glove2_x.ToString("F2"));
+        form.AddField("glove2_y", player.glove2_y.ToString("F2"));
+        form.AddField("glove2_z", player.glove2_z.ToString("F2"));
+        form.AddField("glove2_rotX", player.glove2_rotX.ToString("000"));
+        form.AddField("glove2_rotY", player.glove2_rotY.ToString("000"));
+        form.AddField("glove2_rotZ", player.glove2_rotZ.ToString("000"));
 
         form.AddField("head_name", player.head_name);
-        form.AddField("head_x", c.head.transform.localScale.x.ToString());
-        form.AddField("head_y", c.head.transform.localScale.y.ToString());
-        form.AddField("head_z", c.head.transform.localScale.z.ToString());
-        form.AddField("head_rotX", c.head.transform.localRotation.x.ToString());
-        form.AddField("head_rotY", c.head.transform.localRotation.y.ToString());
-        form.AddField("head_rotZ", c.head.transform.localRotation.z.ToString());
+        form.AddField("head_x", player.head_x.ToString("F2"));
+        form.AddField("head_y", player.head_y.ToString("F2"));
+        form.AddField("head_z", player.head_z.ToString("F2"));
+        form.AddField("head_rotX", player.head_rotX.ToString("000"));
+        form.AddField("head_rotY", player.head_rotY.ToString("000"));
+        form.AddField("head_rotZ", player.head_rotZ.ToString("000"));
 
         form.AddField("tail_name", player.tail_name);
-        form.AddField("tail_x", c.tail.transform.localScale.x.ToString());
-        form.AddField("tail_y", c.tail.transform.localScale.y.ToString());
-        form.AddField("tail_z", c.tail.transform.localScale.z.ToString());
-        form.AddField("tail_rotX", c.tail.transform.localRotation.x.ToString());
-        form.AddField("tail_rotY", c.tail.transform.localRotation.y.ToString());
-        form.AddField("tail_rotZ", c.tail.transform.localRotation.z.ToString());
+        form.AddField("tail_x", player.tail_x.ToString("F2"));
+        form.AddField("tail_y", player.tail_y.ToString("F2"));
+        form.AddField("tail_z", player.tail_z.ToString("F2"));
+        form.AddField("tail_rotX", player.tail_rotX.ToString("000"));
+        form.AddField("tail_rotY", player.tail_rotY.ToString("000"));
+        form.AddField("tail_rotZ", player.tail_rotZ.ToString("000"));
 
         form.AddField("item1", player.item1);
         form.AddField("item2", player.item2);
@@ -177,7 +172,7 @@ public class SaveLoad : MonoBehaviour
     }
     private IEnumerator LoadDataCoroutine()
     {
-        string url = "http://61.99.10.173/fruitsGuys/PlayerItemLoad.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerItemLoad.php";
         WWWForm form = new WWWForm();
         form.AddField("id", ID);
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -196,7 +191,7 @@ public class SaveLoad : MonoBehaviour
     {
         inventype.fashionInven = new INVEN[inventory.fashionItem.transform.childCount];
         inventype.useInven = new INVEN[inventory.useItem.transform.childCount];
-        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
         for (int i = 0; i < inventory.fashionItem.transform.childCount; i++)
         {
             if (inventory.fashionItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionItem.transform.childCount > 0)
@@ -237,7 +232,7 @@ public class SaveLoad : MonoBehaviour
     }
     private IEnumerator InvenLoadCoroutine()
     {
-        string url = "http://61.99.10.173/fruitsGuys/PlayerInvenLoad.php";
+        string url = "http://192.168.35.229/fruitsGuys/PlayerInvenLoad.php";
         using (UnityWebRequest www = UnityWebRequest.Get($"{url}?id={UnityWebRequest.EscapeURL(ID)}"))
         {
             yield return www.SendWebRequest();
@@ -343,7 +338,7 @@ public class SaveLoad : MonoBehaviour
 
     IEnumerator LoadTotalScore()
     {
-        string url = "http://61.99.10.173/fruitsGuys/TotalScore.php";
+        string url = "http://192.168.35.229/fruitsGuys/TotalScore.php";
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             yield return www.SendWebRequest();

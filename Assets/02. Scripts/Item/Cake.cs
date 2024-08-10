@@ -1,27 +1,43 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cake : UseItem
 {
-    PhotonView pvMine;
-    private void Awake()
+
+    protected override void Awake()
     {
-        pvMine = GetComponent<PhotonView>();
+        base.Awake(); 
     }
+
     protected override void Start()
     {
         base.Start();
     }
-    protected override void OnCollisionEnter(Collision collision)
+
+    void OnCollisionEnter(Collision collision)
     {
-        PhotonView pv = PV(collision);
-        if (pv != null && pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
+        if (pv.IsMine)
         {
-            pv.GetComponent<PlayerCtrl>().DeBuffTime();
-                pv.GetComponent<PlayerCtrl>().camHide.color = new Color(0, 0, 0, 1);
-            PhotonNetwork.Destroy(gameObject);
+            PhotonView p = ctrl(collision);
+            if (p != null)
+            {
+                pv.RPC("DeBuffHide", RpcTarget.AllBuffered, p.ViewID);
+                PhotonNetwork.Destroy(gameObject);
+            }
+        }
+    }
+    [PunRPC]
+    void DeBuffHide(int playerViewID)
+    {
+        PhotonView playerPhotonView = PhotonView.Find(playerViewID);
+        if (playerPhotonView != null)
+        {
+            PlayerCtrl p = playerPhotonView.GetComponent<PlayerCtrl>();
+            if (p != null)
+            {
+                p.DeBuffTime();
+                p.camHide.color = new Color(0, 0, 0, 1);
+            }
         }
     }
 }

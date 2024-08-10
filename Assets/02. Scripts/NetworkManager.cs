@@ -215,7 +215,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     IEnumerator RoomListRectSet()
     {
         yield return new WaitForSeconds(0.3f);
-        scrollContents.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
         scrollContents.GetComponent<RectTransform>().pivot = new Vector3(0.5f, 1.0f);
         scrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(
         scrollContents.GetComponent<GridLayoutGroup>().cellSize.x,
