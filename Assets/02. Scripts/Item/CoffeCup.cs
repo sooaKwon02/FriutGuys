@@ -1,29 +1,41 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoffeCup : UseItem
 {
-    PhotonView pvMine;
-    private void Awake()
+    protected override void Awake()
     {
-        pvMine = GetComponent<PhotonView>();
+        base.Awake();
     }
+
     protected override void Start()
     {
-        base.Start();
-    }
-    protected override void OnCollisionEnter(Collision collision)
-    {
-        PhotonView pv = PV(collision);
-        if (pv != null && pvMine.Controller==pv.Controller&& pv.CompareTag("Player"))
+        if (pv.IsMine)
         {
-            pv.GetComponent<PlayerCtrl>().BuffTime();
-                pv.GetComponent<PlayerCtrl>().moveSpeed *= 2;
-                pv.GetComponent<PlayerCtrl>().slideSpeed *= 2;
+            // RPC 호출 시 player의 ViewID를 인자로 전달
+            pv.RPC("SpeedUp", RpcTarget.All, player.ViewID);
+            // 네트워크에서 객체 삭제
             PhotonNetwork.Destroy(gameObject);
+        }
+    }
 
+    [PunRPC]
+    void SpeedUp(int playerViewID)
+    {
+        // playerViewID로 PhotonView 찾기
+        PhotonView playerPhotonView = PhotonView.Find(playerViewID);
+        if (playerPhotonView != null)
+        {
+            // PhotonView로 PlayerCtrl 컴포넌트 가져오기
+            PlayerCtrl playerCtrl = playerPhotonView.GetComponent<PlayerCtrl>();
+            if (playerCtrl != null)
+            {
+                // BuffTime 코루틴 시작
+                playerCtrl.BuffTime();
+                // 이동 속도 두 배로 증가
+                playerCtrl.moveSpeed *= 2;
+            }
         }
     }
 }

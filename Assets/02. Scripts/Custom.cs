@@ -21,6 +21,7 @@ public class Custom : MonoBehaviour
     public Slider sliderY;
     public Slider sliderZ;
     public bool setSize;
+    public GameObject partsPanel;
    
 
     private void Awake()
@@ -31,7 +32,8 @@ public class Custom : MonoBehaviour
       
     }
     private void Start()
-    {
+    {  
+        partsPanel.SetActive(false);
         num = 0;
         StyleCheck = "Scale";
         styleName.text = "Scale";
@@ -42,6 +44,17 @@ public class Custom : MonoBehaviour
         sliderY.value = p.body_y;
         sliderZ.value = p.body_z;      
 
+    }
+    public void PartsPanelOnOff()
+    {
+        if(partsPanel.activeSelf)
+        {
+            partsPanel.SetActive(false);
+        }
+        else
+        {
+            partsPanel.SetActive(true);
+        }
     }
 
    

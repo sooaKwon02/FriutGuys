@@ -129,6 +129,7 @@ public class DatabaseManager : MonoBehaviour
         {
             yield return www.SendWebRequest();
             LoginResponse response = JsonUtility.FromJson<LoginResponse>(www.downloadHandler.text);
+            Debug.Log(response);
             if (response.success)
             {
                 saveload.SetGame(id, response.nickname);

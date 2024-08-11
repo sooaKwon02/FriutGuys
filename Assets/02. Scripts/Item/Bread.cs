@@ -1,28 +1,42 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bread : UseItem
 {
-    PhotonView pvMine; 
-    private void Awake()
+    protected override void Awake()
     {
-        pvMine = GetComponent<PhotonView>();
+        base.Awake();
     }
+
     protected override void Start()
     {
         base.Start();
     }
-    protected override void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        PhotonView pv = PV(collision);
-        if (pv != null && pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
+        if (pv.IsMine)
         {
-            pv.GetComponent<PlayerCtrl>().DeBuffTime();
-                pv.GetComponent<Rigidbody>().AddForce(-pv.GetComponent<Rigidbody>().velocity*10);
-            PhotonNetwork.Destroy(gameObject);
+            PhotonView p = ctrl(other);
+            if (p != null)
+            {
+                pv.RPC("DeBuffJump", RpcTarget.AllBuffered, p.ViewID);
+                PhotonNetwork.Destroy(gameObject);
+            }
+        }
+    }  
 
+    [PunRPC]
+    void DeBuffJump(int playerViewID)
+    {
+        PhotonView playerPhotonView = PhotonView.Find(playerViewID);
+        if (playerPhotonView != null)
+        {
+            PlayerCtrl p = playerPhotonView.GetComponent<PlayerCtrl>();
+            if (p != null)
+            {
+                p.DeBuffTime();
+                p.jumpForce = 0f; 
+            }
         }
     }
 }
