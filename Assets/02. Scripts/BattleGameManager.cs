@@ -16,8 +16,6 @@ public class BattleGameManager : MonoBehaviour
 
     private Text gameTxt;
 
-    int watchIndex = -1;
-
     private void Awake()
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount != 0)
@@ -102,23 +100,30 @@ public class BattleGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        foreach (GameObject player in players)
+        if (fallCount != 1)
         {
-            PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
-
-            if (player.GetComponent<PhotonView>().IsMine)
+            foreach (GameObject player in players)
             {
-                if (!playerCtrl.isGoalin)
+                PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
+
+                if (player.GetComponent<PhotonView>().IsMine)
                 {
-                    PhotonNetwork.LeaveRoom();
-                }
-                else if (playerCtrl.isGoalin)
-                {
-                    yield return new WaitForSeconds(2f);
-                    playerCtrl.gameObject.SetActive(true);
-                    PhotonNetwork.LoadLevel(5);
+                    if (!playerCtrl.isGoalin)
+                    {
+                        PhotonNetwork.LeaveRoom();
+                    }
+                    else if (playerCtrl.isGoalin)
+                    {
+                        yield return new WaitForSeconds(2f);
+                        playerCtrl.gameObject.SetActive(true);
+                        PhotonNetwork.LoadLevel(5);
+                    }
                 }
             }
+        }
+        else
+        {
+            PhotonNetwork.LeaveRoom();
         }
     }
 
@@ -145,7 +150,7 @@ public class BattleGameManager : MonoBehaviour
             }
         }
 
-        //StartCoroutine(GameOver());
+        StartCoroutine(GameOver());
     }
 
     private void OnTriggerEnter(Collider other)
