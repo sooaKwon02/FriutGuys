@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52be000f7008c2446a3dff87ecbe373e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipPrefab: {fileID: 1836591180304235827, guid: 66b0087e65059ef48ba4cf2a7788dc4f, type: 3}
 --- !u!4 &1537718864
 Transform:
   m_ObjectHideFlags: 0
@@ -304,7 +305,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f45dbfef62dde5646b68474f58492d92, type: 3}
   - {fileID: 8300000, guid: 9d7260a2630dbf34d9b67de45848baca, type: 3}
   buttonClickSound: {fileID: 8300000, guid: 1f737da2bee88374eaf42c377796dc07, type: 3}
-  playerMoveSound: {fileID: 8300000, guid: dff0abcec498b8441a1f33b233acc872, type: 3}
   backgroundVolume: 1
   isMuted: 0
   num: 0

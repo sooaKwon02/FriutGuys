@@ -82,29 +82,8 @@ public class SoundManager : MonoBehaviour
         PlayerPrefs.SetInt(MuteKey, isMuted ? 1 : 0);
         PlayerPrefs.Save();
     }
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded; 
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        foreach (Transform transform in FindObjectsOfType<Transform>(true))
-        {
-            Button button = transform.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.RemoveListener(ButtonClickSound);
-                button.onClick.AddListener(ButtonClickSound);
-            }
-        }
-    }
-    void ButtonClickSound()
+    
+    public void ButtonClickSound()
     {
         audioSources[1].PlayOneShot(buttonClickSound);
     }

@@ -1089,6 +1089,11 @@ MonoBehaviour:
   holdPosition: {fileID: 0}
   isGoalin: 0
   custom: {fileID: 0}
+  audioClip:
+  - {fileID: 8300000, guid: 1155549f4019371498f25f2a351387a1, type: 3}
+  - {fileID: 8300000, guid: d898ad983d260884abee50f2675c3e71, type: 3}
+  - {fileID: 8300000, guid: 906a4da9b7a9eaa4fbfe14411cb21475, type: 3}
+  - {fileID: 8300000, guid: 3a5033ca8f3fe1f4dac29c35e1ddcaeb, type: 3}
   cookie: 0
 --- !u!136 &3323184941572198166
 CapsuleCollider:

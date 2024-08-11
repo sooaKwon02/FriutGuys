@@ -67,6 +67,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     public CharacterCustom custom;
     AudioSource audiosource;
+    [SerializeField]
+    AudioClip[] audioClip;
  
     public bool cookie=false;
     void Awake()

@@ -947,6 +947,7 @@ GameObject:
   - component: {fileID: 643299571}
   - component: {fileID: 643299570}
   - component: {fileID: 643299569}
+  - component: {fileID: 643299572}
   m_Layer: 5
   m_Name: LoginButton
   m_TagString: Untagged
@@ -1068,6 +1069,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643299567}
   m_CullTransparentMesh: 1
+--- !u!114 &643299572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643299567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34df58230cac6f43b15a35afee3cd8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: 0}
+  description: "\uB85C\uADF8\uC778"
 --- !u!1 &644478441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,6 +1252,7 @@ GameObject:
   - component: {fileID: 708147679}
   - component: {fileID: 708147681}
   - component: {fileID: 708147680}
+  - component: {fileID: 708147682}
   m_Layer: 5
   m_Name: SignUp
   m_TagString: Untagged
@@ -1305,6 +1321,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708147678}
   m_CullTransparentMesh: 1
+--- !u!114 &708147682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708147678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34df58230cac6f43b15a35afee3cd8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: 0}
+  description: "\uD68C\uC6D0\uAC00\uC785"
 --- !u!1 &744595417
 GameObject:
   m_ObjectHideFlags: 0
@@ -2121,7 +2151,7 @@ GameObject:
   - component: {fileID: 1099233793}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
