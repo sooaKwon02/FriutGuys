@@ -63,9 +63,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
  
     public bool cookie=false;
     bool stop;
+    public ParticleSystem[] par;
+    public bool startGame;
     void Awake()
     {
-
         stop = false;
         audiosource = GetComponent<AudioSource>();
         myTr = GetComponent<Transform>();
@@ -85,7 +86,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     }
     void Start()
     {
-        if(pv.IsMine)
+        startGame = false;
+        if (pv.IsMine)
         {
             custom = GetComponent<CharacterCustom>();
             camHide.gameObject.SetActive(true);
@@ -107,7 +109,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             {
                 isJump = true;
             }
-            if(custom)
+            if(custom&& startGame)
             {
                 custom.UseItem();
             }
@@ -371,29 +373,31 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             }
         }
     }
-    public void BuffTime()
+    public void BuffTime(int i)
     {
-        StartCoroutine(BuffTimeCo());
+        StartCoroutine(BuffTimeCo(i));
     }
-    IEnumerator BuffTimeCo()
+    IEnumerator BuffTimeCo(int i)
     {
         yield return new WaitForSeconds(10f);
         cookie = false;
         moveSpeed = 5f;
         jumpForce = 5f;
+        par[i].Stop();
     }
-    public void DeBuffTime()
+    public void DeBuffTime(int i)
     {
-        StartCoroutine(DeBuffTimeCo());
+        StartCoroutine(DeBuffTimeCo(i));
     }
-    IEnumerator DeBuffTimeCo()
+    IEnumerator DeBuffTimeCo(int i)
     {
         yield return new WaitForSeconds(10f);
         moveSpeed = 5f;
         jumpForce = 5f;
-        camHide.color = new Color(0, 0, 0, 0);      
+        camHide.color = new Color(0, 0, 0, 0);
+        par[i].Stop();
     }
-
+   
     void Des(GameObject obj)
     {
         Destroy(obj);

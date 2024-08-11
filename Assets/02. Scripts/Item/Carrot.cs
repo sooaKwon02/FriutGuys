@@ -31,8 +31,9 @@ public class Carrot : UseItem
             PlayerCtrl playerCtrl = playerPhotonView.GetComponent<PlayerCtrl>();
             if (playerCtrl != null)
             {
+                playerCtrl.par[0].Play();
                 // 플레이어의 BuffTime 코루틴 시작
-                playerCtrl.BuffTime();
+                playerCtrl.BuffTime(0);
                 // 점프력을 두 배로 증가
                 playerCtrl.jumpForce *= 2;
             }

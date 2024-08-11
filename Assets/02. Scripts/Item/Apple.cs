@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Apple : UseItem
 {
+    
     protected override void Awake()
     {
         base.Awake();
@@ -34,7 +35,8 @@ public class Apple : UseItem
             PlayerCtrl p = playerPhotonView.GetComponent<PlayerCtrl>();
             if (p != null)
             {
-                p.DeBuffTime();
+                p.par[3].Play();
+                p.DeBuffTime(3);
                 p.moveSpeed=0f;
             }
         }

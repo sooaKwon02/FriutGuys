@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource[] audioSources;
+    public AudioSource audioSources;
     public AudioClip[] backgroundSound;
     public AudioClip buttonClickSound;
 
@@ -51,13 +51,11 @@ public class SoundManager : MonoBehaviour
 
     public void SetAudio(float volume, int backgroundAudioIndex, bool mute)
     {
-        foreach(AudioSource aud in audioSources)
-        {
-            aud.volume = volume;
-            aud.clip = backgroundSound[backgroundAudioIndex];
-            aud.mute = mute;
-        }
-        audioSources[0].Play();
+
+        audioSources.volume = volume;
+        audioSources.mute = mute;       
+        audioSources.clip = backgroundSound[backgroundAudioIndex];
+        audioSources.Play();
         
 
         PlayerPrefs.SetFloat(VolumeKey, volume);
@@ -85,7 +83,7 @@ public class SoundManager : MonoBehaviour
     
     public void ButtonClickSound()
     {
-        audioSources[1].PlayOneShot(buttonClickSound);
+        audioSources.PlayOneShot(buttonClickSound);
     }
 
 }

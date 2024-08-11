@@ -87,6 +87,7 @@ public class StartGameManager : MonoBehaviour
         {
             playerCtrls.moveSpeed = 5.0f;
             playerCtrls.isColl = false;
+            playerCtrls.startGame = true;
         }
     }
 

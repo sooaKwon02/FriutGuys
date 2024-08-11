@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Banana : UseItem
 {
+    public PhotonView p;
     protected override void Awake()
     {
         base.Awake();
@@ -16,10 +17,10 @@ public class Banana : UseItem
     {
         if (pv.IsMine)
         {
-            PhotonView p = ctrl(other);
+            p = ctrl(other);
             if (p != null)
             {      
-                p.GetComponent<PlayerCtrl>().rb.AddForce(p.GetComponent<PlayerCtrl>().rb.velocity * 1000f);
+                p.GetComponent<PlayerCtrl>().rb.AddForce(p.transform.forward * 2000f);
                 pv.RPC("DeBuffSlide", RpcTarget.OthersBuffered, p.ViewID);
                 PhotonNetwork.Destroy(gameObject);
             }
@@ -33,7 +34,7 @@ public class Banana : UseItem
         if (playerPhotonView != null)
         {
             PlayerCtrl p = playerPhotonView.GetComponent<PlayerCtrl>();
-            p.rb.AddForce(p.rb.velocity * 1000f);
+            p.rb.AddForce(p.transform.forward * 2000f);
         }
     }
 

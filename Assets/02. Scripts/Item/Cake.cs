@@ -35,7 +35,8 @@ public class Cake : UseItem
             PlayerCtrl p = playerPhotonView.GetComponent<PlayerCtrl>();
             if (p != null)
             {
-                p.DeBuffTime();
+                p.par[3].Play();
+                p.DeBuffTime(3);
                 p.camHide.color = new Color(0, 0, 0, 1);
             }
         }

@@ -25,11 +25,11 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     public Image[] useItem;
     public ThrowUp throwUp;
     public GameObject UseItemImagePanel;
-    public bool startGame;
+    public Text coolTimeText;
+    bool coolTime;
 
     private void Awake()
     {
-        startGame = false;
         if (GetComponent<PhotonView>())
         { 
             pv = GetComponent<PhotonView>();
@@ -49,6 +49,7 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     {
         if (pv.IsMine&& PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
+            coolTime = false;
             StartCoroutine(CustomPlayer());
             pv.RPC("UserInfoSet", RpcTarget.AllBuffered, nickName);
             ItemImageSet(); 
@@ -56,7 +57,7 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     }
    public void UseItem()
    {
-        if(startGame&&pv.IsMine)
+        if(pv.IsMine&&!coolTime)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -70,8 +71,12 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
 
                     throwUp.ItemSet(Resources.Load<Item>("Item/UseItem/" + item1.item.name));
                     throwUp.ThrowAnim(item1.item.useitemType);
-                    item1.ItemSet(null);
-                    ItemSwap();
+                    item1.ItemSet(null);    
+                    ItemSwap(); 
+                    if (item1.item != null || item2.item != null)
+                    {
+                        StartCoroutine(CoolTimeCheck());
+                    }
                 }
                 else
                 {
@@ -80,6 +85,22 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
             }
         }       
    }
+    IEnumerator CoolTimeCheck()
+    {
+        coolTime = true;
+        useItem[0].gameObject.SetActive(false);
+        useItem[1].gameObject.SetActive(false);
+        coolTimeText.gameObject.SetActive(true);
+        for (int i = 10; i > 0; i--)
+        {
+            coolTimeText.text = i.ToString();
+            yield return new WaitForSeconds(1f); // 1초 대기
+        }
+        coolTime = false;
+        coolTimeText.gameObject.SetActive(false);       
+        useItem[0].gameObject.SetActive(true);
+        useItem[1].gameObject.SetActive(true);
+    }
     void ItemSwap()
     {
         Item item = item1.item;

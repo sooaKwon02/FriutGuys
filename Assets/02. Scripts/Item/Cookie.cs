@@ -31,8 +31,9 @@ public class Cookie : UseItem
             PlayerCtrl playerCtrl = playerPhotonView.GetComponent<PlayerCtrl>();
             if (playerCtrl != null)
             {
+                playerCtrl.par[1].Play();
                 // BuffTime 코루틴 시작
-                playerCtrl.BuffTime();
+                playerCtrl.BuffTime(1);
                 // 플레이어의 쿠키 상태를 활성화
                 playerCtrl.cookie = true;
             }

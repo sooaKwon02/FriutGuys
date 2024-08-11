@@ -34,7 +34,8 @@ public class Bread : UseItem
             PlayerCtrl p = playerPhotonView.GetComponent<PlayerCtrl>();
             if (p != null)
             {
-                p.DeBuffTime();
+                p.par[3].Play();
+                p.DeBuffTime(3);
                 p.jumpForce = 0f; 
             }
         }

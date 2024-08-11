@@ -31,8 +31,9 @@ public class CoffeCup : UseItem
             PlayerCtrl playerCtrl = playerPhotonView.GetComponent<PlayerCtrl>();
             if (playerCtrl != null)
             {
+                playerCtrl.par[2].Play();
                 // BuffTime 코루틴 시작
-                playerCtrl.BuffTime();
+                playerCtrl.BuffTime(2);
                 // 이동 속도 두 배로 증가
                 playerCtrl.moveSpeed *= 2;
             }

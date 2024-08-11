@@ -8,12 +8,15 @@ public class ToolTip : MonoBehaviour
 
     void Start()
     { 
-        foreach(ToolTipTrigger tip in FindObjectsOfType<ToolTipTrigger>())
+        foreach (Transform obj in GameObject.FindObjectsOfType<Transform>(true))
         {
-            tip.tooltip=this;
+            ToolTipTrigger tipTrigger = obj.GetComponent<ToolTipTrigger>();
+            if (tipTrigger != null)
+            {
+                tipTrigger.tooltip = this;
+            }
         }
         tooltip.SetActive(false);
-        DontDestroyOnLoad(gameObject);
     }  
     public void HideTooltip()
     {
@@ -45,7 +48,7 @@ public class ToolTip : MonoBehaviour
         {
             rt.pivot = new Vector2(-0.1f, -0.1f);
         }
-        rt.sizeDelta = screenSize / 8;
+        rt.sizeDelta = screenSize / 10;
         rt.position = position;
         
     }
