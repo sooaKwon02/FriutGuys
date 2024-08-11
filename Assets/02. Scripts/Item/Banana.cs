@@ -11,14 +11,16 @@ public class Banana : UseItem
     {
         
     }
-    void OnCollisionEnter(Collision collision)
+ 
+    void OnTriggerEnter(Collider other)
     {
         if (pv.IsMine)
         {
-            PhotonView p = ctrl(collision);
+            PhotonView p = ctrl(other);
             if (p != null)
-            {
-                pv.RPC("DeBuffSlide", RpcTarget.AllBuffered, p.ViewID);
+            {      
+                p.GetComponent<PlayerCtrl>().rb.AddForce(p.GetComponent<PlayerCtrl>().rb.velocity * 1000f);
+                pv.RPC("DeBuffSlide", RpcTarget.OthersBuffered, p.ViewID);
                 PhotonNetwork.Destroy(gameObject);
             }
         }

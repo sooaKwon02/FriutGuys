@@ -1,12 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    [HideInInspector]
-    public AudioSource audioSource;
+    public AudioSource[] audioSources;
     public AudioClip[] backgroundSound;
     public AudioClip buttonClickSound;
-    public AudioClip playerMoveSound;
 
     static SoundManager _instance;
     public static SoundManager Instance
@@ -33,7 +33,6 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        audioSource=GetComponent<AudioSource>();
         if (_instance == null)
         {
             _instance = this;
@@ -52,10 +51,14 @@ public class SoundManager : MonoBehaviour
 
     public void SetAudio(float volume, int backgroundAudioIndex, bool mute)
     {
-        audioSource.volume = volume;
-        audioSource.clip = backgroundSound[backgroundAudioIndex];
-        audioSource.mute = mute;
-        audioSource.Play();
+        foreach(AudioSource aud in audioSources)
+        {
+            aud.volume = volume;
+            aud.clip = backgroundSound[backgroundAudioIndex];
+            aud.mute = mute;
+        }
+        audioSources[0].Play();
+        
 
         PlayerPrefs.SetFloat(VolumeKey, volume);
         PlayerPrefs.SetInt(BackgroundAudioKey, backgroundAudioIndex);
@@ -78,6 +81,32 @@ public class SoundManager : MonoBehaviour
         PlayerPrefs.SetInt(BackgroundAudioKey, num);
         PlayerPrefs.SetInt(MuteKey, isMuted ? 1 : 0);
         PlayerPrefs.Save();
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; 
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        foreach (Transform transform in FindObjectsOfType<Transform>(true))
+        {
+            Button button = transform.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.RemoveListener(ButtonClickSound);
+                button.onClick.AddListener(ButtonClickSound);
+            }
+        }
+    }
+    void ButtonClickSound()
+    {
+        audioSources[1].PlayOneShot(buttonClickSound);
     }
 
 }

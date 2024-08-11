@@ -11,11 +11,11 @@ public class Apple : UseItem
     {
         base.Start();
     }
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         if (pv.IsMine)
         {
-            PhotonView p = ctrl(collision);
+            PhotonView p = ctrl(other);
             if (p != null)
             {
                 pv.RPC("DeBuffSpeed", RpcTarget.AllBuffered, p.ViewID);
@@ -23,6 +23,7 @@ public class Apple : UseItem
             }
         }
     }
+   
 
     [PunRPC]
     void DeBuffSpeed(int playerViewID)

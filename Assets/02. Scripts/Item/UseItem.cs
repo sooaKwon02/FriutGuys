@@ -57,7 +57,7 @@ public class UseItem : MonoBehaviour
         }
     }
 
-    public PhotonView ctrl(Collision col)
+    public PhotonView ctrl(Collider col)
     {
         PhotonView photonView = col.transform.GetComponentInParent<PhotonView>() ?? col.transform.GetComponent<PhotonView>();
 

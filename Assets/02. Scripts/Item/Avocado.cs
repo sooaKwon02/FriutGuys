@@ -12,9 +12,8 @@ public class Avocado : UseItem
         base.Awake();
     }
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
         if (pv.IsMine)
         {
             StartCoroutine(Explosion());

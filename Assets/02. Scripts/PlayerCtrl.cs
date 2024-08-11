@@ -66,12 +66,13 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     public bool isGoalin = false;
 
     public CharacterCustom custom;
+    AudioSource audiosource;
  
     public bool cookie=false;
     void Awake()
     {
 
-
+        audiosource = GetComponent<AudioSource>();
         myTr = GetComponent<Transform>();
 
         currPos = myTr.position;

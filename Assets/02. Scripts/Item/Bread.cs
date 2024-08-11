@@ -12,19 +12,18 @@ public class Bread : UseItem
     {
         base.Start();
     }
-
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         if (pv.IsMine)
         {
-            PhotonView p = ctrl(collision);
+            PhotonView p = ctrl(other);
             if (p != null)
             {
                 pv.RPC("DeBuffJump", RpcTarget.AllBuffered, p.ViewID);
                 PhotonNetwork.Destroy(gameObject);
             }
         }
-    }
+    }  
 
     [PunRPC]
     void DeBuffJump(int playerViewID)
