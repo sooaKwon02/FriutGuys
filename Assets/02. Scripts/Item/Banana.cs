@@ -7,7 +7,7 @@ public class Banana : UseItem
     {
         base.Awake();
     }
-    private void Start()
+    new void Start()
     {
         
     }

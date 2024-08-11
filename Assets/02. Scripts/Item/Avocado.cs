@@ -12,7 +12,7 @@ public class Avocado : UseItem
         base.Awake();
     }
 
-    void Start()
+    new void Start()
     {
         if (pv.IsMine)
         {

@@ -43,9 +43,9 @@ public class ToolTip : MonoBehaviour
         }
         else
         {
-            rt.pivot = new Vector2(-0.1f, 1.1f);
+            rt.pivot = new Vector2(-0.1f, -0.1f);
         }
-        rt.sizeDelta = screenSize / 5;
+        rt.sizeDelta = screenSize / 8;
         rt.position = position;
         
     }
