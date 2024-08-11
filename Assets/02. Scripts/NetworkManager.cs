@@ -9,7 +9,6 @@ using System.Linq;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    //string myName;
     public InputField roomNameInput;
     public InputField fullRoomInput;
     public InputField passwordInput;
@@ -28,6 +27,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private string roomPassword = "";
     public List<RoomInfo> gameRoomList = new List<RoomInfo>();
     List<RoomInfo> re_list =new List<RoomInfo>();
+
     void Awake()
     {
         if (toggle != null)

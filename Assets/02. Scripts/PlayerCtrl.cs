@@ -139,6 +139,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             }
         }
     }
+
     void MenuOnOff()
     {
         if (Menu.activeSelf)
@@ -279,7 +280,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 anim.SetBool("isFall", true);
             }
         }
-        //timer = 0.0f;
     }
 
     void Slide()
@@ -379,11 +379,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         isColl = false;
     }
+    //얘만하면 이상해짐
     public void AllStop()
     {
         stop = true;
         anim.speed = 0;
-        rb.velocity = Vector3.zero;
+        //rb.velocity = Vector3.zero;
     }
 
 
@@ -409,7 +410,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     {
         moveSpeed = 0f;
         isColl = true;
-        playerTxt.text = isGoalin ? playerTxt.text = "성공" : playerTxt.text = "실패";  
+        playerTxt.text = isGoalin ? playerTxt.text = "성공" : playerTxt.text = "실패";
     }
 
 }

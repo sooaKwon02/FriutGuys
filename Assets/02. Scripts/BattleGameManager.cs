@@ -1,18 +1,16 @@
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class StartGameManager : MonoBehaviour
+public class BattleGameManager : MonoBehaviour
 {
     int currentPlayers;
     public Transform[] pos;
-    public Collider goal;
+    public Collider fallColl;
 
-    public int goalCount;
+    public int fallCount;
     public int count;
     GameObject[] players;
 
@@ -36,14 +34,15 @@ public class StartGameManager : MonoBehaviour
         gameTxt.transform.SetParent(canvas.transform);
 
         players = GameObject.FindGameObjectsWithTag("Player");
-        
-        foreach(GameObject player in players)
+
+        foreach (GameObject player in players)
         {
+            player.GetComponent<PlayerCtrl>().isGoalin = false;
             player.SetActive(true);
         }
 
-        count = 0;
-        goalCount = currentPlayers / 2;
+        count = currentPlayers;
+        fallCount = currentPlayers / 2;
 
         StartCoroutine(SpawnSet());
         StartCoroutine(GameCount());
@@ -56,6 +55,11 @@ public class StartGameManager : MonoBehaviour
         {
             players[i].transform.position = pos[i].position;
         }
+
+        ObstacleScript oS = FindObjectOfType<ObstacleScript>();
+        ObstacleSpeed oSpeed = FindObjectOfType<ObstacleSpeed>();
+        oS.speed = 0;
+        oSpeed.speed = 0;
         yield return new WaitForSeconds(3f);
     }
 
@@ -82,6 +86,11 @@ public class StartGameManager : MonoBehaviour
         gameTxt.enabled = false;
         PlayerCtrl[] playerCtrl = FindObjectsOfType<PlayerCtrl>();
 
+        ObstacleScript oS = FindObjectOfType<ObstacleScript>();
+        ObstacleSpeed oSpeed = FindObjectOfType<ObstacleSpeed>();
+        oS.speed = 25;
+        oSpeed.speed = 25;
+
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
             playerCtrls.moveSpeed = 5.0f;
@@ -93,60 +102,30 @@ public class StartGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        //PhotonView[] pview = FindObjectsOfType<PhotonView>();
-        //foreach (PhotonView pv in pview)
-        //{
-        //    if (pv.GetComponent<PlayerCtrl>().isGoalin)
-        //    {
-        //        //if (PhotonNetwork.IsMasterClient)
-        //        //{
-        //        //    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
-        //        //}
-        //        //else
-        //        //{
-        //        //    PhotonNetwork.LeaveRoom();
-        //        // ÎßàÏä§ÌÑ∞ ÌÅ¥ÎùºÏù¥Ïñ∏Ìä∏Í∞Ä Î≥ÄÍ≤ΩÎêòÏóàÏùÑÎïå ÏΩúÎ∞±
-        //        // public override void OnMasterClientSwitched(Player newMasterClient)
-        //        PhotonNetwork.LoadLevel(5);
-        //        //SceneManager.LoadScene(5);
-        //    }
-        //    else if(!pv.GetComponent<PlayerCtrl>().isGoalin)
-        //    {
-        //        //Destroy(cam.gameObject);
-        //        PhotonNetwork.LeaveRoom();
-        //    }
-        //}
-        if (goalCount != 1)
+        foreach (GameObject player in players)
         {
-            foreach (GameObject player in players)
-            {
-                PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
+            PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
 
-                if (player.GetComponent<PhotonView>().IsMine)
+            if (player.GetComponent<PhotonView>().IsMine)
+            {
+                if (!playerCtrl.isGoalin)
                 {
-                    if (!playerCtrl.isGoalin)
-                    {
-                        PhotonNetwork.LeaveRoom();
-                    }
-                    else if (playerCtrl.isGoalin)
-                    {
-                        yield return new WaitForSeconds(2f);
-                        playerCtrl.gameObject.SetActive(true);
-                        PhotonNetwork.LoadLevel(5);
-                    }
+                    PhotonNetwork.LeaveRoom();
+                }
+                else if (playerCtrl.isGoalin)
+                {
+                    yield return new WaitForSeconds(2f);
+                    playerCtrl.gameObject.SetActive(true);
+                    PhotonNetwork.LoadLevel(5);
                 }
             }
-        }
-        else
-        {
-            PhotonNetwork.LeaveRoom();
         }
     }
 
     IEnumerator GameoverMsg()
     {
         gameTxt.enabled = true;
-        gameTxt.text = "ÎùºÏö¥Îìú Ï¢ÖÎ£å";
+        gameTxt.text = "∂ÛøÓµÂ ¡æ∑·";
         yield return new WaitForSeconds(3f);
 
         foreach (GameObject player in players)
@@ -157,27 +136,27 @@ public class StartGameManager : MonoBehaviour
             {
                 if (playerCtrl.isGoalin)
                 {
-                    gameTxt.text = "ÏÑ±Í≥µ!";
+                    gameTxt.text = "Ω«∆–!";
                 }
                 else
                 {
-                    gameTxt.text = "Ïã§Ìå®!";
+                    gameTxt.text = "º∫∞¯!";
                 }
             }
         }
 
-        StartCoroutine(GameOver());
+        //StartCoroutine(GameOver());
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")||other.CompareTag("SlideCollider"))
+        if (other.CompareTag("Player") || other.CompareTag("SlideCollider"))
         {
-            count++;
+            count--;
             other.GetComponent<PlayerCtrl>().isGoalin = true;
-            //other.GetComponent<PlayerCtrl>().AllStop();  //ÏñòÍ∞Ä Î¨∏Ï†úÏûÑ
+            //other.GetComponent<PlayerCtrl>().AllStop();
 
-            if (count >= goalCount)
+            if (count <= fallCount)
             {
                 StartCoroutine(GameoverMsg());
             }
