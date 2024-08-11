@@ -113,6 +113,8 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     {
         GameObject userInfoPanel = Instantiate(UserInfoPanel);
         userInfoPanel.GetComponent<UserInfo>().DisplayPlayerInfo(_name);
+        userPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 1);
+        userPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(userPanel.GetComponent<GridLayoutGroup>().cellSize.x, userPanel.GetComponent<GridLayoutGroup>().cellSize.y * userPanel.childCount);
 
         if (PhotonNetwork.IsMasterClient)
         {

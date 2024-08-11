@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 {
     public PhotonView pv;
-    private Rigidbody rb;
+    public Rigidbody rb;
     public Animator anim;
     private CapsuleCollider coll;
 
@@ -57,6 +57,9 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     public bool isGoalin = false;
 
     public CharacterCustom custom;
+    AudioSource audiosource;
+    [SerializeField]
+    AudioClip[] audioClip;
  
     public bool cookie=false;
     bool stop;
@@ -64,6 +67,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     {
 
         stop = false;
+        audiosource = GetComponent<AudioSource>();
         myTr = GetComponent<Transform>();
 
         currPos = myTr.position;
@@ -81,7 +85,11 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     }
     void Start()
     {
-        custom = GetComponent<CharacterCustom>();     
+        if(pv.IsMine)
+        {
+            custom = GetComponent<CharacterCustom>();
+            camHide.gameObject.SetActive(true);
+        }     
     }
 
     void Update()
@@ -99,7 +107,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             {
                 isJump = true;
             }
-            custom.UseItem();
+            if(custom)
+            {
+                custom.UseItem();
+            }
             Slide();
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -329,7 +340,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             }
         }
     }
-
+   
     void OnCollisionEnter(Collision coll)
     {
         if (coll.gameObject.CompareTag("Obstacle"))
@@ -343,28 +354,43 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             StartCoroutine(ReMove());
 
         }
-        if(cookie&&coll.transform.GetComponentInParent<PhotonView>().tag=="Player")
+        if (cookie)
         {
-            coll.rigidbody.AddForce(rb.velocity, ForceMode.Impulse);
+            if (coll.transform.CompareTag("Player") || coll.transform.CompareTag("SlideCollider"))
+            {
+            
+                Rigidbody targetRb = coll.rigidbody;
+                if (targetRb == null)
+                {
+                    targetRb = coll.transform.GetComponentInParent<Rigidbody>();
+                }
+                if (targetRb != null)
+                {
+                    targetRb.AddForce(rb.velocity * 1000, ForceMode.Impulse);
+                }            
+            }
         }
     }
-    public IEnumerator BuffTime()
+    public void BuffTime()
     {
-        float speedSet1 = moveSpeed;
-        float speedSet2 = slideSpeed;
-        float JumpSet = jumpForce;
-        Vector3 physics = Physics.gravity;
+        StartCoroutine(BuffTimeCo());
+    }
+    IEnumerator BuffTimeCo()
+    {
         yield return new WaitForSeconds(10f);
         cookie = false;
-        moveSpeed = speedSet1;
-        slideSpeed = speedSet2;
-        jumpForce=JumpSet;
-        rb.AddForce(physics, ForceMode.Acceleration);
+        moveSpeed = 5f;
+        jumpForce = 5f;
     }
-    public IEnumerator DeBuffTime()
+    public void DeBuffTime()
+    {
+        StartCoroutine(DeBuffTimeCo());
+    }
+    IEnumerator DeBuffTimeCo()
     {
         yield return new WaitForSeconds(10f);
         moveSpeed = 5f;
+        jumpForce = 5f;
         camHide.color = new Color(0, 0, 0, 0);      
     }
 
@@ -412,5 +438,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         isColl = true;
         playerTxt.text = isGoalin ? playerTxt.text = "성공" : playerTxt.text = "실패";
     }
+  
 
 }

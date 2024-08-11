@@ -41,13 +41,13 @@ public class Inventory : MonoBehaviour
     }
     public void InventoryAdd(int num)
     {
-        if (num == 0&&saveload.player.cashMoney>100)
+        if (num == 0&&saveload.player.cashMoney>=100)
         {
             saveload.player.cashMoney -= 100;
             GetComponent<GameManager>().IDPanelSet();
             InstanceAdd();
         }
-        else if(num==1&&saveload.player.gameMoney>1000)
+        else if(num==1&&saveload.player.gameMoney>=1000)
         {
             saveload.player.gameMoney -= 1000;
             GetComponent<GameManager>().IDPanelSet();
@@ -55,7 +55,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            GetComponent<GameManager>().ErrorSend("머니가 부족합니다");
+            StartCoroutine(GetComponent<GameManager>().ErrorSend("머니가 부족합니다"));
         }
     }
     void InstanceAdd()

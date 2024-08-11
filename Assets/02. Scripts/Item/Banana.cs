@@ -1,27 +1,41 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Banana : UseItem
 {
-    PhotonView pvMine;
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     private void Start()
     {
         
     }
-    private void Awake()
+ 
+    void OnTriggerEnter(Collider other)
     {
-        pvMine = GetComponent<PhotonView>();
-    }
-    protected override void OnCollisionEnter(Collision collision)
-    {
-        PhotonView pv=PV(collision);
-
-        if ( pv!=null&&pvMine.Controller != pv.Controller && pv.CompareTag("Player"))
+        if (pv.IsMine)
         {
-            pv.GetComponent<Rigidbody>().AddForce(pv.GetComponent<Rigidbody>().velocity * 2);
+            PhotonView p = ctrl(other);
+            if (p != null)
+            {      
+                p.GetComponent<PlayerCtrl>().rb.AddForce(p.GetComponent<PlayerCtrl>().rb.velocity * 1000f);
+                pv.RPC("DeBuffSlide", RpcTarget.OthersBuffered, p.ViewID);
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
-    
+
+    [PunRPC]
+    void DeBuffSlide(int playerViewID)
+    {
+        PhotonView playerPhotonView = PhotonView.Find(playerViewID);
+        if (playerPhotonView != null)
+        {
+            PlayerCtrl p = playerPhotonView.GetComponent<PlayerCtrl>();
+            p.rb.AddForce(p.rb.velocity * 1000f);
+        }
+    }
+
+
 }

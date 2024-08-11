@@ -15,6 +15,7 @@ public class StartGameManager : MonoBehaviour
     public int goalCount;
     public int count;
     GameObject[] players;
+    PlayerCtrl playerCtrl;
 
     private Text gameTxt;
 

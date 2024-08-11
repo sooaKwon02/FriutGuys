@@ -28,7 +28,7 @@ public class UserInfo : MonoBehaviourPunCallbacks
             playerCon.KickPlayer(userName.text);
         });
         userPanel = GameObject.FindGameObjectWithTag("UserInfoPanel").transform;
-        transform.SetParent(userPanel.transform);
+        transform.SetParent(userPanel.transform,false);
     }
 
     public void DisplayPlayerInfo(string _nick)

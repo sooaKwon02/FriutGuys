@@ -10,7 +10,7 @@ public class Custom : MonoBehaviour
 {
     public Text fixedPartName;
     public Text styleName;
-    CharacterCustom custom;
+    LobbyCharacterCustom custom;
     Transform player=null;
     SaveLoad.PLAYER p; 
     string StyleCheck= "Scale";
@@ -21,17 +21,19 @@ public class Custom : MonoBehaviour
     public Slider sliderY;
     public Slider sliderZ;
     public bool setSize;
+    public GameObject partsPanel;
    
 
     private void Awake()
     {              
-        custom = FindObjectOfType<CharacterCustom>();
+        custom = FindObjectOfType<LobbyCharacterCustom>();
         if (FindObjectOfType<SaveLoad>())
             p = FindObjectOfType<SaveLoad>().player; 
       
     }
     private void Start()
-    {
+    {  
+        partsPanel.SetActive(false);
         num = 0;
         StyleCheck = "Scale";
         styleName.text = "Scale";
@@ -42,6 +44,17 @@ public class Custom : MonoBehaviour
         sliderY.value = p.body_y;
         sliderZ.value = p.body_z;      
 
+    }
+    public void PartsPanelOnOff()
+    {
+        if(partsPanel.activeSelf)
+        {
+            partsPanel.SetActive(false);
+        }
+        else
+        {
+            partsPanel.SetActive(true);
+        }
     }
 
    

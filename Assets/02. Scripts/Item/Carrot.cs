@@ -1,29 +1,41 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Carrot : UseItem
 {
-    PhotonView pvMine;
-    private void Awake()
+    protected override void Awake()
     {
-        pvMine = GetComponent<PhotonView>();
+        base.Awake();
     }
+
     protected override void Start()
     {
-        base.Start();
-    }
-    protected override void OnCollisionEnter(Collision collision)
-    {
-        PhotonView pv = PV(collision);
-        if (pv != null && pvMine.Controller==pv.Controller&& pv.CompareTag("Player"))
+        if (pv.IsMine)
         {
-            pv.GetComponent<PlayerCtrl>().BuffTime();
-                pv.GetComponent<PlayerCtrl>().jumpForce*=2;
-                pv.GetComponent<Rigidbody>().AddForce(Physics.gravity*2, ForceMode.Acceleration);
+            // RPC 호출 시, player의 ViewID만 전송
+            pv.RPC("JumpUp", RpcTarget.All, player.ViewID);
+            // RPC 호출 후, 네트워크에서 객체 삭제
             PhotonNetwork.Destroy(gameObject);
         }
+    }
 
+    [PunRPC]
+    void JumpUp(int playerViewID)
+    {
+        // playerViewID로 플레이어의 PhotonView를 찾음
+        PhotonView playerPhotonView = PhotonView.Find(playerViewID);
+        if (playerPhotonView != null)
+        {
+            // 플레이어의 PlayerCtrl 컴포넌트를 가져옴
+            PlayerCtrl playerCtrl = playerPhotonView.GetComponent<PlayerCtrl>();
+            if (playerCtrl != null)
+            {
+                // 플레이어의 BuffTime 코루틴 시작
+                playerCtrl.BuffTime();
+                // 점프력을 두 배로 증가
+                playerCtrl.jumpForce *= 2;
+            }
+        }
     }
 }

@@ -904,7 +904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1470028717681326305
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1009,7 +1009,8 @@ GameObject:
   - component: {fileID: -7068979838084846393}
   - component: {fileID: -1068843625034408550}
   - component: {fileID: 745410495212268047}
-  m_Layer: 0
+  - component: {fileID: 3467476995478427085}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1062,6 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 0}
+  rb: {fileID: 0}
   anim: {fileID: 0}
   cam: {fileID: 3323184940998535190}
   player: {fileID: 7054785656221380520}
@@ -1082,6 +1084,11 @@ MonoBehaviour:
   holdPosition: {fileID: 0}
   isGoalin: 0
   custom: {fileID: 0}
+  audioClip:
+  - {fileID: 8300000, guid: 1155549f4019371498f25f2a351387a1, type: 3}
+  - {fileID: 8300000, guid: d898ad983d260884abee50f2675c3e71, type: 3}
+  - {fileID: 8300000, guid: 906a4da9b7a9eaa4fbfe14411cb21475, type: 3}
+  - {fileID: 8300000, guid: 3a5033ca8f3fe1f4dac29c35e1ddcaeb, type: 3}
   cookie: 0
 --- !u!136 &3323184941572198166
 CapsuleCollider:
@@ -1153,14 +1160,109 @@ MonoBehaviour:
   tail: {fileID: 5381106506553674452}
   item1: {fileID: 5661340351817265704}
   item2: {fileID: 9164628659099832378}
-  gameMoney: 0
-  cashMoney: 0
-  score: 0
   pv: {fileID: 0}
   useItem:
   - {fileID: 7848763133918503971}
   - {fileID: 7019390901105182777}
   throwUp: {fileID: 8819151463900044625}
+  UseItemImagePanel: {fileID: 2535316582612671452}
+  startGame: 0
+--- !u!82 &3467476995478427085
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3323184941572198164}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: dff0abcec498b8441a1f33b233acc872, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3389549358925040908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,7 +1555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6256204942401967526
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1808,10 +1910,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2189,6 +2291,10 @@ PrefabInstance:
       value: Collider
       objectReference: {fileID: 0}
     - target: {fileID: 172486103, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 172486103, guid: 1235f6fdfe904874cab3c83e4a67727c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2357,7 +2463,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: slide
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Dizzy
   - Type: 9
     SynchronizeType: 1
@@ -2372,7 +2478,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Buff
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isFall
   m_SynchronizeLayers:
   - SynchronizeType: 1

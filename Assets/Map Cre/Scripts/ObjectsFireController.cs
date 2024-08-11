@@ -27,7 +27,9 @@ public class ObjectsFireController : MonoBehaviour
 
     private void Update()
     {
-        objectsCore.LookAt(playerTransform);
+        Vector3 PlayerPosition = playerTransform.position;
+        PlayerPosition.x -= 1.0f;
+        objectsCore.LookAt(PlayerPosition);
         transform.rotation = objectsCore.rotation;
         Vector3 rayOrigin = firePosition.position;
         Vector3 rayDirection = firePosition.forward;

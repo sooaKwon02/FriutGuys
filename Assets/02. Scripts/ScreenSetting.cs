@@ -78,28 +78,28 @@ public class ScreenSetting : MonoBehaviour
         switch (num)
         {
             case 0:
+                RectSizeChange(1280, 720, on);
+                sizeX = 1280;
+                sizeY = 720;
+                sizeText.text = "1280 | 720";
+                break;
+            case 1:
+                RectSizeChange(1366, 768, on);
+                sizeX = 1366;
+                sizeY = 768;
+                sizeText.text = "1366 | 768";
+                break;
+            case 2:
                 RectSizeChange(1600, 900, on);
                 sizeX = 1600;
                 sizeY = 900;
                 sizeText.text = "1600 | 900";
                 break;
-            case 1:
-                RectSizeChange(1600, 1000, on);
-                sizeX = 1600;
-                sizeY = 1000;
-                sizeText.text = "1600 | 1000";
-                break;
-            case 2:
+            case 3:
                 RectSizeChange(1920, 1080, on);
                 sizeX = 1920;
                 sizeY = 1080;
                 sizeText.text = "1920 | 1080";
-                break;
-            case 3:
-                RectSizeChange(2560, 1440, on);
-                sizeX = 2560;
-                sizeY = 1440;
-                sizeText.text = "2560 | 1440";
                 break;
             default:
                 break;

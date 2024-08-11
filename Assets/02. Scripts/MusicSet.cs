@@ -10,20 +10,16 @@ public class MusicSet : MonoBehaviour
     public Transform selectPanel;
     public Transform musicContents;
     public GameObject musicItem;
-    AudioSource audioSource;
+    AudioSource[] audioSources;
     public Toggle toggle;
     GameObject music;
 
     private void Awake()
     {
-        audioSource = FindObjectOfType<AudioSource>();
-        musicVolume.value = audioSource.volume;
-        toggle.isOn = audioSource.mute;
-        musicName.text = audioSource.clip.name;
-
-   
-        
-
+        audioSources = SoundManager.Instance.audioSources;
+        musicVolume.value = audioSources[0].volume;
+        toggle.isOn = audioSources[0].mute;
+        musicName.text = audioSources[0].clip.name;
     }
     private void Start()
     {
@@ -52,19 +48,28 @@ public class MusicSet : MonoBehaviour
     public void SetBackgroundMusicVolume(Slider volume)
     {
         SoundManager.Instance.backgroundVolume = volume.value;
-        audioSource.volume = volume.value   ;
+        foreach(AudioSource aud in audioSources)
+        {
+            aud.volume = volume.value;
+        }
     }
     public void SetMuted(Toggle mute)
     {
-       if(mute.isOn)
+        if(mute.isOn)
         {
             SoundManager.Instance.isMuted = true;
-            audioSource.mute = true;
+            foreach (AudioSource aud in audioSources)
+            {
+                aud.mute = true;
+            }               
         }        
         else
         {
             SoundManager.Instance.isMuted = false;
-            audioSource.mute = false;
+            foreach (AudioSource aud in audioSources)
+            {
+                aud.mute = false;
+            }                
         }            
     }  
     public void SaveSetting()
