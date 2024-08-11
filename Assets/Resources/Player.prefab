@@ -1080,11 +1080,6 @@ MonoBehaviour:
   Menu: {fileID: 8804549425001952321}
   playerTxt: {fileID: 738663335936063404}
   camHide: {fileID: 227935919589567460}
-  pullForce: 0
-  pullStrength: 0
-  pushStrength: 0
-  pullRange: 1
-  pullRadius: 1.5
   targetObject: {fileID: 0}
   holdPosition: {fileID: 0}
   isGoalin: 0
