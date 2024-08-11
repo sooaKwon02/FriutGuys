@@ -133,7 +133,9 @@ public class StartGameManager : MonoBehaviour
                     {
                         yield return new WaitForSeconds(2f);
                         playerCtrl.gameObject.SetActive(true);
-                        PhotonNetwork.LoadLevel(5);
+
+                        PlayerCon pc = FindObjectOfType<PlayerCon>();
+                        pc.LoadRandomScene();
                     }
                 }
             }
