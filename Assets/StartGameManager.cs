@@ -30,7 +30,7 @@ public class StartGameManager : MonoBehaviour
 
     private void Start()
     {
-        Camera.main.gameObject.SetActive(true);
+        //Camera.main.gameObject.SetActive(true);
         Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
 
         gameTxt.transform.SetParent(canvas.transform);
@@ -57,6 +57,7 @@ public class StartGameManager : MonoBehaviour
             players[i].GetComponent<PlayerCtrl>().enabled = true;
             players[i].transform.position = pos[i].position;
         }
+        Camera.main.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
     }
 
@@ -97,6 +98,7 @@ public class StartGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         Camera.main.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(10);

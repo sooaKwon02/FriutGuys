@@ -27,7 +27,6 @@ public class BattleGameManager : MonoBehaviour
 
     private void Start()
     {
-        Camera.main.gameObject.SetActive(true);
         Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
 
         gameTxt.transform.SetParent(canvas.transform);
@@ -55,6 +54,7 @@ public class BattleGameManager : MonoBehaviour
             players[i].transform.position = pos[i].position;
         }
 
+        Camera.main.gameObject.SetActive(true);
         ObstacleScript oS = FindObjectOfType<ObstacleScript>();
         ObstacleSpeed oSpeed = FindObjectOfType<ObstacleSpeed>();
         oS.speed = 0;
@@ -105,6 +105,7 @@ public class BattleGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         Camera.main.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(10);

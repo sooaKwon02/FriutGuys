@@ -51,6 +51,7 @@ public class GameEndManager : MonoBehaviour
         {
             yield return null;
         }
+        panel.gameObject.SetActive(false);
         player = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < player.Length; i++)
         {
@@ -72,8 +73,8 @@ public class GameEndManager : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
         }
-        panel.gameObject.SetActive(false);
-        yield return new WaitForSeconds(2f);
+
+        yield return new WaitForSeconds(5f);
         StartCoroutine(PlayerReady());
     }
     IEnumerator PlayerGameOver(GameObject pos)
@@ -88,6 +89,8 @@ public class GameEndManager : MonoBehaviour
             yield return null;
         }
         count = 0;
+        Debug.Log(count);
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
         while (!PhotonNetwork.IsMasterClient)
         {
             yield return null;
@@ -96,6 +99,7 @@ public class GameEndManager : MonoBehaviour
         {
             ScenesManager pc = FindObjectOfType<ScenesManager>();
             pc.LoadRandomScene();
+            //PhotonNetwork.LoadLevel(7);
         }
     }
 }
