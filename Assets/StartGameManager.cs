@@ -53,6 +53,7 @@ public class StartGameManager : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
+            players[i].GetComponent<PlayerCtrl>().enabled = true;
             players[i].transform.position = pos[i].position;
         }
         yield return new WaitForSeconds(3f);
@@ -83,6 +84,7 @@ public class StartGameManager : MonoBehaviour
 
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
+            playerCtrls.enabled = true;
             playerCtrls.moveSpeed = 5.0f;
             playerCtrls.isColl = false;
             playerCtrls.startGame = true;
@@ -95,30 +97,7 @@ public class StartGameManager : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            foreach (GameObject player in players)
-            {
-                PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
-
-                if (player.GetComponent<PhotonView>().IsMine)
-                {
-                    if (!playerCtrl.isGoalin)
-                    {
-                        PhotonNetwork.LeaveRoom();
-                    }
-                    else if (playerCtrl.isGoalin)
-                    {
-                        yield return new WaitForSeconds(2f);
-                        playerCtrl.gameObject.SetActive(true);
-
-                        PlayerCon pc = FindObjectOfType<PlayerCon>();
-                        pc.LoadRandomScene();
-                    }
-                }
-            }
-        }
-        else
-        {
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.LoadLevel(10);
         }
     }
 
@@ -150,13 +129,14 @@ public class StartGameManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")||other.CompareTag("SlideCollider"))
+        if (other.CompareTag("Player") || other.CompareTag("SlideCollider"))
         {
-            count++;
-            other.GetComponent<PlayerCtrl>().isGoalin = true;
-            //other.GetComponent<PlayerCtrl>().AllStop();  //얘가 문제임
-
-            if (count >= goalCount)
+            if (count < goalCount)
+            {
+                count++;
+                other.GetComponent<PlayerCtrl>().isGoalin = true;
+            }
+            if (count == goalCount)
             {
                 StartCoroutine(GameoverMsg());
             }

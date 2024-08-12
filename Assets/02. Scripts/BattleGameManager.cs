@@ -35,7 +35,7 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (GameObject player in players)
         {
-            player.GetComponent<PlayerCtrl>().isGoalin = false;
+            player.GetComponent<PlayerCtrl>().isAlive = true;
             player.SetActive(true);
         }
 
@@ -68,8 +68,10 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
+            playerCtrls.enabled = true;
             playerCtrls.moveSpeed = 0;
             playerCtrls.isColl = true;
+            playerCtrls.startGame = true;
         }
 
         for (int i = 3; i > 0; i--)
@@ -110,7 +112,7 @@ public class BattleGameManager : MonoBehaviour
     IEnumerator GameoverMsg()
     {
         gameTxt.enabled = true;
-        gameTxt.text = "���� ����";
+        gameTxt.text = "Round End";
         yield return new WaitForSeconds(3f);
 
         foreach (GameObject player in players)
@@ -119,13 +121,13 @@ public class BattleGameManager : MonoBehaviour
 
             if (player.GetComponent<PhotonView>().IsMine)
             {
-                if (playerCtrl.isGoalin)
+                if (playerCtrl.isAlive)
                 {
-                    gameTxt.text = "����!";
+                    gameTxt.text = "Success!";
                 }
                 else
                 {
-                    gameTxt.text = "����!";
+                    gameTxt.text = "Fail!";
                 }
             }
         }

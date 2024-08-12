@@ -55,6 +55,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     public Transform holdPosition;
 
     public bool isGoalin = false;
+    public bool isAlive = false;
 
     public CharacterCustom custom;
     AudioSource audiosource;
@@ -83,6 +84,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         coll = GetComponent<CapsuleCollider>();
         //failedText.SetActive(false);
         isGoalin = false;
+        isAlive = false;
     }
     void Start()
     {
@@ -144,6 +146,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
                 if (nextPlayer.GetComponent<PlayerCtrl>().cam != null)
                 {
                     Camera.main.transform.SetParent(nextPlayer.cam.transform);
+                    Camera.main.transform.localPosition = new Vector3(0, -4f, 5f);
                     Camera.main.transform.localPosition = new Vector3(0, -4f, 5f);
                     Camera.main.transform.rotation = Quaternion.Euler(40f, 0f, 0f);
                     watchIndex = index;

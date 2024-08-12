@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class ScenesManager : MonoBehaviour
 {
     static public int SceneNum;
     public GameObject tooltipPrefab;
+    public List<int> loadScenes = new List<int>();
+    public int[] sceneIndex = new int[] { 5, 6, 7, 8, 9 };
 
     private void Awake()
     {
@@ -40,9 +43,31 @@ public class ScenesManager : MonoBehaviour
 
         GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
         if (canvas != null)
-        {            
+        {
             GameObject tooltipInstance = Instantiate(tooltipPrefab, canvas.transform);
-            tooltipInstance.transform.SetAsLastSibling(); 
+            tooltipInstance.transform.SetAsLastSibling();
         }
+    }
+    public void LoadRandomScene()
+    {
+        List<int> sceneList = new List<int>(sceneIndex);
+
+        foreach (int index in loadScenes)
+        {
+            sceneList.Remove(index);
+        }
+
+        if (sceneList.Count == 0)
+        {
+            loadScenes.Clear();
+            sceneList = new List<int>(sceneIndex);
+        }
+
+        int randomIndex = Random.Range(0, sceneList.Count);
+        int selectScene = sceneList[randomIndex];
+
+        loadScenes.Add(selectScene);
+
+        PhotonNetwork.LoadLevel(selectScene);
     }
 }
