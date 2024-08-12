@@ -110,7 +110,7 @@ public class BattleGameManager : MonoBehaviour
     IEnumerator GameoverMsg()
     {
         gameTxt.enabled = true;
-        gameTxt.text = "���� ����";
+        gameTxt.text = "라운드 종료";
         yield return new WaitForSeconds(3f);
 
         foreach (GameObject player in players)
@@ -121,11 +121,11 @@ public class BattleGameManager : MonoBehaviour
             {
                 if (playerCtrl.isGoalin)
                 {
-                    gameTxt.text = "����!";
+                    gameTxt.text = "성공!";
                 }
                 else
                 {
-                    gameTxt.text = "����!";
+                    gameTxt.text = "실패!";
                 }
             }
         }

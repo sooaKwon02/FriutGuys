@@ -55,6 +55,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     public Transform holdPosition;
 
     public bool isGoalin = false;
+    public bool isAlive = false;
 
     public CharacterCustom custom;
     AudioSource audiosource;
@@ -83,6 +84,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         coll = GetComponent<CapsuleCollider>();
         //failedText.SetActive(false);
         isGoalin = false;
+        isAlive = false;
     }
     void Start()
     {
