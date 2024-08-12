@@ -87,14 +87,11 @@ public class GameEndManager : MonoBehaviour
         {
             yield return null;
         }
-
         count = 0;
-
         while (!PhotonNetwork.IsMasterClient)
         {
             yield return null;
-        }
-
+        }  
         if (PhotonNetwork.IsMasterClient)
         {
             ScenesManager pc = FindObjectOfType<ScenesManager>();

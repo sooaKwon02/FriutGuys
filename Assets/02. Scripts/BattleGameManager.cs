@@ -27,6 +27,7 @@ public class BattleGameManager : MonoBehaviour
 
     private void Start()
     {
+        Camera.main.gameObject.SetActive(true);
         Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
 
         gameTxt.transform.SetParent(canvas.transform);
@@ -103,6 +104,7 @@ public class BattleGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
+        Camera.main.gameObject.SetActive(false);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(10);
