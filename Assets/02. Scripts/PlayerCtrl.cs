@@ -202,8 +202,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z).normalized, Color.red);
         float h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
-
-        //ī�޶� ���� �� ���� 
+ 
         Vector3 moveInput = new Vector2(h, v);
         //어느방향으로든 움직이면 true
         isMove = moveInput.magnitude != 0;
@@ -218,11 +217,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             Vector3 lookRight = new Vector3(cam.transform.right.x, 0f, cam.transform.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
-            // �÷��̾ �ٶ� ��ǥ ����
             Quaternion targetRot = Quaternion.LookRotation(moveDir);
-            //playerȸ��
+
             player.rotation = Quaternion.Slerp(player.rotation, targetRot, Time.deltaTime * rotSpeed);
-            //������
+
             rb.position += moveDir * Time.deltaTime * moveSpeed;
         }
     }
@@ -235,15 +233,12 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         float x = camAngle.x - mouseDelta.y;
 
-        //ī�޶��� ������ 180�� ���϶��
         if (x < 180f)
         {
-            //0�� 70������ ������ ����
             x = Mathf.Clamp(x, 0f, 70f);
         }
         else
         {
-            //180�� �̻��̶�� 
             x = Mathf.Clamp(x, 335f, 361f);
         }
         cam.transform.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
@@ -269,7 +264,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     void CheckGround()
     {
         RaycastHit hit;
-        Debug.DrawRay(rb.position, Vector3.down * 0.1f, Color.red);
+        Debug.DrawRay(rb.position, Vector3.down * 1.0f, Color.red);
 
         if (Physics.Raycast(rb.position, Vector3.down, out hit, 0.1f))
         {
@@ -297,7 +292,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     void Slide()
     {
-        //����۽ð��� 0���� ũ�� ���ֱ�
         if (cooltimeTimer > 0)
         {
             cooltimeTimer -= Time.deltaTime;
@@ -409,14 +403,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
         isColl = false;
     }
-    //얘만하면 이상해짐
-    public void AllStop()
-    {
-        stop = true;
-        anim.speed = 0;
-        //rb.velocity = Vector3.zero;
-    }
-
 
     public void RespawnPointSet()
     {
@@ -442,6 +428,4 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         isColl = true;
         playerTxt.text = isGoalin ? playerTxt.text = "성공" : playerTxt.text = "실패";
     }
-  
-
 }

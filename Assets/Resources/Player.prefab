@@ -1107,7 +1107,7 @@ MonoBehaviour:
   moveSpeed: 5
   slideSpeed: 5
   slideCooltime: 1
-  jumpForce: 5
+  jumpForce: 5.5
   point: {x: 0, y: 0, z: 0}
   isGround: 0
   isJump: 0
