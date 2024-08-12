@@ -138,7 +138,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 019aa591ce9eabf44813257eb073a915, type: 3}
   m_PrefabInstance: {fileID: 3463231212587658560}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &46266866788806015
+--- !u!65 &3454085304785434402
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,7 +151,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 1, z: 2.0000005}
   m_Center: {x: -0.000000059604645, y: 0.5, z: 0.00000005960466}
---- !u!114 &3207226028526236452
+--- !u!114 &2741862775414127873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   over: {fileID: 4381641392772354065}
   obj: {fileID: 0}
---- !u!54 &5024946387448299580
+--- !u!54 &4577740697542222121
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,7 +268,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2d1510afb3f2e99478a3b9972d15a5d1, type: 3}
   m_PrefabInstance: {fileID: 3463231212703460070}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &7932237979637202412
+--- !u!65 &1145309266744704705
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
