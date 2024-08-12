@@ -65,7 +65,7 @@ public class MiniMapController : MonoBehaviour
         {
             if (worldTransforms[i] == null)
             {
-                worldTransforms[i] = null;
+                Nullified(i);
             }
 
             else
@@ -85,5 +85,11 @@ public class MiniMapController : MonoBehaviour
     {
         Vector2 normalizedPosition = boundaries.FindNormalizedPosition(worldPosition);
         return Rect.NormalizedToPoint(MapTransform.rect, normalizedPosition);
+    }
+
+    private void Nullified(int i)
+    {
+        worldTransforms[i] = null;
+        imageTransforms[i].gameObject.SetActive(false);
     }
 }
