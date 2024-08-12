@@ -19,6 +19,8 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     public Text playerCountText;
     public GameObject UserInfoPanel;
 
+    public List<int> loadScenes = new List<int>();
+    public int[] sceneIndex = new int[] {5, 6, 7, 8, 9};
 
     private void Awake()
     {
@@ -96,12 +98,33 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             //{
             //    PlayerSettingManager.Instance.type = PlayerSettingManager.GAME_TYPE.BATTLE;
             //}
-            SceneManager.LoadScene(5);
-            //FindObjectOfType<ScenesManager>().LoadRandomScene();
+            //PhotonNetwork.LoadLevel(5);
+            LoadRandomScene();
         }
     }
 
- 
+    public void LoadRandomScene()
+    {
+        List<int> sceneList = new List<int>(sceneIndex);
+
+        foreach(int index in loadScenes)
+        {
+            sceneList.Remove(index);
+        }
+
+        if(sceneList.Count == 0)
+        {
+            loadScenes.Clear();
+            sceneList = new List<int>(sceneIndex);
+        }
+
+        int randomIndex = Random.Range(0, sceneList.Count);
+        int selectScene = sceneList[randomIndex];
+
+        loadScenes.Add(selectScene);
+
+        PhotonNetwork.LoadLevel(selectScene);
+    }
 
     IEnumerator CreatePlayer()
     {
