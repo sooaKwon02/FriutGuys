@@ -97,6 +97,7 @@ public class StartGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         Camera.main.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(10);
