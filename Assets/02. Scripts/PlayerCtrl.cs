@@ -431,6 +431,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         isColl = true;
         playerTxt.text = isGoalin ? playerTxt.text = "성공" : playerTxt.text = "실패";
     }
+
     public void GameOver()
     {
         StartCoroutine(Over());
@@ -440,6 +441,4 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         yield return new WaitForSeconds(3f);
         PhotonNetwork.LeaveRoom();
     }
-  
-
 }
