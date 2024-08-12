@@ -98,7 +98,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             //{
             //    PlayerSettingManager.Instance.type = PlayerSettingManager.GAME_TYPE.BATTLE;
             //}
-            //PhotonNetwork.LoadLevel(5);
+            //PhotonNetwork.LoadLevel(9);
             LoadRandomScene();
         }
     }

@@ -135,8 +135,11 @@ public class StartGameManager : MonoBehaviour
                         yield return new WaitForSeconds(2f);
                         playerCtrl.gameObject.SetActive(true);
 
-                        PlayerCon pc = FindObjectOfType<PlayerCon>();
-                        pc.LoadRandomScene();
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            PlayerCon pc = FindObjectOfType<PlayerCon>();
+                            pc.LoadRandomScene();
+                        }
                     }
                 }
             }
@@ -177,10 +180,11 @@ public class StartGameManager : MonoBehaviour
     {
         if (other.CompareTag("Player")||other.CompareTag("SlideCollider"))
         {
-            count++;
-            other.GetComponent<PlayerCtrl>().isGoalin = true;
-            //other.GetComponent<PlayerCtrl>().AllStop();  //얘가 문제임
-
+            if (count <= goalCount)
+            {
+                count++;
+                other.GetComponent<PlayerCtrl>().isGoalin = true;
+            }
             if (count >= goalCount)
             {
                 StartCoroutine(GameoverMsg());

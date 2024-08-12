@@ -9,6 +9,7 @@ public class RespawnPoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerCtrl>().point = transform.position;
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 }
