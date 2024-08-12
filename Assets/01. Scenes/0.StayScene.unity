@@ -153,8 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipPrefab: {fileID: 1836591180304235827, guid: 66b0087e65059ef48ba4cf2a7788dc4f, type: 3}
-  loadScenes: 
-  sceneIndex: 0500000006000000070000000800000009000000
 --- !u!4 &1537718864
 Transform:
   m_ObjectHideFlags: 0

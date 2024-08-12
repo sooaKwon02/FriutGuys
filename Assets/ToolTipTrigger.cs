@@ -9,11 +9,12 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltip.ShowTooltip(description, Input.mousePosition); 
+       tooltip.ShowTooltip(description, Input.mousePosition);
+       
     }
-
     public void OnPointerExit(PointerEventData eventData)
     {
-        tooltip.HideTooltip(); 
+        tooltip.HideTooltip();
     }
+
 }
