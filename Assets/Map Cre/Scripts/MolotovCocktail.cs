@@ -27,7 +27,14 @@ public class MolotovCocktail : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        else if (collision.collider.CompareTag("Shield")|| collision.collider.CompareTag("Ground"))
+        else if (collision.collider.CompareTag("Shield"))
+        {
+            Instantiate(ExplosiveController.instance.GetExplosive(transform.position));
+            collision.collider.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
+
+        else if (collision.collider.CompareTag("Ground"))
         {
             gameObject.SetActive(false);
         }
