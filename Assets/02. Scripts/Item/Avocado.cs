@@ -6,6 +6,7 @@ public class Avocado : UseItem
 {
     public float explosionRadius = 20f;
     public float explosionForce = 1500f;
+    public GameObject exp;
     protected override void Awake()
     {
         base.Awake();
@@ -38,15 +39,14 @@ public class Avocado : UseItem
     [PunRPC]
     void ExplodeRPC()
     {
+        Instantiate(exp, transform.position, Quaternion.identity);
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider collider in colliders)
         {
             Rigidbody rb = collider.GetComponent<Rigidbody>();
             if (rb != null)
-            {
-                GetComponent<ParticleSystem>().Play();
+            {                
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
-                GetComponent<ParticleSystem>().Stop();
             }
         }
     }
