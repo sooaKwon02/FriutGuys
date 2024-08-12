@@ -1,10 +1,8 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using static UnityEditor.PlayerSettings;
 
 public class GameEndManager : MonoBehaviour
 {
@@ -13,27 +11,26 @@ public class GameEndManager : MonoBehaviour
     public Image panel;
 
     public GameObject[] pos = new GameObject[16];
-    GameObject[] player;
+    PlayerCtrl[] players;
     public int count;
-
+    
     private void Start()
     {
         panel.gameObject.SetActive(true);
 
+        InitializeTiles();
+        StartCoroutine(JoinPlayer());
+    }
+    private void InitializeTiles()
+    {
+        // Initialize spawn tiles
         for (int i = 0; i < 16; i++)
         {
-            if (i < 8)
-            {
-                GameObject obj = Instantiate(spawnTile, new Vector3(i * 3, 0, 0), Quaternion.identity);
-                pos[i] = obj;
-            }
-            else
-            {
-                GameObject obj = Instantiate(spawnTile, new Vector3((i * 3) - 24, 3, 0), Quaternion.identity);
-                pos[i] = obj;
-            }
+            Vector3 position = i < 8 ? new Vector3(i * 3, 0, 0) : new Vector3((i * 3) - 24, 3, 0);
+            pos[i] = Instantiate(spawnTile, position, Quaternion.identity);
         }
 
+        // Initialize ground tiles
         for (int i = -1; i < 9; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -41,9 +38,7 @@ public class GameEndManager : MonoBehaviour
                 Instantiate(groundTile, new Vector3(i * 3, -10, j * -2), Quaternion.identity);
             }
         }
-        StartCoroutine(JoinPlayer());
     }
-
     IEnumerator JoinPlayer()
     {
         yield return new WaitForSeconds(1f);
@@ -51,29 +46,25 @@ public class GameEndManager : MonoBehaviour
         {
             yield return null;
         }
-        panel.gameObject.SetActive(false);
-        player = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < player.Length; i++)
+        players = FindObjectsOfType<PlayerCtrl>();
+        for (int i = 0; i < players.Length; i++)
         {
-            player[i].GetComponent<PlayerCtrl>().enabled = false;
-            player[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
-            player[i].GetComponent<PlayerCtrl>().startGame = false;
-            player[i].transform.position = pos[i].transform.position;
-            if (player[i].GetComponent<PlayerCtrl>().isGoalin)
+            players[i].enabled = false;
+            players[i].rb.velocity = Vector3.zero;
+            players[i].startGame = false;
+            players[i].transform.position = pos[i].transform.position;
+            if (players[i].isGoalin|| players[i].isAlive)
             {
                 count++;
-            }
-            else if (player[i].GetComponent<PlayerCtrl>().isAlive)
-            {
-                count++;
-            }
+            }            
             else
             {
                 StartCoroutine(PlayerGameOver(pos[i]));
             }
             yield return new WaitForSeconds(0.1f);
-        }     
-        yield return new WaitForSeconds(5f);
+        }
+        panel.gameObject.SetActive(false);
+        yield return new WaitForSeconds(3f);
         StartCoroutine(PlayerReady());
     }
     IEnumerator PlayerGameOver(GameObject pos)
@@ -85,12 +76,14 @@ public class GameEndManager : MonoBehaviour
     {
         while (count != PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            yield return null;
+            Debug.Log("플레이어 수가 맞지 않음. 다시 시도합니다.");
+
+            yield return new WaitForSeconds(1f);
+
+            count = PhotonNetwork.CurrentRoom != null ? PhotonNetwork.CurrentRoom.PlayerCount : 0;
         }
-        Debug.Log(count);
-        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
         count = 0;
-        while (!PhotonNetwork.IsMasterClient)
+        while (PhotonNetwork.MasterClient==null)
         {
             yield return null;
         }

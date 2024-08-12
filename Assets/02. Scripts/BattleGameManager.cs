@@ -15,9 +15,10 @@ public class BattleGameManager : MonoBehaviour
     GameObject[] players;
 
     private Text gameTxt;
-
+    bool check;
     private void Awake()
     {
+        check = false;
         if (PhotonNetwork.CurrentRoom.PlayerCount != 0)
         {
             currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -35,8 +36,9 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (GameObject player in players)
         {
+            player.GetComponent<PlayerCtrl>().enabled = false;
             player.GetComponent<PlayerCtrl>().isAlive = true;
-            player.SetActive(true);
+            player.GetComponent<PlayerCtrl>().startGame = false;
         }
 
         count = currentPlayers;
@@ -53,8 +55,6 @@ public class BattleGameManager : MonoBehaviour
         {
             players[i].transform.position = pos[i].position;
         }
-        
-            Camera.main.gameObject.SetActive(true);
         ObstacleScript oS = FindObjectOfType<ObstacleScript>();
         ObstacleSpeed oSpeed = FindObjectOfType<ObstacleSpeed>();
         oS.speed = 0;
@@ -64,17 +64,7 @@ public class BattleGameManager : MonoBehaviour
     }
 
     IEnumerator GameCount()
-    {
-        PlayerCtrl[] playerCtrl = FindObjectsOfType<PlayerCtrl>();
-
-        foreach (PlayerCtrl playerCtrls in playerCtrl)
-        {
-            playerCtrls.enabled = true;
-            playerCtrls.moveSpeed = 0;
-            playerCtrls.isColl = true;
-            playerCtrls.startGame = true;
-        }
-
+    {   
         for (int i = 3; i > 0; i--)
         {
             gameTxt.text = i.ToString();
@@ -95,17 +85,14 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
-            playerCtrls.moveSpeed = 5.0f;
-            playerCtrls.isColl = false;
+            playerCtrls.enabled = true;
+            playerCtrls.startGame = true;
         }
     }
 
     IEnumerator GameOver()
     {
-        yield return new WaitForSeconds(5f);
-
-        Camera.main.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(10);
@@ -116,7 +103,7 @@ public class BattleGameManager : MonoBehaviour
     {
         gameTxt.enabled = true;
         gameTxt.text = "Round End";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         foreach (GameObject player in players)
         {
@@ -146,8 +133,9 @@ public class BattleGameManager : MonoBehaviour
                 count--;
                 other.GetComponent<PlayerCtrl>().isAlive = false;
             }
-            if(count == fallCount)
-            {                        
+            if(count == fallCount&&!check)
+            {
+                check = true;
                 StartCoroutine(GameoverMsg());
             }
         }

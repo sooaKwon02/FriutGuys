@@ -17,10 +17,12 @@ public class StartGameManager : MonoBehaviour
     GameObject[] players;
 
     private Text gameTxt;
+    bool check;
 
 
     private void Awake()
     {
+        check = false;
         if (PhotonNetwork.CurrentRoom.PlayerCount != 0)
         {
             currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -30,7 +32,6 @@ public class StartGameManager : MonoBehaviour
 
     private void Start()
     {
-        Camera.main.gameObject.SetActive(true);
         Canvas canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
 
         gameTxt.transform.SetParent(canvas.transform);
@@ -39,7 +40,9 @@ public class StartGameManager : MonoBehaviour
         
         foreach(GameObject player in players)
         {
-            player.SetActive(true);
+            player.GetComponent<PlayerCtrl>().enabled = false;
+            player.GetComponent<PlayerCtrl>().startGame = false;
+            player.GetComponent<PlayerCtrl>().isGoalin = false;
         }
 
         count = 0;
@@ -54,7 +57,6 @@ public class StartGameManager : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            players[i].GetComponent<PlayerCtrl>().enabled = true;
             players[i].transform.position = pos[i].position;
         }
         yield return new WaitForSeconds(3f);
@@ -62,14 +64,6 @@ public class StartGameManager : MonoBehaviour
 
     IEnumerator GameCount()
     {
-        PlayerCtrl[] playerCtrl = FindObjectsOfType<PlayerCtrl>();
-
-        foreach (PlayerCtrl playerCtrls in playerCtrl)
-        {
-            playerCtrls.moveSpeed = 0;
-            playerCtrls.isColl = true;
-        }
-
         for (int i = 3; i > 0; i--)
         {
             gameTxt.text = i.ToString();
@@ -86,8 +80,6 @@ public class StartGameManager : MonoBehaviour
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
             playerCtrls.enabled = true;
-            playerCtrls.moveSpeed = 5.0f;
-            playerCtrls.isColl = false;
             playerCtrls.startGame = true;
         }
     }
@@ -96,8 +88,6 @@ public class StartGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        Camera.main.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(10);
@@ -108,7 +98,7 @@ public class StartGameManager : MonoBehaviour
     {
         gameTxt.enabled = true;
         gameTxt.text = "라운드 종료";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         foreach (GameObject player in players)
         {
@@ -139,8 +129,9 @@ public class StartGameManager : MonoBehaviour
                 count++;
                 other.GetComponent<PlayerCtrl>().isGoalin = true;
             }
-            if (count == goalCount)
+            if (count == goalCount&&!check)
             {
+                check = true;
                 StartCoroutine(GameoverMsg());
             }
         }

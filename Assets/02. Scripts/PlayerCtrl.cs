@@ -107,7 +107,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
             
             LookAround();
             CheckGround();
-            if (Input.GetKeyDown(KeyCode.Space) && isGround && pv.IsMine && !isColl)
+            if (Input.GetKeyDown(KeyCode.Space) && isGround  && !isColl&&startGame)
             {
                 isJump = true;
             }
@@ -433,7 +433,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     }
     public void GameOver()
     {
-        StartCoroutine(Over());
+        if (pv.IsMine)
+        {
+            StartCoroutine(Over());
+        }
     }
     IEnumerator Over()
     {
