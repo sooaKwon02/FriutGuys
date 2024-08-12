@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using static SaveLoad;
+using System.Collections.Generic;
 
 public class PlayerCon : MonoBehaviourPunCallbacks
 {
@@ -17,6 +18,9 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     public GameObject readyButton;
     public Text playerCountText;
     public GameObject UserInfoPanel;
+
+    public List<int> loadScenes = new List<int>();
+    public int[] sceneIndex = new int[] {5, 6, 7, 8, 9};
 
     private void Awake()
     {
@@ -94,8 +98,32 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             //{
             //    PlayerSettingManager.Instance.type = PlayerSettingManager.GAME_TYPE.BATTLE;
             //}
-            PhotonNetwork.LoadLevel(5);
+            //PhotonNetwork.LoadLevel(5);
+            LoadRandomScene();
         }
+    }
+
+    public void LoadRandomScene()
+    {
+        List<int> sceneList = new List<int>(sceneIndex);
+
+        foreach(int index in loadScenes)
+        {
+            sceneList.Remove(index);
+        }
+
+        if(sceneList.Count == 0)
+        {
+            loadScenes.Clear();
+            sceneList = new List<int>(sceneIndex);
+        }
+
+        int randomIndex = Random.Range(0, sceneList.Count);
+        int selectScene = sceneList[randomIndex];
+
+        loadScenes.Add(selectScene);
+
+        PhotonNetwork.LoadLevel(selectScene);
     }
 
     IEnumerator CreatePlayer()

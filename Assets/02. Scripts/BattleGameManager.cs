@@ -58,7 +58,18 @@ public class BattleGameManager : MonoBehaviour
         ObstacleSpeed oSpeed = FindObjectOfType<ObstacleSpeed>();
         oS.speed = 0;
         oSpeed.speed = 0;
+
         yield return new WaitForSeconds(3f);
+
+        //switch
+        //case :
+        //    battle{
+
+        //    }
+        //case race:
+        //    {
+
+        //    }
     }
 
     IEnumerator GameCount()
@@ -116,7 +127,9 @@ public class BattleGameManager : MonoBehaviour
                     {
                         yield return new WaitForSeconds(2f);
                         playerCtrl.gameObject.SetActive(true);
-                        PhotonNetwork.LoadLevel(5);
+
+                        PlayerCon pc = FindObjectOfType<PlayerCon>();
+                        pc.LoadRandomScene();
                     }
                 }
             }
