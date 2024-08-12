@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MiniMapController : MonoBehaviour
 {
@@ -53,9 +54,37 @@ public class MiniMapController : MonoBehaviour
         GameObject[] imageObjects = GameObject.FindGameObjectsWithTag("MiniMap Icon");
         imageTransforms = new RectTransform[imageObjects.Length];
 
+        Color[] colors = new Color[]
+        {
+            new Color(1.0f, 0.0f, 0.0f, 1.0f),
+            new Color(0.0f, 1.0f, 0.0f, 1.0f),
+            new Color(0.0f, 0.0f, 1.0f, 1.0f),
+            new Color(1.0f, 1.0f, 0.0f, 1.0f),
+            new Color(0.0f, 1.0f, 1.0f, 1.0f),
+            new Color(1.0f, 0.0f, 1.0f, 1.0f),
+            new Color(1.0f, 0.5f, 0.0f, 1.0f),
+            new Color(0.5f, 1.0f, 0.0f, 1.0f),
+            new Color(1.0f, 0.0f, 0.5f, 1.0f),
+            new Color(0.5f, 0.0f, 1.0f, 1.0f),
+            new Color(0.0f, 1.0f, 0.5f, 1.0f),
+            new Color(0.0f, 0.5f, 1.0f, 1.0f),
+            new Color(0.5f, 1.0f, 0.75f, 1.0f),
+            new Color(0.75f, 1.0f, 0.5f, 1.0f),
+            new Color(0.5f, 0.75f, 1.0f, 1.0f),
+            new Color(0.75f, 0.5f, 1.0f, 1.0f)
+        };
+
+        ShuffleArray(colors);
+
         for (int i = 0; i < imageObjects.Length; i++)
         {
             imageTransforms[i] = (RectTransform)imageObjects[i].transform;
+
+            if (imageTransforms[i] != null)
+            {
+                int colorIndex = i % colors.Length;
+                imageTransforms[i].GetComponent<Image>().color = colors[colorIndex];
+            }
         }
     }
 
@@ -91,5 +120,19 @@ public class MiniMapController : MonoBehaviour
     {
         worldTransforms[i] = null;
         imageTransforms[i].gameObject.SetActive(false);
+    }
+
+    private void ShuffleArray<T>(T[] array)
+    {
+        System.Random range = new System.Random();
+        int arrayLength = array.Length;
+        while (arrayLength > 1)
+        {
+            arrayLength--;
+            int arrayRange = range.Next(arrayLength + 1);
+            T value = array[arrayRange];
+            array[arrayRange] = array[arrayLength];
+            array[arrayLength] = value;
+        }
     }
 }

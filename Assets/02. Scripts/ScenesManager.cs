@@ -33,6 +33,7 @@ public class ScenesManager : MonoBehaviour
             Button button = transform.GetComponent<Button>();
             if (button != null)
             {
+                Debug.Log("버튼이름 : " + button);
                 button.onClick.RemoveListener(SoundManager.Instance.ButtonClickSound);
                 button.onClick.AddListener(SoundManager.Instance.ButtonClickSound);
             }

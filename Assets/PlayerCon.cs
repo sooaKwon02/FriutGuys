@@ -170,13 +170,13 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     public void KickPlayer(string name)
     {
-        //¸¶½ºÅÍ Å¬¶óÀÌ¾ðÆ®ÀÏ¶§
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½Ï¶ï¿½
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonView[] pvs = FindObjectsOfType<PhotonView>();
             foreach (PhotonView _pv in pvs)
             {
-                //Æ÷Åæºä¿¡´Ù RPC¸¦ ½ð´Ù
+                //ï¿½ï¿½ï¿½ï¿½ä¿¡ï¿½ï¿½ RPCï¿½ï¿½ ï¿½ï¿½ï¿½
                 _pv.RPC("KickPlayerRPC", RpcTarget.All, name);
                 _pv.RPC("DestroyUserInfo", RpcTarget.All, name);
             }
