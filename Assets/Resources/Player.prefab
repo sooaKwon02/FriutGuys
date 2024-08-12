@@ -1119,6 +1119,7 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   holdPosition: {fileID: 0}
   isGoalin: 0
+  isAlive: 0
   custom: {fileID: 0}
   audioClip:
   - {fileID: 8300000, guid: 1155549f4019371498f25f2a351387a1, type: 3}
