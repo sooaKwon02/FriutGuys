@@ -35,7 +35,7 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (GameObject player in players)
         {
-            player.GetComponent<PlayerCtrl>().isGoalin = false;
+            player.GetComponent<PlayerCtrl>().isAlive = true;
             player.SetActive(true);
         }
 
@@ -87,6 +87,7 @@ public class BattleGameManager : MonoBehaviour
             gameTxt.text = i.ToString();
             yield return new WaitForSeconds(1);
         }
+
         gameTxt.text = "Go!";
     }
 
@@ -102,8 +103,10 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
+            playerCtrls.enabled = true;
             playerCtrls.moveSpeed = 5.0f;
             playerCtrls.isColl = false;
+            playerCtrls.startGame = true;
         }
     }
 
@@ -111,33 +114,38 @@ public class BattleGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        if (fallCount != 1)
-        {
-            foreach (GameObject player in players)
-            {
-                PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
+        //if (fallCount != 1)
+        //{
+        //    foreach (GameObject player in players)
+        //    {
+        //        PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
 
-                if (player.GetComponent<PhotonView>().IsMine)
-                {
-                    if (!playerCtrl.isGoalin)
-                    {
-                        PhotonNetwork.LeaveRoom();
-                    }
-                    else if (playerCtrl.isGoalin)
-                    {
-                        yield return new WaitForSeconds(2f);
-                        playerCtrl.gameObject.SetActive(true);
+        //        if (player.GetComponent<PhotonView>().IsMine)
+        //        {
+        //            if (!playerCtrl.isGoalin)
+        //            {
+        //                PhotonNetwork.LeaveRoom();
+        //            }
+        //            else if (playerCtrl.isGoalin)
+        //            {
+        //                yield return new WaitForSeconds(2f);
+        //                playerCtrl.gameObject.SetActive(true);
 
-                        PlayerCon pc = FindObjectOfType<PlayerCon>();
-                        pc.LoadRandomScene();
-                    }
-                }
-            }
-        }
-        else
+        //                PlayerCon pc = FindObjectOfType<PlayerCon>();
+        //                pc.LoadRandomScene();
+        //            }
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    PhotonNetwork.LeaveRoom();
+        //}
+        if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.LoadLevel(10);
         }
+
     }
 
     IEnumerator GameoverMsg()
@@ -152,7 +160,7 @@ public class BattleGameManager : MonoBehaviour
 
             if (player.GetComponent<PhotonView>().IsMine)
             {
-                if (playerCtrl.isGoalin)
+                if (!playerCtrl.isAlive)
                 {
                     gameTxt.text = "½ÇÆÐ!";
                 }
@@ -170,12 +178,13 @@ public class BattleGameManager : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("SlideCollider"))
         {
-            count--;
-            other.GetComponent<PlayerCtrl>().isGoalin = true;
-            //other.GetComponent<PlayerCtrl>().AllStop();
-
-            if (count <= fallCount)
+            if(count>fallCount)
             {
+                count--;
+                other.GetComponent<PlayerCtrl>().isAlive = false;
+            }
+            if(count==fallCount)
+            {                        
                 StartCoroutine(GameoverMsg());
             }
         }

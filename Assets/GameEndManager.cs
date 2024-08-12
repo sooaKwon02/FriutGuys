@@ -3,68 +3,99 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using static UnityEditor.PlayerSettings;
+using UnityEngine.UI;
 
 public class GameEndManager : MonoBehaviour
 {
     public GameObject spawnTile;
     public GameObject groundTile;
+    public Image panel;
 
-    public Transform[] pos = new Transform[16];
+    public GameObject[] pos = new GameObject[16];
     GameObject[] player;
+    public int count;
 
     private void Start()
     {
-        for(int i=0;i<16; i++)
+        panel.gameObject.SetActive(true);
+        for (int i=0;i<16; i++)
         {
             if (i < 8) {
-                Instantiate(spawnTile, new Vector3(i*2, 0, 0), Quaternion.identity);
-                pos[i] = spawnTile.transform;
+                GameObject obj= Instantiate(spawnTile, new Vector3(i*3, 0, 0), Quaternion.identity);
+                pos[i] = obj;
             }
             else
             {
-                Instantiate(spawnTile, new Vector3((i*2)-16, 2, 0), Quaternion.identity);
-                pos[i] = spawnTile.transform;
+                GameObject obj =Instantiate(spawnTile, new Vector3((i*3)-24, 3, 0), Quaternion.identity);
+                pos[i] = obj;
             }
-                
-           
-        }      
-       
+
+
+        }
+
         for (int i=-1;i<9;i++)
         {
             for(int j=0;j<3; j++)
             {
-                Instantiate(groundTile, new Vector3(i * 2, -10, j*-2), Quaternion.identity);
-            }
-            
+                Instantiate(groundTile, new Vector3(i * 3, -10, j*-2), Quaternion.identity);
+            }            
         }
         StartCoroutine(JoinPlayer());
     }
 
     IEnumerator JoinPlayer()
-    {
+    {        
         yield return new WaitForSeconds(1f);
-        if(GameObject.FindGameObjectWithTag("Player")&&GameObject.FindGameObjectsWithTag("Player").Length==PhotonNetwork.CurrentRoom.PlayerCount)
+        while(GameObject.FindGameObjectsWithTag("Player").Length != PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            player = GameObject.FindGameObjectsWithTag("Player");
-            for(int i = 0; i < player.Length; i++) 
-            {
-                player[i].transform.position = pos[i].position;
-                if(!player[i].GetComponent<PlayerCtrl>().isGoalin)
-                {
-                    StartCoroutine(PlayerGameOver(pos[i]));
-                }
-                yield return new WaitForSeconds(0.3f);
-            }
+            yield return null;
         }
-        else
+        player = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < player.Length; i++)
         {
-            StartCoroutine(JoinPlayer());
-        }      
+            player[i].GetComponent<PlayerCtrl>().enabled = false;
+            player[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+            player[i].GetComponent<PlayerCtrl>().startGame = false;
+            player[i].transform.position = pos[i].transform.position;
+            if (player[i].GetComponent<PlayerCtrl>().isGoalin )
+            {
+                count++;
+            }
+            else if (player[i].GetComponent<PlayerCtrl>().isAlive )
+            {
+                count++;
+            }
+            else
+            {
+                StartCoroutine(PlayerGameOver(pos[i]));
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        panel.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(PlayerReady());
     }
-    IEnumerator PlayerGameOver(Transform pos)
+    IEnumerator PlayerGameOver(GameObject pos)
     {
-        yield return new WaitForSeconds(1f);
-        pos.GetComponent<GameOver>().Over();       
+        yield return new WaitForSeconds(0.5f);
+        pos.GetComponentInChildren<GameOver>().Over();        
     }  
+    IEnumerator PlayerReady()
+    {
+        while (count != PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            yield return null;
+        }
+        count = 0;
+        while (!PhotonNetwork.IsMasterClient)
+        {
+            yield return null;
+        }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ScenesManager pc = FindObjectOfType<ScenesManager>();
+            pc.LoadRandomScene();
+        }
+
+    }    
 }
