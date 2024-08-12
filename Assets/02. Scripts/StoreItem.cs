@@ -8,8 +8,7 @@ using static SaveLoad;
 
 public class StoreItem : MonoBehaviour
 {
-    [SerializeField]
-    Item item;
+    public Item item;
     //===============================================
     public Image itemImg;
     public Image priceImg;
@@ -20,7 +19,7 @@ public class StoreItem : MonoBehaviour
     {
         ItemImageSet();
     }
-    void ItemImageSet()
+    public void ItemImageSet()
     {
         itemImg.sprite = item.sprite;
         priceImg.sprite = item.priceImg;
