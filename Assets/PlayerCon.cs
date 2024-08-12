@@ -19,8 +19,6 @@ public class PlayerCon : MonoBehaviourPunCallbacks
     public Text playerCountText;
     public GameObject UserInfoPanel;
 
-    public List<int> loadScenes = new List<int>();
-    public int[] sceneIndex = new int[] {5, 6, 7, 8, 9};
 
     private void Awake()
     {
@@ -98,33 +96,12 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             //{
             //    PlayerSettingManager.Instance.type = PlayerSettingManager.GAME_TYPE.BATTLE;
             //}
-            //PhotonNetwork.LoadLevel(9);
-            LoadRandomScene();
+            SceneManager.LoadScene(5);
+            //FindObjectOfType<ScenesManager>().LoadRandomScene();
         }
     }
 
-    public void LoadRandomScene()
-    {
-        List<int> sceneList = new List<int>(sceneIndex);
-
-        foreach(int index in loadScenes)
-        {
-            sceneList.Remove(index);
-        }
-
-        if(sceneList.Count == 0)
-        {
-            loadScenes.Clear();
-            sceneList = new List<int>(sceneIndex);
-        }
-
-        int randomIndex = Random.Range(0, sceneList.Count);
-        int selectScene = sceneList[randomIndex];
-
-        loadScenes.Add(selectScene);
-
-        PhotonNetwork.LoadLevel(selectScene);
-    }
+ 
 
     IEnumerator CreatePlayer()
     {
@@ -170,13 +147,13 @@ public class PlayerCon : MonoBehaviourPunCallbacks
 
     public void KickPlayer(string name)
     {
-        //¸¶½ºÅÍ Å¬¶óÀÌ¾ðÆ®ÀÏ¶§
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½Ï¶ï¿½
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonView[] pvs = FindObjectsOfType<PhotonView>();
             foreach (PhotonView _pv in pvs)
             {
-                //Æ÷Åæºä¿¡´Ù RPC¸¦ ½ð´Ù
+                //ï¿½ï¿½ï¿½ï¿½ä¿¡ï¿½ï¿½ RPCï¿½ï¿½ ï¿½ï¿½ï¿½
                 _pv.RPC("KickPlayerRPC", RpcTarget.All, name);
                 _pv.RPC("DestroyUserInfo", RpcTarget.All, name);
             }

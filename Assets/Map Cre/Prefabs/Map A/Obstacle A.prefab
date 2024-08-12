@@ -50,12 +50,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444914999269068}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -109,7 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444915311726485
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,12 +159,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444915311726485}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -219,7 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444915323260069
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,12 +268,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444915323260069}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -329,7 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444915370415417
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,12 +377,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444915370415417}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -439,7 +436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444915479863233
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,12 +486,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444915479863233}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -549,7 +545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444915798301835
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,12 +595,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444915798301835}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -659,7 +654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444916211234265
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,12 +704,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444916211234265}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -769,7 +763,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444916234667435
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,12 +813,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444916234667435}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -879,7 +872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444916373289276
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,12 +922,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444916373289276}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -989,7 +981,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
 --- !u!1 &2347444916830519375
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,12 +1084,12 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347444917027052187}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -1152,4 +1143,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ee0dd758c25354d85505c94620e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10

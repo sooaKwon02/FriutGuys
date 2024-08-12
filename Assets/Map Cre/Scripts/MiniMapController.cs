@@ -63,13 +63,21 @@ public class MiniMapController : MonoBehaviour
     {
         for (int i = 0; i < worldTransforms.Length; i++)
         {
-            if (i >= imageTransforms.Length)
+            if (worldTransforms[i] == null)
             {
-                break;
+                Nullified(i);
             }
 
-            Vector2 position = FindInterfacePoint(worldTransforms[i].position);
-            imageTransforms[i].anchoredPosition = position;
+            else
+            {
+                if (i >= imageTransforms.Length)
+                {
+                    break;
+                }
+
+                Vector2 position = FindInterfacePoint(worldTransforms[i].position);
+                imageTransforms[i].anchoredPosition = position;
+            }
         }
     }
 
@@ -77,5 +85,11 @@ public class MiniMapController : MonoBehaviour
     {
         Vector2 normalizedPosition = boundaries.FindNormalizedPosition(worldPosition);
         return Rect.NormalizedToPoint(MapTransform.rect, normalizedPosition);
+    }
+
+    private void Nullified(int i)
+    {
+        worldTransforms[i] = null;
+        imageTransforms[i].gameObject.SetActive(false);
     }
 }

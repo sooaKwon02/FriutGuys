@@ -45,9 +45,8 @@ public class ObjectsBullet : MonoBehaviour
         score.score -= 1;
         hitImage.enabled = true;
         hitText.enabled = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         hitImage.enabled = false;
         hitText.enabled = false;
-        gameObject.SetActive(false);
     }
 }

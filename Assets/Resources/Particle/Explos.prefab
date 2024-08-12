@@ -4773,6 +4773,7 @@ GameObject:
   - component: {fileID: 7880177668124990078}
   - component: {fileID: 7880177668124990080}
   - component: {fileID: 7880177668124990081}
+  - component: {fileID: 1785808129387544325}
   m_Layer: 0
   m_Name: Explos
   m_TagString: Untagged
@@ -4812,7 +4813,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 1
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5048,8 +5049,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 8
+      scalar: 20
+      minScalar: 20
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9589,6 +9590,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &1785808129387544325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880177668124990079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044acb951629ffb4f8aea695bc80326d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7880177668979411099
 GameObject:
   m_ObjectHideFlags: 0
