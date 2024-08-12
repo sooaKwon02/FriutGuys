@@ -15,11 +15,9 @@ public class StartGameManager : MonoBehaviour
     public int goalCount;
     public int count;
     GameObject[] players;
-    PlayerCtrl playerCtrl;
 
     private Text gameTxt;
 
-    int watchIndex = -1;
 
     private void Awake()
     {
@@ -95,30 +93,7 @@ public class StartGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        //PhotonView[] pview = FindObjectsOfType<PhotonView>();
-        //foreach (PhotonView pv in pview)
-        //{
-        //    if (pv.GetComponent<PlayerCtrl>().isGoalin)
-        //    {
-        //        //if (PhotonNetwork.IsMasterClient)
-        //        //{
-        //        //    PhotonNetwork.CloseConnection(player.GetComponent<PhotonView>().Owner);
-        //        //}
-        //        //else
-        //        //{
-        //        //    PhotonNetwork.LeaveRoom();
-        //        // 마스터 클라이언트가 변경되었을때 콜백
-        //        // public override void OnMasterClientSwitched(Player newMasterClient)
-        //        PhotonNetwork.LoadLevel(5);
-        //        //SceneManager.LoadScene(5);
-        //    }
-        //    else if(!pv.GetComponent<PlayerCtrl>().isGoalin)
-        //    {
-        //        //Destroy(cam.gameObject);
-        //        PhotonNetwork.LeaveRoom();
-        //    }
-        //}
-        if (goalCount != 1)
+        if (PhotonNetwork.IsMasterClient)
         {
             foreach (GameObject player in players)
             {

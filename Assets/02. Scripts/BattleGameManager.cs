@@ -60,16 +60,6 @@ public class BattleGameManager : MonoBehaviour
         oSpeed.speed = 0;
 
         yield return new WaitForSeconds(3f);
-
-        //switch
-        //case :
-        //    battle{
-
-        //    }
-        //case race:
-        //    {
-
-        //    }
     }
 
     IEnumerator GameCount()
@@ -111,39 +101,16 @@ public class BattleGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        if (fallCount != 1)
+        if (PhotonNetwork.IsMasterClient)
         {
-            foreach (GameObject player in players)
-            {
-                PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
-
-                if (player.GetComponent<PhotonView>().IsMine)
-                {
-                    if (!playerCtrl.isGoalin)
-                    {
-                        PhotonNetwork.LeaveRoom();
-                    }
-                    else if (playerCtrl.isGoalin)
-                    {
-                        yield return new WaitForSeconds(2f);
-                        playerCtrl.gameObject.SetActive(true);
-
-                        PlayerCon pc = FindObjectOfType<PlayerCon>();
-                        pc.LoadRandomScene();
-                    }
-                }
-            }
-        }
-        else
-        {
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.LoadLevel(10);
         }
     }
 
     IEnumerator GameoverMsg()
     {
         gameTxt.enabled = true;
-        gameTxt.text = "¶ó¿îµå Á¾·á";
+        gameTxt.text = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
         yield return new WaitForSeconds(3f);
 
         foreach (GameObject player in players)
@@ -154,15 +121,14 @@ public class BattleGameManager : MonoBehaviour
             {
                 if (playerCtrl.isGoalin)
                 {
-                    gameTxt.text = "½ÇÆÐ!";
+                    gameTxt.text = "ï¿½ï¿½ï¿½ï¿½!";
                 }
                 else
                 {
-                    gameTxt.text = "¼º°ø!";
+                    gameTxt.text = "ï¿½ï¿½ï¿½ï¿½!";
                 }
             }
         }
-
         StartCoroutine(GameOver());
     }
 
@@ -170,12 +136,13 @@ public class BattleGameManager : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("SlideCollider"))
         {
-            count--;
-            other.GetComponent<PlayerCtrl>().isGoalin = true;
-            //other.GetComponent<PlayerCtrl>().AllStop();
-
-            if (count <= fallCount)
+            if(count > fallCount)
             {
+                count--;
+                other.GetComponent<PlayerCtrl>().isAlive = false;
+            }
+            if(count == fallCount)
+            {                        
                 StartCoroutine(GameoverMsg());
             }
         }
