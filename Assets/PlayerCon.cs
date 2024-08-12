@@ -118,7 +118,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
             sceneList = new List<int>(sceneIndex);
         }
 
-        int randomIndex = Random.Range(5, 10);
+        int randomIndex = Random.Range(0, sceneList.Count);
         int selectScene = sceneList[randomIndex];
 
         loadScenes.Add(selectScene);

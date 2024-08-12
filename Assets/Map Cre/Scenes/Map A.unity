@@ -24747,6 +24747,7 @@ Transform:
   m_Children:
   - {fileID: 1746518119}
   - {fileID: 822049866}
+  - {fileID: 1508415794}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32665,8 +32666,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 26.852877, y: 5.799059, z: 1}
-  m_Center: {x: -0.27484798, y: 5.1765194, z: 0}
+  m_Size: {x: 28, y: 5.799059, z: 1}
+  m_Center: {x: -0.27484798, y: 4, z: 0}
 --- !u!114 &616454559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42218,7 +42219,7 @@ Transform:
   m_Children:
   - {fileID: 159528330}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &797775666
 GameObject:
@@ -80326,8 +80327,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 436034757}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -97617,8 +97618,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 26.852877, y: 5.799059, z: 1}
-  m_Center: {x: -0.27484798, y: 5.1765194, z: 0}
+  m_Size: {x: 28, y: 5.799059, z: 1}
+  m_Center: {x: -0.27484798, y: 4, z: 0}
 --- !u!114 &1819417313
 MonoBehaviour:
   m_ObjectHideFlags: 0
