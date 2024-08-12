@@ -63,13 +63,21 @@ public class MiniMapController : MonoBehaviour
     {
         for (int i = 0; i < worldTransforms.Length; i++)
         {
-            if (i >= imageTransforms.Length)
+            if (worldTransforms[i] == null)
             {
-                break;
+                worldTransforms[i] = null;
             }
 
-            Vector2 position = FindInterfacePoint(worldTransforms[i].position);
-            imageTransforms[i].anchoredPosition = position;
+            else
+            {
+                if (i >= imageTransforms.Length)
+                {
+                    break;
+                }
+
+                Vector2 position = FindInterfacePoint(worldTransforms[i].position);
+                imageTransforms[i].anchoredPosition = position;
+            }
         }
     }
 
