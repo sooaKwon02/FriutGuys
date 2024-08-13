@@ -85,8 +85,7 @@ public class DatabaseManager : MonoBehaviour
             StartCoroutine(SignUp(id.text, password.text, nickname.text));
         else
         {
-            SignUpComplete.SetActive(true);
-            SignUpComplete.GetComponentInChildren<Text>().text = "제대로 입력하세요";
+           Text("제대로 입력하세요");
         }        
     }
     private bool IdPassword(string input)
@@ -113,13 +112,11 @@ public class DatabaseManager : MonoBehaviour
             yield return www.SendWebRequest(); 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                SignUpComplete.SetActive(true);
-                resText.text = "서버에 연결할 수 없습니다";
+                Text("서버에 연결할 수 없습니다");
             }
             else
             {
-                SignUpComplete.SetActive(true);
-                resText.text = www.downloadHandler.text.ToString();
+                Text(www.downloadHandler.text.ToString());
             }
         }
     }  
@@ -174,8 +171,7 @@ public class DatabaseManager : MonoBehaviour
             }
             else
             {
-                SignUpComplete.SetActive(true);
-                resText.text = response.result;
+                Text(response.result);
             }
             LoginReset();
         }
@@ -191,12 +187,10 @@ public class DatabaseManager : MonoBehaviour
         if (num == 1)
         {
             SignUpPanel.SetActive(true);
-            SignUpComplete.SetActive(false);
         }        
         else
         {
             SignUpPanel.SetActive(false);
-            SignUpComplete.SetActive(false);
         }
         SignReset();
         resText.text = null;
@@ -212,5 +206,17 @@ public class DatabaseManager : MonoBehaviour
     {
         loginIdInput.text = null;
         loginPasswordInput.text = null;
+    }
+    void Text(string str)
+    {
+        StartCoroutine(TextGet(str));
+    }
+    IEnumerator TextGet(string str)
+    {
+        SignUpComplete.SetActive(true);
+        SignUpComplete.GetComponentInChildren<Text>().text = str;   
+        yield return new WaitForSeconds(2f);
+        SignUpComplete.GetComponentInChildren<Text>().text = null;
+        SignUpComplete.SetActive(false);
     }
 }
