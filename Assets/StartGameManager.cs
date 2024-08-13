@@ -59,6 +59,7 @@ public class StartGameManager : MonoBehaviour
         {
             players[i].transform.position = pos[i].position;
         }
+        Camera.main.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
     }
 

@@ -76,7 +76,7 @@ public class GameEndManager : MonoBehaviour
     {
         while (count != PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î ¼ö°¡ ¸ÂÁö ¾ÊÀ½. ´Ù½Ã ½ÃµµÇÕ´Ï´Ù.");
+            Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½Õ´Ï´ï¿½.");
 
             yield return new WaitForSeconds(1f);
 
@@ -91,6 +91,7 @@ public class GameEndManager : MonoBehaviour
         {
             ScenesManager pc = FindObjectOfType<ScenesManager>();
             pc.LoadRandomScene();
+            //PhotonNetwork.LoadLevel(7);
         }
     }
 }
