@@ -9,6 +9,7 @@ public class GameEndManager : MonoBehaviour
     public GameObject spawnTile;
     public GameObject groundTile;
     public Image panel;
+    public Camera camera;
 
     public GameObject[] pos = new GameObject[16];
     PlayerCtrl[] players;
@@ -16,6 +17,7 @@ public class GameEndManager : MonoBehaviour
     
     private void Start()
     {
+        count = 0;
         panel.gameObject.SetActive(true);
 
         InitializeTiles();
@@ -53,6 +55,8 @@ public class GameEndManager : MonoBehaviour
             players[i].rb.velocity = Vector3.zero;
             players[i].startGame = false;
             players[i].transform.position = pos[i].transform.position;
+            players[i].GetComponentInChildren<ThrowUp>().transform.rotation = Quaternion.Euler(0,180,0);
+            players[i].anim.SetTrigger("Result");
             if (players[i].isGoalin|| players[i].isAlive)
             {
                 count++;
@@ -64,7 +68,7 @@ public class GameEndManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         panel.gameObject.SetActive(false);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);      
         StartCoroutine(PlayerReady());
     }
     IEnumerator PlayerGameOver(GameObject pos)
@@ -73,25 +77,31 @@ public class GameEndManager : MonoBehaviour
         pos.GetComponentInChildren<GameOver>().Over();
     }
     IEnumerator PlayerReady()
-    {
-        while (count != PhotonNetwork.CurrentRoom.PlayerCount)
+    {    
+        while (PhotonNetwork.MasterClient==null||count!=PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            Debug.Log("�÷��̾� ���� ���� ����. �ٽ� �õ��մϴ�.");
-
             yield return new WaitForSeconds(1f);
-
-            count = PhotonNetwork.CurrentRoom != null ? PhotonNetwork.CurrentRoom.PlayerCount : 0;
         }
-        count = 0;
-        while (PhotonNetwork.MasterClient==null)
-        {
-            yield return null;
-        }
-        if (PhotonNetwork.IsMasterClient)
+        StartCoroutine(GameSet());
+    }
+    IEnumerator GameSet()
+    {
+        if (PhotonNetwork.IsMasterClient && count != 1)
         {
             ScenesManager pc = FindObjectOfType<ScenesManager>();
             pc.LoadRandomScene();
-            //PhotonNetwork.LoadLevel(7);
         }
+        else if (PhotonNetwork.IsMasterClient && count == 1)
+        {
+            PlayerCtrl pc = FindObjectOfType<PlayerCtrl>();
+            camera.transform.position = pc.transform.position + new Vector3(0, 1, -5);
+            camera.transform.LookAt(pc.transform.position);
+            yield return new WaitForSeconds(0.5f);
+            pc.anim.SetTrigger("Victory");
+            FindObjectOfType<ScenesManager>().count++;
+            yield return new WaitForSeconds(3f);
+            pc.GameOver();
+        }
+        yield return null;
     }
 }

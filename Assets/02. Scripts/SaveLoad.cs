@@ -195,7 +195,7 @@ public class SaveLoad : MonoBehaviour
         inventype.fashionInven = new INVEN[inventory.fashionItem.transform.childCount];
         inventype.useInven = new INVEN[inventory.useItem.transform.childCount];
         string url = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
-        //tring url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
+        //string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
         for (int i = 0; i < inventory.fashionItem.transform.childCount; i++)
         {
             if (inventory.fashionItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionItem.transform.childCount > 0)
@@ -356,6 +356,39 @@ public class SaveLoad : MonoBehaviour
             }
         }
     }
+    public void ScoreSet(string _item1,string _item2)
+    {
+        StartCoroutine(ScoreMoneySet());
+        StartCoroutine(UseItemSet(_item1, _item2));
+        SaveData();
+    }
+    IEnumerator UseItemSet(string _item1, string _item2)
+    {
+        player.item1 = _item1;
+        player.item1 = _item2;
+        yield return null;
+    }
+    IEnumerator ScoreMoneySet()
+    {
+        player.gameMoney += 100 * Add(FindObjectOfType<ScenesManager>().count);
+        player.score += 100 * Add(FindObjectOfType<ScenesManager>().count);
 
-
+        yield return null;
+    }
+   int Add(int num)
+    {
+        int sum = 1;
+        if (num == 0)
+        {
+            return sum;
+        }
+        else
+        {
+            for (int i = 0; i < num; i++)
+            {
+                sum *= 2;
+            }
+            return sum;
+        }       
+    }   
 }

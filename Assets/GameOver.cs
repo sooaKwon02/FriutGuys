@@ -23,6 +23,7 @@ public class GameOver : MonoBehaviour
             over.transform.Translate(Vector3.back * 0.02f, Space.World);
             yield return null;
         }
+        over.transform.localPosition = new Vector3(0, 1, -0.2f);
     }
     private void OnCollisionEnter(Collision collision)
     {
