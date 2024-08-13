@@ -31,11 +31,13 @@ public class GameManager : MonoBehaviour
     public GameObject playButtonPanel;
     public GameObject SearchRoomPanel;
     public GameObject createRoomPanel;
+    public GameObject exitPanel;
 
     SaveLoad saveload;
 
     private void Start()
     {
+        exitPanel.SetActive(false);
         errorBox.SetActive(false);
         store.SetActive(false);
         inventoryPanel.SetActive(false);
@@ -181,9 +183,33 @@ public class GameManager : MonoBehaviour
         errorBox.GetComponentInChildren<Text>().text = null;
         errorBox.SetActive(false);
     }
+    public void ExitButtonOnOff()
+    {
+        if (exitPanel.activeSelf)
+        {
+            exitPanel.SetActive(false);
+            settingMenuPanel.SetActive(true);
+        }
+        else
+        { 
+            exitPanel.SetActive(true);
+            settingMenuPanel.SetActive(false);
+        }
+    } 
     public void SaveServerData()
     {
         saveload.SaveData();
         saveload.SaveInven();
+    }
+    public void ExitGame()
+    {
+        StartCoroutine(Exit());
+        Application.Quit();
+    }
+    IEnumerator Exit()
+    {
+        SaveServerData();
+        StartCoroutine(saveload.UpdateIsActiveStatus(1));
+        yield return new WaitForSeconds(2f);
     }
 }

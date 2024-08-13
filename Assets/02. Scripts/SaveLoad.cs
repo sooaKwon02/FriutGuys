@@ -87,7 +87,7 @@ public class SaveLoad : MonoBehaviour
         }
         StartCoroutine(UpdateIsActiveStatus(1));
     }
-    IEnumerator UpdateIsActiveStatus(int isActive)
+    public IEnumerator UpdateIsActiveStatus(int isActive)
     {
         string url= "http://61.99.10.173/fruitsGuys/IsActive.php";
         //string url = "http://192.168.35.229/fruitsGuys/IsActive.php";
