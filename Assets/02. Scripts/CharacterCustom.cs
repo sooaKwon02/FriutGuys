@@ -20,7 +20,7 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
     public PlayerItem item1;
     public PlayerItem item2;
 
-    SaveLoad.PLAYER p;
+    public SaveLoad.PLAYER p;
     public PhotonView pv;
     public Image[] useItem;
     public ThrowUp throwUp;
