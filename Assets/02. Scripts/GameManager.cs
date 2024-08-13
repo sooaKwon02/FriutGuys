@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,17 +28,15 @@ public class GameManager : MonoBehaviour
     public Text CashPanelText;
     public Text GameMoneyPanelText;
 
-
     public GameObject roomListPanel;
     public GameObject playButtonPanel;
     public GameObject SearchRoomPanel;
     public GameObject createRoomPanel;
+
+    public GameObject vrButton;
+
     SaveLoad saveload;
 
-
-    private void Awake()
-    {
-    }
     private void Start()
     {
         errorBox.SetActive(false);
@@ -51,20 +51,32 @@ public class GameManager : MonoBehaviour
         settingMenuPanel.SetActive(false);
         settingPanel.SetActive(false);
         roomListPanel.SetActive(false);
+
+        vrButton.SetActive(false);
+        if (XRSettings.isDeviceActive)
+        {
+            vrButton.SetActive(true);
+        }
+
         saveload = FindObjectOfType<SaveLoad>();
         ActiveMenu(true);
         IDPanelSet();
-
-
     }
     private void Update()
     {
-        
-            if (Input.GetKey(KeyCode.RightArrow))
-            { Player.Rotate(new Vector3(0, 1, 0) * -50 * Time.deltaTime); }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
-      
+        if (Input.GetKey(KeyCode.RightArrow))
+        { Player.Rotate(new Vector3(0, 1, 0) * -50 * Time.deltaTime); }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
+
+        if (XRSettings.isDeviceActive)
+        {
+            vrButton.SetActive(true);
+        }
+        else
+        {
+            vrButton.SetActive(false);
+        }
     }
     
     public void IDPanelSet()
@@ -192,5 +204,9 @@ public class GameManager : MonoBehaviour
         saveload.SaveData();
         saveload.SaveInven();
     }
-  
+
+    public void VRButton()
+    {
+        SceneManager.LoadScene(11);
+    }
 }
