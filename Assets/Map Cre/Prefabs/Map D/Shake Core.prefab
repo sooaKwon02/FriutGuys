@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2978128991771435972}
   - component: {fileID: 2978128991771436027}
   - component: {fileID: 5514949058793929857}
+  - component: {fileID: 804022323614980427}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -109,6 +110,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &804022323614980427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128991771436026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128992133639623
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,6 +180,7 @@ GameObject:
   - component: {fileID: 2978128992556274640}
   - component: {fileID: 2978128992556274647}
   - component: {fileID: 8327881415095288995}
+  - component: {fileID: 4465052725434468493}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -259,6 +277,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &4465052725434468493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128992556274646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128992561995415
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +306,7 @@ GameObject:
   - component: {fileID: 2978128992561995409}
   - component: {fileID: 2978128992561995408}
   - component: {fileID: 4903902134653192842}
+  - component: {fileID: 3470210262100459824}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -368,6 +403,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &3470210262100459824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128992561995415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993057131596
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +432,7 @@ GameObject:
   - component: {fileID: 2978128993057131599}
   - component: {fileID: 2978128993057131598}
   - component: {fileID: 6059178768852696157}
+  - component: {fileID: 2362344300684640002}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -477,6 +529,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &2362344300684640002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993057131596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993196033010
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,6 +558,7 @@ GameObject:
   - component: {fileID: 2978128993196033020}
   - component: {fileID: 2978128993196033011}
   - component: {fileID: 2698469780302987646}
+  - component: {fileID: 8110670724446290244}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -586,6 +655,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &8110670724446290244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993196033010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993254019979
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,6 +684,7 @@ GameObject:
   - component: {fileID: 2978128993254019989}
   - component: {fileID: 2978128993254019988}
   - component: {fileID: 2754516061520909140}
+  - component: {fileID: 7754377411407591721}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -695,6 +781,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &7754377411407591721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993254019979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993325846757
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +810,7 @@ GameObject:
   - component: {fileID: 2978128993325846759}
   - component: {fileID: 2978128993325846758}
   - component: {fileID: 812227752142881867}
+  - component: {fileID: 2095182785197740812}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -804,6 +907,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &2095182785197740812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993325846757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993328842616
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +936,7 @@ GameObject:
   - component: {fileID: 2978128993328842618}
   - component: {fileID: 2978128993328842617}
   - component: {fileID: 7627153006035696145}
+  - component: {fileID: 5109258621050948968}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -913,6 +1033,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &5109258621050948968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993328842616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993332919665
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,6 +1062,7 @@ GameObject:
   - component: {fileID: 2978128993332919667}
   - component: {fileID: 2978128993332919666}
   - component: {fileID: 1480055651323594971}
+  - component: {fileID: 414448066028804492}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -1022,6 +1159,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &414448066028804492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993332919665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993352486165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1188,7 @@ GameObject:
   - component: {fileID: 2978128993352486167}
   - component: {fileID: 2978128993352486166}
   - component: {fileID: 1704120320557334060}
+  - component: {fileID: 8998880361375588403}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -1131,6 +1285,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &8998880361375588403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993352486165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2978128993620388811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,6 +1314,7 @@ GameObject:
   - component: {fileID: 2978128993620388821}
   - component: {fileID: 2978128993620388820}
   - component: {fileID: 6674651155487433091}
+  - component: {fileID: 3608375062080310071}
   m_Layer: 0
   m_Name: Shake Floor
   m_TagString: Untagged
@@ -1240,3 +1411,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverse: 0
+--- !u!114 &3608375062080310071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978128993620388811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

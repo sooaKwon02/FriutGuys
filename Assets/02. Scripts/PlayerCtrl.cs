@@ -435,6 +435,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         if (num == 1)
         {
             FindObjectOfType<ScenesManager>().count++;
+            Debug.Log("count : " + FindObjectOfType<ScenesManager>().count++);
         }       
         FindObjectOfType<SaveLoad>().ScoreSet(custom.item1.name,custom.item2.name);
         yield return new WaitForSeconds(3f);
