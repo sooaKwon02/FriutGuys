@@ -56,7 +56,7 @@ public class GameEndManager : MonoBehaviour
             players[i].startGame = false;
             players[i].transform.position = pos[i].transform.position;
             players[i].GetComponentInChildren<ThrowUp>().transform.rotation = Quaternion.Euler(0,180,0);
-            players[i].anim.SetTrigger("Result");
+            players[i].anim.SetBool("Result",true);
             if (players[i].isGoalin|| players[i].isAlive)
             {
                 count++;
