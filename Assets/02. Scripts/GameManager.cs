@@ -207,6 +207,6 @@ public class GameManager : MonoBehaviour
 
     public void VRButton()
     {
-        SceneManager.LoadScene(11);
+        SceneManager.LoadScene(12);
     }
 }
