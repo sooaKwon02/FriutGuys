@@ -361,6 +361,7 @@ public class SaveLoad : MonoBehaviour
         StartCoroutine(ScoreMoneySet());
         StartCoroutine(UseItemSet(_item1, _item2));
         SaveData();
+        LoadData();
     }
     IEnumerator UseItemSet(string _item1, string _item2)
     {
