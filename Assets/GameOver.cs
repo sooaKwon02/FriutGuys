@@ -27,7 +27,7 @@ public class GameOver : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.transform.CompareTag("Player"))
-        {
+        {        
             collision.transform.GetComponent<PlayerCtrl>().GameOver();
         }
     }

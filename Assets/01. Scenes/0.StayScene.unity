@@ -410,7 +410,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1069689250530235657}
   - component: {fileID: 1069689250530235656}
-  - component: {fileID: 1069689250530235660}
   m_Layer: 0
   m_Name: SaveLoadManager
   m_TagString: Untagged
@@ -418,34 +417,3 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1069689250530235660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069689250530235659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a372d3c6a2d30d4387ad9da9b4ce4c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - {fileID: 11400000, guid: 021473e774041384f979d4377382e0f6, type: 2}
-  - {fileID: 11400000, guid: 7db32ba3f0ac5434a9ef310ce15e6f5b, type: 2}
-  - {fileID: 11400000, guid: 2242a9454c44bc84cab75e2964b06eb3, type: 2}
-  - {fileID: 11400000, guid: e1880fcbbf23a15488a2d1f6d7bf2bda, type: 2}
-  - {fileID: 11400000, guid: ff454ceb1d18b9c4e967d9878d45818e, type: 2}
-  - {fileID: 11400000, guid: 491e652b3f53fcc4cbd545d8bd4b6785, type: 2}
-  - {fileID: 11400000, guid: 9e5bf07658c118249beb78732d4a0c6f, type: 2}
-  - {fileID: 11400000, guid: 0aa536097f4a2f249b8551c495775823, type: 2}
-  - {fileID: 11400000, guid: 5b3ef11265ee45f48b140b3fd75844f1, type: 2}
-  - {fileID: 11400000, guid: 9e0e88a34608c7143b42a5989f2c7716, type: 2}
-  - {fileID: 11400000, guid: 41ded53f11f3b174f920f5dd7dcfc932, type: 2}
-  - {fileID: 11400000, guid: 49693f78a0fc89d4cba463014c45656e, type: 2}
-  - {fileID: 11400000, guid: 9b2e9aade99b7db4781dcd006288b42e, type: 2}
-  - {fileID: 11400000, guid: 2502b5243b7e49c4d99c62ea4b929124, type: 2}
-  - {fileID: 11400000, guid: a835a88fe6461b743887afc25ddd4e18, type: 2}
-  - {fileID: 11400000, guid: 64512595b76ef314c8e6d5a71c361884, type: 2}
-  itemMoneys: 01000000000000000100000000000000010000000000000001000000010000000000000001000000010000000000000001000000010000000000000000000000
-  count: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

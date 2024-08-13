@@ -61,7 +61,6 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     AudioSource audiosource;
     [SerializeField]
     AudioClip[] audioClip;
- 
     public bool cookie=false;
     bool stop;
     public ParticleSystem[] par;
@@ -441,7 +440,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     }
     IEnumerator Over()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         PhotonNetwork.LeaveRoom();
     }
 }
