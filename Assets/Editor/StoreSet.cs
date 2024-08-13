@@ -7,7 +7,6 @@ public class StoreSet : EditorWindow
     private Object[,] item = new Object[4, 4];
     public GameObject[] obj;
     int[] num;
-    int StoreCount;
     Item[] items ;
     Item.MoneyType[] money;
     int count;
@@ -66,7 +65,6 @@ public class StoreSet : EditorWindow
             }
             EditorGUILayout.EndVertical();
             count = 0; 
-            StoreCount = 0;
             GameObject go = GameObject.Find(storeItems);
             money= new Item.MoneyType[16];
             if (GUILayout.Button("Setting"))
