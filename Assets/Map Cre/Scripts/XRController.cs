@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class XRController : MonoBehaviour
 {
-    private GameObject mainCamera;
+    public GameObject mainCamera;
     private GameObject XRI;
     private GameObject XRO;
     private GameObject XRC;
 
     private void Awake()
     {
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         XRI = GameObject.FindGameObjectWithTag("XR I");
         XRO = GameObject.FindGameObjectWithTag("XR O");
         XRC = GameObject.FindGameObjectWithTag("XR C");
