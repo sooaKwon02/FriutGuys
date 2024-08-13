@@ -356,6 +356,39 @@ public class SaveLoad : MonoBehaviour
             }
         }
     }
+    public void ScoreSet(string _item1,string _item2)
+    {
+        StartCoroutine(ScoreMoneySet());
+        StartCoroutine(UseItemSet(_item1, _item2));
+        SaveData();
+    }
+    IEnumerator UseItemSet(string _item1, string _item2)
+    {
+        player.item1 = _item1;
+        player.item1 = _item2;
+        yield return null;
+    }
+    IEnumerator ScoreMoneySet()
+    {
+        player.gameMoney += 100 * Add(FindObjectOfType<ScenesManager>().count);
+        player.score += 100 * Add(FindObjectOfType<ScenesManager>().count);
 
-
+        yield return null;
+    }
+   int Add(int num)
+    {
+        int sum = 1;
+        if (num == 0)
+        {
+            return sum;
+        }
+        else
+        {
+            for (int i = 0; i < num; i++)
+            {
+                sum *= 2;
+            }
+            return sum;
+        }       
+    }   
 }

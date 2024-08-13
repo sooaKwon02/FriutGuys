@@ -440,7 +440,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     }
     IEnumerator Over()
     {
-        yield return new WaitForSeconds(5f);
+        FindObjectOfType<SaveLoad>().ScoreSet(custom.item1.name,custom.item2.name);
+        yield return new WaitForSeconds(3f);
         PhotonNetwork.LeaveRoom();
     }
 }

@@ -155,6 +155,7 @@ MonoBehaviour:
   spawnTile: {fileID: 3463231212377893346, guid: 56d2656993c5e6348af853b85333a81e, type: 3}
   groundTile: {fileID: 8657174630728027717, guid: 294ed3bfbc9ab0b44b3fc47a3a900453, type: 3}
   panel: {fileID: 598918476}
+  camera: {fileID: 2146577813}
   pos:
   - {fileID: 0}
   - {fileID: 0}
@@ -541,7 +542,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2146577814}
   - component: {fileID: 2146577813}
-  - component: {fileID: 2146577812}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -549,14 +549,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2146577812
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146577811}
-  m_Enabled: 1
 --- !u!20 &2146577813
 Camera:
   m_ObjectHideFlags: 0
