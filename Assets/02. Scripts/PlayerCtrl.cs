@@ -423,23 +423,19 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         }
     }
 
-    [PunRPC]
-    public void vic()
-    {
-        moveSpeed = 0f;
-        isColl = true;
-        playerTxt.text = isGoalin ? playerTxt.text = "성공" : playerTxt.text = "실패";
-    }
-
-    public void GameOver()
+    public void GameOver(int num)
     {
         if (pv.IsMine)
         {
-            StartCoroutine(Over());
+            StartCoroutine(Over(num));
         }
     }
-    IEnumerator Over()
+    IEnumerator Over(int num)
     {
+        if (num == 1)
+        {
+            FindObjectOfType<ScenesManager>().count++;
+        }       
         FindObjectOfType<SaveLoad>().ScoreSet(custom.item1.name,custom.item2.name);
         yield return new WaitForSeconds(3f);
         PhotonNetwork.LeaveRoom();

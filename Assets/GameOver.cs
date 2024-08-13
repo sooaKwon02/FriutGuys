@@ -29,7 +29,7 @@ public class GameOver : MonoBehaviour
     {
         if(collision.transform.CompareTag("Player"))
         {
-            collision.transform.GetComponent<PlayerCtrl>().GameOver();
+            collision.transform.GetComponent<PlayerCtrl>().GameOver(0);
         }
     }
 }

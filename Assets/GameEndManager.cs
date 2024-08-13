@@ -98,9 +98,8 @@ public class GameEndManager : MonoBehaviour
             camera.transform.LookAt(pc.transform.position);
             yield return new WaitForSeconds(0.5f);
             pc.anim.SetTrigger("Victory");
-            FindObjectOfType<ScenesManager>().count++;
             yield return new WaitForSeconds(3f);
-            pc.GameOver();
+            pc.GameOver(1);
         }
         yield return null;
     }
