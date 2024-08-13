@@ -8,7 +8,6 @@ public class ScreenSetting : MonoBehaviour
     public GameObject sizePanel;
     public Mask mask;
     public Text sizeText;
-    public RectTransform uiElement;
 
     private int sizeX;
     private int sizeY;
