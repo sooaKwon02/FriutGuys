@@ -85,8 +85,10 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
+            playerCtrls.moveSpeed = 5;
             playerCtrls.enabled = true;
             playerCtrls.startGame = true;
+            playerCtrls.isColl = false;
         }
     }
 
@@ -126,14 +128,30 @@ public class BattleGameManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("SlideCollider"))
+        if (other.CompareTag("Player"))
         {
-            if(count > fallCount)
+            other.GetComponent<PlayerCtrl>().moveSpeed = 0;
+            other.GetComponent<PlayerCtrl>().isColl = true;
+            if (count > fallCount)
             {
                 count--;
                 other.GetComponent<PlayerCtrl>().isAlive = false;
             }
             if(count == fallCount&&!check)
+            {
+                check = true;
+                StartCoroutine(GameoverMsg());
+            }
+        }
+        else if (other.CompareTag("SlideCollider"))
+        {
+            other.GetComponentInParent<PlayerCtrl>().moveSpeed = 0;
+            if (count > fallCount)
+            {
+                count--;
+                other.GetComponentInParent<PlayerCtrl>().isAlive = false;
+            }
+            if (count == fallCount && !check)
             {
                 check = true;
                 StartCoroutine(GameoverMsg());
