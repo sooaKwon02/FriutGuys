@@ -223,7 +223,7 @@ Transform:
   m_LocalScale: {x: 2.5, y: 0.5, z: 3}
   m_Children: []
   m_Father: {fileID: 6948598982364488997}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &6121448760366816841
 MeshFilter:
@@ -319,7 +319,7 @@ Transform:
   m_LocalScale: {x: 2.5, y: 0.5, z: 3}
   m_Children: []
   m_Father: {fileID: 6948598982364488997}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &4108719458911386663
 MeshFilter:
@@ -394,6 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6948598982364488997}
   - component: {fileID: 6948598982364488994}
+  - component: {fileID: 6369764109101925188}
   m_Layer: 0
   m_Name: Windmill
   m_TagString: Untagged
@@ -413,8 +414,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4681095379804229087}
-  - {fileID: 2917515725785013324}
   - {fileID: 247921953903262656}
+  - {fileID: 2917515725785013324}
   - {fileID: 8210910590715261542}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -432,3 +433,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+--- !u!114 &6369764109101925188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6948598982364488996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
