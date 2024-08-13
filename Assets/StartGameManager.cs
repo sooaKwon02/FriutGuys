@@ -40,6 +40,7 @@ public class StartGameManager : MonoBehaviour
         
         foreach(GameObject player in players)
         {
+            player.GetComponent<PlayerCtrl>().anim.SetBool("Result", false);
             player.GetComponent<PlayerCtrl>().enabled = false;
             player.GetComponent<PlayerCtrl>().startGame = false;
             player.GetComponent<PlayerCtrl>().isGoalin = false;
@@ -126,8 +127,9 @@ public class StartGameManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        {           
+        {
             other.GetComponent<PlayerCtrl>().moveSpeed = 0;
+            other.GetComponent<PlayerCtrl>().isColl = true;
             if (count < goalCount)
             {
                 count++;

@@ -36,6 +36,7 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (GameObject player in players)
         {
+            player.GetComponent<PlayerCtrl>().anim.SetBool("Result", false);
             player.GetComponent<PlayerCtrl>().enabled = false;
             player.GetComponent<PlayerCtrl>().isAlive = true;
             player.GetComponent<PlayerCtrl>().startGame = false;
@@ -146,6 +147,7 @@ public class BattleGameManager : MonoBehaviour
         else if (other.CompareTag("SlideCollider"))
         {
             other.GetComponentInParent<PlayerCtrl>().moveSpeed = 0;
+            other.GetComponent<PlayerCtrl>().isColl = true;
             if (count > fallCount)
             {
                 count--;
