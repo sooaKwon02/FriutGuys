@@ -83,6 +83,7 @@ public class StartGameManager : MonoBehaviour
             playerCtrls.moveSpeed = 5;
             playerCtrls.enabled = true;
             playerCtrls.startGame = true;
+            playerCtrls.isColl = false;
         }
     }
 
@@ -141,6 +142,7 @@ public class StartGameManager : MonoBehaviour
         else if ( other.CompareTag("SlideCollider"))
         {
             other.GetComponentInParent<PlayerCtrl>().moveSpeed = 0;
+            other.GetComponent<PlayerCtrl>().isColl = true;
             if (count < goalCount)
             {
                 count++;

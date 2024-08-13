@@ -88,6 +88,7 @@ public class BattleGameManager : MonoBehaviour
             playerCtrls.moveSpeed = 5;
             playerCtrls.enabled = true;
             playerCtrls.startGame = true;
+            playerCtrls.isColl = false;
         }
     }
 
@@ -130,6 +131,7 @@ public class BattleGameManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerCtrl>().moveSpeed = 0;
+            other.GetComponent<PlayerCtrl>().isColl = true;
             if (count > fallCount)
             {
                 count--;
