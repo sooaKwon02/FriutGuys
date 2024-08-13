@@ -1203,6 +1203,47 @@ MonoBehaviour:
   tail: {fileID: 5381106506553674452}
   item1: {fileID: 5661340351817265704}
   item2: {fileID: 9164628659099832378}
+  p:
+    body_name: 
+    body_x: 0
+    body_y: 0
+    body_z: 0
+    body_rotX: 0
+    body_rotY: 0
+    body_rotZ: 0
+    glove1_name: 
+    glove1_x: 0
+    glove1_y: 0
+    glove1_z: 0
+    glove1_rotX: 0
+    glove1_rotY: 0
+    glove1_rotZ: 0
+    glove2_name: 
+    glove2_x: 0
+    glove2_y: 0
+    glove2_z: 0
+    glove2_rotX: 0
+    glove2_rotY: 0
+    glove2_rotZ: 0
+    head_name: 
+    head_x: 0
+    head_y: 0
+    head_z: 0
+    head_rotX: 0
+    head_rotY: 0
+    head_rotZ: 0
+    tail_name: 
+    tail_x: 0
+    tail_y: 0
+    tail_z: 0
+    tail_rotX: 0
+    tail_rotY: 0
+    tail_rotZ: 0
+    item1: 
+    item2: 
+    gameMoney: 0
+    cashMoney: 0
+    score: 0
   pv: {fileID: 0}
   useItem:
   - {fileID: 7848763133918503971}
