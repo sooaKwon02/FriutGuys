@@ -7,6 +7,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using IPMINE;
 using System.Text.RegularExpressions;
+using UnityEngine.EventSystems;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class DatabaseManager : MonoBehaviour
     [HideInInspector]
     public string nicknametext;
 
+    public InputField[] inputField;
+    int ifndex = 0;
+
     private void Awake()
     {
         resText=SignUpComplete.GetComponentInChildren<Text>();
@@ -40,6 +44,36 @@ public class DatabaseManager : MonoBehaviour
     {
         LoginPanel.SetActive(true); 
         SignUpComplete.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            MoveField();
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            GameLogin();
+        }   
+    }
+
+    void MoveField()
+    {
+        if (inputField.Length == 0)
+            return;
+
+        for (int i = 0; i < inputField.Length; i++)
+        {
+            if (EventSystem.current.currentSelectedGameObject == inputField[i].gameObject)
+            {
+                ifndex = i;
+                break;
+            }
+        }
+
+        ifndex = (ifndex + 1) % inputField.Length;
+        inputField[ifndex].Select();
     }
     //=============================================================회원가입==============
     public void SignUpButton()
