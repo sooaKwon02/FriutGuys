@@ -8,7 +8,6 @@ using static SaveLoad;
 
 public class StoreItem : MonoBehaviour
 {
-    [HideInInspector]
     public Item item;
     //===============================================
     [SerializeField]

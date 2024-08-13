@@ -7,7 +7,10 @@ public class StoreItemManager : MonoBehaviour
 {
     public Item[] items;
     public Item.MoneyType[] itemMoneys;
-
+    private void Awake()
+    {
+        StoreSet();
+    }
     public void StoreSet()
     {
         StoreItem[] stores = GetComponentsInChildren<StoreItem>();
