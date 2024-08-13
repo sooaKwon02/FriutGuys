@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,13 +31,13 @@ public class GameManager : MonoBehaviour
     public GameObject playButtonPanel;
     public GameObject SearchRoomPanel;
     public GameObject createRoomPanel;
-
-    public GameObject vrButton;
+    public GameObject exitPanel;
 
     SaveLoad saveload;
 
     private void Start()
     {
+        exitPanel.SetActive(false);
         errorBox.SetActive(false);
         store.SetActive(false);
         inventoryPanel.SetActive(false);
@@ -52,12 +51,6 @@ public class GameManager : MonoBehaviour
         settingPanel.SetActive(false);
         roomListPanel.SetActive(false);
 
-        vrButton.SetActive(false);
-        if (XRSettings.isDeviceActive)
-        {
-            vrButton.SetActive(true);
-        }
-
         saveload = FindObjectOfType<SaveLoad>();
         ActiveMenu(true);
         IDPanelSet();
@@ -68,15 +61,6 @@ public class GameManager : MonoBehaviour
         { Player.Rotate(new Vector3(0, 1, 0) * -50 * Time.deltaTime); }
         if (Input.GetKey(KeyCode.LeftArrow))
         { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
-
-        if (XRSettings.isDeviceActive)
-        {
-            vrButton.SetActive(true);
-        }
-        else
-        {
-            vrButton.SetActive(false);
-        }
     }
     
     public void IDPanelSet()
@@ -199,14 +183,33 @@ public class GameManager : MonoBehaviour
         errorBox.GetComponentInChildren<Text>().text = null;
         errorBox.SetActive(false);
     }
+    public void ExitButtonOnOff()
+    {
+        if (exitPanel.activeSelf)
+        {
+            exitPanel.SetActive(false);
+            settingMenuPanel.SetActive(true);
+        }
+        else
+        { 
+            exitPanel.SetActive(true);
+            settingMenuPanel.SetActive(false);
+        }
+    } 
     public void SaveServerData()
     {
         saveload.SaveData();
         saveload.SaveInven();
     }
-
-    public void VRButton()
+    public void ExitGame()
     {
-        SceneManager.LoadScene(11);
+        StartCoroutine(Exit());
+        Application.Quit();
+    }
+    IEnumerator Exit()
+    {
+        SaveServerData();
+        StartCoroutine(saveload.UpdateIsActiveStatus(1));
+        yield return new WaitForSeconds(2f);
     }
 }

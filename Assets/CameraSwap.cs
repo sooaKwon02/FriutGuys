@@ -36,6 +36,7 @@ public class CameraSwap : MonoBehaviour
         else if (num == 10)
         {
             Camera cam = GetComponentInChildren<Camera>();
+            GetComponent<PlayerCtrl>().anim.SetBool("Result", true);
             if (cam)
             {
                 cam.enabled = false;

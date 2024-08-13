@@ -32,6 +32,15 @@ TagManager:
   - Death Ball
   - GAME_TXT
   - PLAYER_TXT
+  - MiniMap Icon
+  - UI Panel
+  - UI Panel Hit
+  - Police Officer
+  - Civilian
+  - Shield
+  - XR I
+  - XR O
+  - XR C
   layers:
   - Default
   - TransparentFX
