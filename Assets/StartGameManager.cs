@@ -80,6 +80,7 @@ public class StartGameManager : MonoBehaviour
 
         foreach (PlayerCtrl playerCtrls in playerCtrl)
         {
+            playerCtrls.moveSpeed = 5;
             playerCtrls.enabled = true;
             playerCtrls.startGame = true;
         }
@@ -123,14 +124,29 @@ public class StartGameManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("SlideCollider"))
-        {
+        if (other.CompareTag("Player"))
+        {           
+            other.GetComponent<PlayerCtrl>().moveSpeed = 0;
             if (count < goalCount)
             {
                 count++;
                 other.GetComponent<PlayerCtrl>().isGoalin = true;
             }
             if (count == goalCount&&!check)
+            {
+                check = true;
+                StartCoroutine(GameoverMsg());
+            }
+        }
+        else if ( other.CompareTag("SlideCollider"))
+        {
+            other.GetComponentInParent<PlayerCtrl>().moveSpeed = 0;
+            if (count < goalCount)
+            {
+                count++;
+                other.GetComponentInParent<PlayerCtrl>().isGoalin = true;
+            }
+            if (count == goalCount && !check)
             {
                 check = true;
                 StartCoroutine(GameoverMsg());
