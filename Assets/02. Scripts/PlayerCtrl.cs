@@ -440,9 +440,10 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         while(saveLoad==null)
         {
             yield return new WaitForSeconds(1f);
-        }        
-        saveLoad.ScoreSet(custom.item1.name,custom.item2.name);
-        yield return new WaitForSeconds(3f);
+        }
+        saveLoad.ScoreSet( custom.item1.item.name, custom.item2.item.name);
+        yield return new WaitForSeconds(5f);
         PhotonNetwork.LeaveRoom();
     }
+    
 }
