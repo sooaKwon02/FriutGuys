@@ -432,12 +432,16 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     }
     IEnumerator Over(int num)
     {
+        SaveLoad saveLoad=FindObjectOfType<SaveLoad>();
         if (num == 1)
         {
             FindObjectOfType<ScenesManager>().count++;
-            Debug.Log("count : " + FindObjectOfType<ScenesManager>().count++);
-        }       
-        FindObjectOfType<SaveLoad>().ScoreSet(custom.item1.name,custom.item2.name);
+        }
+        while(saveLoad==null)
+        {
+            yield return new WaitForSeconds(1f);
+        }        
+        saveLoad.ScoreSet(custom.item1.name,custom.item2.name);
         yield return new WaitForSeconds(3f);
         PhotonNetwork.LeaveRoom();
     }
