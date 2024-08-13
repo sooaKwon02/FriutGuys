@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class MolotovCocktail : MonoBehaviour
 {
-    private ScoreController score;
-
-    private void Awake()
-    {
-        score = GameObject.Find("UI Text Score").GetComponent<ScoreController>();
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Civilian"))
         {
             Instantiate(ExplosiveController.instance.GetExplosive(transform.position));
-            score.score += 10;
+            UIController.instance.CivilianScore();
             gameObject.SetActive(false);
         }
 
         else if (collision.collider.CompareTag("Police Officer"))
         {
             Instantiate(ExplosiveController.instance.GetExplosive(transform.position));
-            score.score += 100;
+            UIController.instance.PoliceOfficerScore();
             gameObject.SetActive(false);
         }
 

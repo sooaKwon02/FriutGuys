@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Map Cre/Scenes/VR Map.unity
     guid: 95cfd3ed5f5d77c498444337a886059e
+  - enabled: 1
+    path: Assets/Map Cre/Scenes/VR Room.unity
+    guid: bc2b09b133008f246bfb4f261ded4c15
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b71861d721f291841abd2ce1f0b22136, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4759c1e9e01c4d84fa9b7de4a27e16f1, type: 2}
