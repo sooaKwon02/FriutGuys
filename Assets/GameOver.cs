@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameOver : MonoBehaviour
 {
     public GameObject over;
-    public GameObject obj;
 
     public void Win()
     {
@@ -29,7 +28,6 @@ public class GameOver : MonoBehaviour
     {
         if(collision.transform.CompareTag("Player"))
         {
-            obj = collision.gameObject;
             collision.transform.GetComponent<PlayerCtrl>().GameOver();
         }
     }
