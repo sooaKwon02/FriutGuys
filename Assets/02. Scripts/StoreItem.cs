@@ -8,19 +8,23 @@ using static SaveLoad;
 
 public class StoreItem : MonoBehaviour
 {
-    [SerializeField]
-    Item item;
+    [HideInInspector]
+    public Item item;
     //===============================================
-    public Image itemImg;
-    public Image priceImg;
-    public Text priceText;
-        
-   
+    [SerializeField]
+    Image itemImg;
+    [SerializeField]
+    Image priceImg;
+    [SerializeField]
+    Text priceText;
+    private void Awake()
+    {
+    }
     private void Start()
     {
         ItemImageSet();
     }
-    void ItemImageSet()
+    public void ItemImageSet()
     {
         itemImg.sprite = item.sprite;
         priceImg.sprite = item.priceImg;
