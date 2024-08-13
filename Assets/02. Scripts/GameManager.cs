@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,8 +32,6 @@ public class GameManager : MonoBehaviour
     public GameObject SearchRoomPanel;
     public GameObject createRoomPanel;
 
-    public GameObject vrButton;
-
     SaveLoad saveload;
 
     private void Start()
@@ -52,12 +49,6 @@ public class GameManager : MonoBehaviour
         settingPanel.SetActive(false);
         roomListPanel.SetActive(false);
 
-        vrButton.SetActive(false);
-        if (XRSettings.isDeviceActive)
-        {
-            vrButton.SetActive(true);
-        }
-
         saveload = FindObjectOfType<SaveLoad>();
         ActiveMenu(true);
         IDPanelSet();
@@ -68,15 +59,6 @@ public class GameManager : MonoBehaviour
         { Player.Rotate(new Vector3(0, 1, 0) * -50 * Time.deltaTime); }
         if (Input.GetKey(KeyCode.LeftArrow))
         { Player.Rotate(new Vector3(0, 1, 0) * 50 * Time.deltaTime); }
-
-        if (XRSettings.isDeviceActive)
-        {
-            vrButton.SetActive(true);
-        }
-        else
-        {
-            vrButton.SetActive(false);
-        }
     }
     
     public void IDPanelSet()
@@ -203,10 +185,5 @@ public class GameManager : MonoBehaviour
     {
         saveload.SaveData();
         saveload.SaveInven();
-    }
-
-    public void VRButton()
-    {
-        SceneManager.LoadScene(12);
     }
 }
