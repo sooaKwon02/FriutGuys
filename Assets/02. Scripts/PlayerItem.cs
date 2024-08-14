@@ -15,6 +15,7 @@ public class PlayerItem : MonoBehaviour
             item = _item;
             mesh.sharedMesh = _item.mesh;
 
+
         }
         else
         {

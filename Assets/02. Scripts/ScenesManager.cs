@@ -8,14 +8,16 @@ using UnityEngine.UI;
 
 public class ScenesManager : MonoBehaviour
 {
+    public static ScenesManager instance;
     static public int SceneNum;
     public GameObject tooltipPrefab;
     public List<int> loadScenes = new List<int>();
-    public int[] sceneIndex = new int[] { 5, 6, 7, 8, 9 };
+    public int[] sceneIndex = new int[] { 6, 7, 8, 9 };
     public int count=-1;
 
     private void Awake()
     {
+        instance = this;
         DontDestroyOnLoad(gameObject);
         SceneNum = 1;
         SceneManager.LoadScene(SceneNum);
@@ -24,6 +26,8 @@ public class ScenesManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SaveLoad.instance.SaveData();
+        SaveLoad.instance.SaveInven();
     }
 
     private void OnDisable()
@@ -71,5 +75,31 @@ public class ScenesManager : MonoBehaviour
         loadScenes.Add(selectScene);
         count++;
         PhotonNetwork.LoadLevel(selectScene);
+    }
+    IEnumerator ScoreMoneySet()
+    {
+        SaveLoad.instance.player.gameMoney += 100 * Add(count);
+        SaveLoad.instance.player.score += 100 * Add(count);
+        yield return new WaitForSeconds(1);
+    }
+    public void ScoreSet()
+    {
+        StartCoroutine(ScoreMoneySet());
+    }
+    int Add(int num)
+    {
+        int sum = 1;
+        if (num == 0)
+        {
+            return sum;
+        }
+        else
+        {
+            for (int i = 0; i < num; i++)
+            {
+                sum *= 2;
+            }
+            return sum;
+        }
     }
 }

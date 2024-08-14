@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     public GameObject createRoomPanel;
     public GameObject exitPanel;
 
-    SaveLoad saveload;
 
     private void Start()
     {
@@ -51,7 +50,6 @@ public class GameManager : MonoBehaviour
         settingPanel.SetActive(false);
         roomListPanel.SetActive(false);
 
-        saveload = FindObjectOfType<SaveLoad>();
         ActiveMenu(true);
         IDPanelSet();
     }
@@ -65,9 +63,9 @@ public class GameManager : MonoBehaviour
     
     public void IDPanelSet()
     {
-        nicknamePanelText.text=saveload.nickName;
-        CashPanelText.text=saveload.player.cashMoney.ToString();
-        GameMoneyPanelText.text=saveload.player.gameMoney.ToString();
+        nicknamePanelText.text=SaveLoad.instance.nickName;
+        CashPanelText.text=SaveLoad.instance.player.cashMoney.ToString();
+        GameMoneyPanelText.text=SaveLoad.instance.player.gameMoney.ToString();
     }
 
     void ActiveMenu(bool active)
@@ -108,7 +106,7 @@ public class GameManager : MonoBehaviour
         ActiveMenu(!check);
         if(!check)
         {
-            saveload.SaveInven();
+            SaveLoad.instance.SaveInven();
         }
 
     }
@@ -198,8 +196,8 @@ public class GameManager : MonoBehaviour
     } 
     public void SaveServerData()
     {
-        saveload.SaveData();
-        saveload.SaveInven();
+        SaveLoad.instance.SaveData();
+        SaveLoad.instance.SaveInven();
     }
     public void ExitGame()
     {
@@ -209,7 +207,7 @@ public class GameManager : MonoBehaviour
     IEnumerator Exit()
     {
         SaveServerData();
-        StartCoroutine(saveload.UpdateIsActiveStatus(1));
+        StartCoroutine(SaveLoad.instance.UpdateIsActiveStatus(1));
         yield return new WaitForSeconds(2f);
     }
 }

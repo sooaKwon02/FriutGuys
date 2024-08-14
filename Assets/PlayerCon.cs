@@ -87,7 +87,7 @@ public class PlayerCon : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            FindObjectOfType<ScenesManager>().LoadRandomScene();
+            PhotonNetwork.LoadLevel(5);
         }
     }
 

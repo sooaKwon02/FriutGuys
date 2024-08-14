@@ -9,7 +9,7 @@ public class GameEndManager : MonoBehaviour
     public GameObject spawnTile;
     public GameObject groundTile;
     public Image panel;
-    public Camera camera;
+    public Camera cam;
 
     public GameObject[] pos = new GameObject[16];
     PlayerCtrl[] players;
@@ -94,8 +94,8 @@ public class GameEndManager : MonoBehaviour
         else if (PhotonNetwork.IsMasterClient && count == 1)
         {
             PlayerCtrl pc = FindObjectOfType<PlayerCtrl>();
-            camera.transform.position = pc.transform.position + new Vector3(0, 1, -5);
-            camera.transform.LookAt(pc.transform.position);
+            cam.transform.position = pc.transform.position + new Vector3(0, 1, -5);
+            cam.transform.LookAt(pc.transform.position);
             yield return new WaitForSeconds(0.5f);
             pc.anim.SetTrigger("Victory");
             yield return new WaitForSeconds(3f);

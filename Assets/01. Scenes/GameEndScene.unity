@@ -155,7 +155,7 @@ MonoBehaviour:
   spawnTile: {fileID: 3463231212377893346, guid: 56d2656993c5e6348af853b85333a81e, type: 3}
   groundTile: {fileID: 8657174630728027717, guid: 294ed3bfbc9ab0b44b3fc47a3a900453, type: 3}
   panel: {fileID: 598918476}
-  camera: {fileID: 2146577813}
+  cam: {fileID: 2146577813}
   pos:
   - {fileID: 0}
   - {fileID: 0}
