@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class XRController : MonoBehaviour
 {
     public GameObject mainCamera;
+    public GameObject canvas;
     private GameObject XRI;
     private GameObject XRO;
     private GameObject XRC;
@@ -22,6 +23,7 @@ public class XRController : MonoBehaviour
     {
         if (XRSettings.isDeviceActive)
         {
+            canvas.SetActive(false);
             mainCamera.SetActive(false);
             XRI.SetActive(true);
             XRO.SetActive(true);
@@ -30,6 +32,7 @@ public class XRController : MonoBehaviour
 
         else
         {
+            canvas.SetActive(true);
             mainCamera.SetActive(true);
             XRI.SetActive(false);
             XRO.SetActive(false);
@@ -41,6 +44,7 @@ public class XRController : MonoBehaviour
     {
         if (XRSettings.isDeviceActive)
         {
+            canvas.SetActive(false);
             mainCamera.SetActive(false);
             XRI.SetActive(true);
             XRO.SetActive(true);
@@ -49,6 +53,7 @@ public class XRController : MonoBehaviour
 
         else
         {
+            canvas.SetActive(true);
             mainCamera.SetActive(true);
             XRI.SetActive(false);
             XRO.SetActive(false);
