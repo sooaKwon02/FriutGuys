@@ -365,21 +365,9 @@ public class SaveLoad : MonoBehaviour
     }
     IEnumerator UseItemSet(string _item1, string _item2)
     {
-        yield return StartCoroutine(SetItemsCoroutine(_item1, _item2));
-    }
-    IEnumerator SetItemsCoroutine(string _item1, string _item2)
-    {
-        player.item1 = _item1 ?? "";
-        player.item2 = _item2 ?? "";
-        if(player.item1==_item1&& player.item2 == _item2)
-        {
-            yield return null;
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(SetItemsCoroutine(_item1, _item2));
-        }
+        player.item1 = _item1;
+        player.item2 = _item2;
+        yield return null;
     }
     IEnumerator ScoreMoneySet()
     {
