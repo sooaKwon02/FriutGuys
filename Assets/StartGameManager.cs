@@ -40,7 +40,7 @@ public class StartGameManager : MonoBehaviour
         
         foreach(GameObject player in players)
         {
-            player.GetComponent<PlayerCtrl>().anim.SetBool("Result", false);
+            player.GetComponent<PlayerCtrl>().anim.SetTrigger("End");
             player.GetComponent<PlayerCtrl>().enabled = false;
             player.GetComponent<PlayerCtrl>().startGame = false;
             player.GetComponent<PlayerCtrl>().isGoalin = false;
