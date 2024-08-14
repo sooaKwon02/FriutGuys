@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
         else
         { 
             Player.position = new Vector2(0, 0);
-            SaveServerData();
         }
+        SaveServerData();
         ActiveMenu(!check);
     }
     public void UseItemOnOff(bool check)
@@ -95,8 +95,8 @@ public class GameManager : MonoBehaviour
         else
         { 
             Player.position = new Vector2(0, 0);
-            SaveServerData();
         }
+        SaveServerData();
         ActiveMenu(!check);
     }
     public void StoreOnOff(bool check)
