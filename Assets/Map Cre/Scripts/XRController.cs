@@ -3,66 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class XRController : MonoBehaviour
 {
-    public GameObject mainCamera;
-    public GameObject canvas;
-    private GameObject XRI;
-    private GameObject XRO;
-    private GameObject XRC;
+    //public GameObject XRI;
+    //public GameObject XRO;
+    //public GameObject cam;
 
-    private void Awake()
-    {
-        XRI = GameObject.FindGameObjectWithTag("XR I");
-        XRO = GameObject.FindGameObjectWithTag("XR O");
-        XRC = GameObject.FindGameObjectWithTag("XR C");
-    }
 
+
+    public GameObject vrCheck;
+    public int count;
+   
     private void Start()
     {
-        if (XRSettings.isDeviceActive)
+        count = 0;
+        StartCoroutine(Check());
+    }
+    
+    IEnumerator Check()
+    {
+        if (count < 5)
         {
-            canvas.SetActive(false);
-            mainCamera.SetActive(false);
-            XRI.SetActive(true);
-            XRO.SetActive(true);
-            XRC.SetActive(true);
+            count++;
+            if (!XRSettings.isDeviceActive)
+            {
+                vrCheck.SetActive(true);
+                yield return new WaitForSeconds(1.0f);
+                StartCoroutine(Check());
+            }
         }
-
         else
         {
-            canvas.SetActive(true);
-            mainCamera.SetActive(true);
-            XRI.SetActive(false);
-            XRO.SetActive(false);
-            XRC.SetActive(false);
-        }
+            vrCheck.SetActive(false);
+            SceneReturn();
+        }       
     }
 
-    private void Update()
+    public void SceneReturn()
     {
-        if (XRSettings.isDeviceActive)
-        {
-            canvas.SetActive(false);
-            mainCamera.SetActive(false);
-            XRI.SetActive(true);
-            XRO.SetActive(true);
-            XRC.SetActive(true);
-        }
-
-        else
-        {
-            canvas.SetActive(true);
-            mainCamera.SetActive(true);
-            XRI.SetActive(false);
-            XRO.SetActive(false);
-            XRC.SetActive(false);
-        }
-    }
-
-    public void VRRoomEnter()
-    {
-        SceneManager.LoadScene("VR Room");
+        SceneManager.LoadScene(2);
     }
 }

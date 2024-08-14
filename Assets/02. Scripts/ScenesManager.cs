@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class ScenesManager : MonoBehaviour
 {
@@ -25,12 +26,18 @@ public class ScenesManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded; 
+        XRDevice.deviceLoaded += OnDeviceLoaded;
     }
-
+   
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        XRDevice.deviceLoaded -= OnDeviceLoaded;
+    }
+    private void OnDeviceLoaded(string deviceName)
+    {
+        Debug.Log("asd");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

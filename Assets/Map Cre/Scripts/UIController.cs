@@ -23,7 +23,7 @@ public class UIController : MonoBehaviour
         UIScore = GameObject.FindGameObjectWithTag("UI Panel");
         UIScoreText = UIScore.GetComponentInChildren<TextMeshProUGUI>();
         UIHit = GameObject.FindGameObjectWithTag("UI Panel Hit");
-        UIHitImage = UIHit.GetComponentInChildren<Image>();
+        //UIHitImage = UIHit.GetComponentInChildren<Image>();
         UIHitText = UIHit.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -34,16 +34,16 @@ public class UIController : MonoBehaviour
 
     public void VRGameExit()
     {
-        SceneManager.LoadScene("VR Room");
+        SceneManager.LoadScene(2);
     }
 
     public IEnumerator HitRoutine()
     {
         score -= 1;
-        UIHitImage.enabled = true;
+        //UIHitImage.enabled = true;
         UIHitText.enabled = true;
         yield return new WaitForSeconds(0.25f);
-        UIHitImage.enabled = false;
+        //UIHitImage.enabled = false;
         UIHitText.enabled = false;
     }
 

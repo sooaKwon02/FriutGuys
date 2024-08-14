@@ -210,4 +210,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SaveLoad.instance.UpdateIsActiveStatus(1));
         yield return new WaitForSeconds(2f);
     }
+    public void VrGameStart()
+    {
+        SceneManager.LoadScene(11);
+    }
 }
