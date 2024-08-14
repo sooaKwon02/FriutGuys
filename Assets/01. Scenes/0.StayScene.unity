@@ -155,6 +155,7 @@ MonoBehaviour:
   tooltipPrefab: {fileID: 1836591180304235827, guid: 66b0087e65059ef48ba4cf2a7788dc4f, type: 3}
   loadScenes: 
   sceneIndex: 0500000006000000070000000800000009000000
+  count: -1
 --- !u!4 &1537718864
 Transform:
   m_ObjectHideFlags: 0
@@ -201,7 +202,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

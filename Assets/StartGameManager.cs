@@ -144,7 +144,7 @@ public class StartGameManager : MonoBehaviour
         else if ( other.CompareTag("SlideCollider"))
         {
             other.GetComponentInParent<PlayerCtrl>().moveSpeed = 0;
-            other.GetComponent<PlayerCtrl>().isColl = true;
+            other.GetComponentInParent<PlayerCtrl>().isColl = true;
             if (count < goalCount)
             {
                 count++;

@@ -17,13 +17,10 @@ public class Inventory : MonoBehaviour
     public GameObject target;
     public Image image;
 
-    SaveLoad saveload;
 
     public GameObject InvenAddPanel;
     private void Awake()
     {
-        saveload = FindObjectOfType<SaveLoad>();
-        saveload.inventory = GetComponent<Inventory>();
         useItem = useInventoryPanel.transform.GetChild(0).GetComponent<RectTransform>();
         fashionItem = fashionInventoryPanel.transform.GetChild(0).GetComponent<RectTransform>();
     }
@@ -32,7 +29,7 @@ public class Inventory : MonoBehaviour
         useInventoryPanel.SetActive(false); 
         fashionInventoryPanel.SetActive(true);
         InvenAddPanel.SetActive(false);
-        InventorySet(saveload.useNum, saveload.useName, saveload.fashionNum, saveload.fashionName);
+        InventorySet(SaveLoad.instance.useNum, SaveLoad.instance.useName, SaveLoad.instance.fashionNum, SaveLoad.instance.fashionName);
     }
     public void InventorySwap(bool check)
     {
@@ -41,15 +38,15 @@ public class Inventory : MonoBehaviour
     }
     public void InventoryAdd(int num)
     {
-        if (num == 0&&saveload.player.cashMoney>=100)
+        if (num == 0&& SaveLoad.instance.player.cashMoney>=100)
         {
-            saveload.player.cashMoney -= 100;
+            SaveLoad.instance.player.cashMoney -= 100;
             GetComponent<GameManager>().IDPanelSet();
             InstanceAdd();
         }
-        else if(num==1&&saveload.player.gameMoney>=1000)
+        else if(num==1&& SaveLoad.instance.player.gameMoney>=1000)
         {
-            saveload.player.gameMoney -= 1000;
+            SaveLoad.instance.player.gameMoney -= 1000;
             GetComponent<GameManager>().IDPanelSet();
             InstanceAdd();
         }

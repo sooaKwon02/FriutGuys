@@ -34,12 +34,9 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         { 
             pv = GetComponent<PhotonView>();
         }
-        if(FindObjectOfType<SaveLoad>())
-        {
-            p = FindObjectOfType<SaveLoad>().player;
-            nickName = FindObjectOfType<SaveLoad>().nickName;
-        }
-        if(pv.IsMine)
+        p = SaveLoad.instance.player;
+        nickName = SaveLoad.instance.nickName;
+        if (pv.IsMine)
         {
             UseItemImagePanel.SetActive(true);
         }
@@ -71,7 +68,8 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
 
                     throwUp.ItemSet(Resources.Load<Item>("Item/UseItem/" + item1.item.name));
                     throwUp.ThrowAnim(item1.item.useitemType);
-                    item1.ItemSet(null);    
+                    item1.ItemSet(null);   
+                    p.item1 = "";
                     ItemSwap(); 
                     if (item1.item != null || item2.item != null)
                     {
@@ -106,6 +104,9 @@ public class CharacterCustom : MonoBehaviourPunCallbacks
         Item item = item1.item;
         item1.ItemSet(item2.item);
         item2.ItemSet(item);
+        string itemName = p.item1;
+        p.item1 = p.item2;
+        p.item2 = itemName;
         ItemImageSet();
     }
     void ItemImageSet()
