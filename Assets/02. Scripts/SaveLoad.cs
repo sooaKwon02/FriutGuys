@@ -366,7 +366,7 @@ public class SaveLoad : MonoBehaviour
     IEnumerator UseItemSet(string _item1, string _item2)
     {
         player.item1 = _item1;
-        player.item1 = _item2;
+        player.item2 = _item2;
         yield return null;
     }
     IEnumerator ScoreMoneySet()
