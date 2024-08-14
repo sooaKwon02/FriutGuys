@@ -26,8 +26,6 @@ public class ScenesManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SaveLoad.instance.SaveData();
-        SaveLoad.instance.SaveInven();
     }
 
     private void OnDisable()
@@ -53,6 +51,8 @@ public class ScenesManager : MonoBehaviour
             GameObject tooltipInstance = Instantiate(tooltipPrefab, canvas.transform);
             tooltipInstance.transform.SetAsLastSibling();
         }
+        if(SceneManager.GetActiveScene().buildIndex!=0|| SceneManager.GetActiveScene().buildIndex!=1)
+        SaveLoad.instance.SaveData();
     }
     public void LoadRandomScene()
     {

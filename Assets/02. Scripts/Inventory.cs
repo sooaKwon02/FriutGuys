@@ -19,8 +19,14 @@ public class Inventory : MonoBehaviour
 
 
     public GameObject InvenAddPanel;
+    private void OnEnable()
+    {
+        if(SaveLoad.instance.inventory==null)
+        SaveLoad.instance.inventory = this;
+    }
     private void Awake()
     {
+        SaveLoad.instance.inventory = this;
         useItem = useInventoryPanel.transform.GetChild(0).GetComponent<RectTransform>();
         fashionItem = fashionInventoryPanel.transform.GetChild(0).GetComponent<RectTransform>();
     }
