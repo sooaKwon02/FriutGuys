@@ -11,7 +11,6 @@ using UnityEngine.EventSystems;
 
 public class DatabaseManager : MonoBehaviour
 {
-    SaveLoad saveload;
     Inventory inven;
     IpMine dll = new IpMine();
     string secretKey = "1q2w3e4r!@#$";
@@ -37,7 +36,6 @@ public class DatabaseManager : MonoBehaviour
     private void Awake()
     {
         resText=SignUpComplete.GetComponentInChildren<Text>();
-        saveload = FindObjectOfType<SaveLoad>();
         inven = FindObjectOfType<Inventory>();
     }
     private void Start()
@@ -162,10 +160,10 @@ public class DatabaseManager : MonoBehaviour
             LoginResponse response = JsonUtility.FromJson<LoginResponse>(www.downloadHandler.text);
             if (response.success)
             {
-                saveload.SetGame(id, response.nickname);
-                saveload.LoadData();
-                saveload.LoadInven();
-                saveload.LoadScore();
+                SaveLoad.instance.SetGame(id, response.nickname);
+                SaveLoad.instance.LoadData();
+                SaveLoad.instance.LoadInven();
+                SaveLoad.instance.LoadScore();
                 StartCoroutine(Success());
                 LoginPanel.SetActive(false);
             }

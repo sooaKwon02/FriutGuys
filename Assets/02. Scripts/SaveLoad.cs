@@ -11,6 +11,7 @@ using static System.Net.WebRequestMethods;
 
 public class SaveLoad : MonoBehaviour
 {
+    public static SaveLoad instance;
     public string ID;
     public string nickName;
     [System.Serializable]
@@ -76,6 +77,7 @@ public class SaveLoad : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         DontDestroyOnLoad(gameObject);
     }  
     private void OnApplicationQuit()
@@ -356,40 +358,27 @@ public class SaveLoad : MonoBehaviour
             }
         }
     }
-    public void ScoreSet(string _item1,string _item2)
-    {
-        StartCoroutine(ScoreMoneySet());
-        StartCoroutine(UseItemSet(_item1, _item2));
-        SaveData();
-        LoadData();
-    }
+   
     IEnumerator UseItemSet(string _item1, string _item2)
     {
-        player.item1 = _item1;
-        player.item2 = _item2;
-        yield return null;
-    }
-    IEnumerator ScoreMoneySet()
-    {
-        player.gameMoney += 100 * Add(FindObjectOfType<ScenesManager>().count);
-        player.score += 100 * Add(FindObjectOfType<ScenesManager>().count);
-
-        yield return null;
-    }
-   int Add(int num)
-    {
-        int sum = 1;
-        if (num == 0)
+        if(_item1 == null )
         {
-            return sum;
+            player.item1 = "";
+        }
+        else 
+        {
+            player.item1 = _item1.ToString(); 
+        }
+        if (_item2 == null)
+        {
+            player.item2 = "";
         }
         else
         {
-            for (int i = 0; i < num; i++)
-            {
-                sum *= 2;
-            }
-            return sum;
-        }       
-    }   
+            player.item2 = _item2.ToString();
+        }
+        yield return null;
+    }
+  
+   
 }
