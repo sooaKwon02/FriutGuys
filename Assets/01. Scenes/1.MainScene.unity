@@ -25453,7 +25453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1747197395406528215
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25785,15 +25785,13 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 84
-    m_Alignment: 7
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'FallGuyRank
-
-'
+  m_Text: FruitGuysRank
 --- !u!222 &1747197396008605131
 CanvasRenderer:
   m_ObjectHideFlags: 0
