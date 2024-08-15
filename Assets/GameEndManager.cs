@@ -88,8 +88,8 @@ public class GameEndManager : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient && count != 1)
         {
-            ScenesManager pc = FindObjectOfType<ScenesManager>();
-            pc.LoadRandomScene();
+            count = 0;
+            ScenesManager.instance.LoadRandomScene();
         }
         else if (PhotonNetwork.IsMasterClient && count == 1)
         {
@@ -98,6 +98,7 @@ public class GameEndManager : MonoBehaviour
             cam.transform.LookAt(pc.transform.position);
             yield return new WaitForSeconds(0.5f);
             pc.anim.SetTrigger("Victory");
+            count = 0;
             yield return new WaitForSeconds(3f);
             pc.GameOver(1);
         }

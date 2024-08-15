@@ -197,7 +197,7 @@ public class SaveLoad : MonoBehaviour
         inventype.fashionInven = new INVEN[inventory.fashionItem.transform.childCount];
         inventype.useInven = new INVEN[inventory.useItem.transform.childCount];
         string url = "http://61.99.10.173/fruitsGuys/PlayerInvenSave.php";
-        //string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
+       // string url = "http://192.168.35.229/fruitsGuys/PlayerInvenSave.php";
         for (int i = 0; i < inventory.fashionItem.transform.childCount; i++)
         {
             if (inventory.fashionItem.transform.GetChild(i).GetComponentInChildren<ItemData>().item != null && inventory.fashionItem.transform.childCount > 0)
