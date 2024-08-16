@@ -13,7 +13,7 @@ public class ScenesManager : MonoBehaviour
     static public int SceneNum;
     public GameObject tooltipPrefab;
     public List<int> loadScenes = new List<int>();
-    public int[] sceneIndex = new int[] { 6, 7, 8, 9 };
+    public int[] sceneIndex = new int[] { 6, 8 };
     public int count=-1;
 
     private void Awake()
