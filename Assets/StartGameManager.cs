@@ -40,6 +40,7 @@ public class StartGameManager : MonoBehaviour
         
         foreach(GameObject player in players)
         {
+            player.GetComponent<PlayerCtrl>().isAlive = false;
             player.GetComponent<PlayerCtrl>().anim.SetTrigger("End");
             player.GetComponent<PlayerCtrl>().enabled = false;
             player.GetComponent<PlayerCtrl>().startGame = false;
