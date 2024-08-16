@@ -7,13 +7,13 @@ using TMPro;
 
 public class UIController : MonoBehaviour
 {
-    private GameObject UIScore;
-    private TextMeshProUGUI UIScoreText;
-    private GameObject UIHit;
-    private Image UIHitImage;
-    private TextMeshProUGUI UIHitText;
+    public GameObject UIScore;
+    public TextMeshProUGUI UIScoreText;
+    public GameObject UIHit;
+    public Image UIHitImage;
+    public Text UIHitText;
 
-    private int score = 0;
+    public int score = 0;
 
     public static UIController instance;
 
@@ -23,8 +23,13 @@ public class UIController : MonoBehaviour
         UIScore = GameObject.FindGameObjectWithTag("UI Panel");
         UIScoreText = UIScore.GetComponentInChildren<TextMeshProUGUI>();
         UIHit = GameObject.FindGameObjectWithTag("UI Panel Hit");
-        //UIHitImage = UIHit.GetComponentInChildren<Image>();
-        UIHitText = UIHit.GetComponentInChildren<TextMeshProUGUI>();
+        UIHitImage = UIHit.GetComponentInChildren<Image>();
+        UIHitText = UIHit.GetComponentInChildren<Text>();
+    }
+
+    private void Start()
+    {
+        UIHit.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -40,10 +45,10 @@ public class UIController : MonoBehaviour
     public IEnumerator HitRoutine()
     {
         score -= 1;
-        //UIHitImage.enabled = true;
+        UIHitImage.enabled = true;
         UIHitText.enabled = true;
         yield return new WaitForSeconds(0.25f);
-        //UIHitImage.enabled = false;
+        UIHitImage.enabled = false;
         UIHitText.enabled = false;
     }
 
