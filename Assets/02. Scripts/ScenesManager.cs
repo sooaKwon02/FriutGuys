@@ -13,7 +13,7 @@ public class ScenesManager : MonoBehaviour
     static public int SceneNum;
     public GameObject tooltipPrefab;
     public List<int> loadScenes = new List<int>();
-    public int[] sceneIndex = new int[] { 6, 8 };
+    public int[] sceneIndex = new int[] { 6, 7 };
     public int count=-1;
 
     private void Awake()
@@ -69,12 +69,7 @@ public class ScenesManager : MonoBehaviour
         {
             sceneList.Remove(index);
         }
-
-        if (sceneList.Count == 0)
-        {
-            loadScenes.Clear();
-            sceneList = new List<int>(sceneIndex);
-        }
+     
 
         int randomIndex = Random.Range(0, sceneList.Count);
         int selectScene = sceneList[randomIndex];

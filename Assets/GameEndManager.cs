@@ -91,7 +91,7 @@ public class GameEndManager : MonoBehaviour
         count = 0;
         if (PhotonNetwork.IsMasterClient && num != 1)
         {
-            SceneManager.LoadScene(6);
+            ScenesManager.instance.LoadRandomScene();
         }
         else if (PhotonNetwork.IsMasterClient && num == 1)
         {
