@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameEndManager : MonoBehaviour
@@ -89,7 +90,7 @@ public class GameEndManager : MonoBehaviour
         if (PhotonNetwork.IsMasterClient && count != 1)
         {
             count = 0;
-            ScenesManager.instance.LoadRandomScene();
+            SceneManager.LoadScene(6);
         }
         else if (PhotonNetwork.IsMasterClient && count == 1)
         {
