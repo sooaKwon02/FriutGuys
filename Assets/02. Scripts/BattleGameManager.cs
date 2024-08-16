@@ -36,6 +36,7 @@ public class BattleGameManager : MonoBehaviour
 
         foreach (GameObject player in players)
         {
+            player.GetComponent<PlayerCtrl>().isGoalin = false;
             player.GetComponent<PlayerCtrl>().anim.SetTrigger("End");
             player.GetComponent<PlayerCtrl>().enabled = false;
             player.GetComponent<PlayerCtrl>().isAlive = true;
@@ -54,7 +55,7 @@ public class BattleGameManager : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            players[i].transform.position = pos[i].position;
+            players[i].transform.position = pos[i].position+new Vector3(0,1,0);
         }
         ObstacleScript oS = FindObjectOfType<ObstacleScript>();
         ObstacleSpeed oSpeed = FindObjectOfType<ObstacleSpeed>();
