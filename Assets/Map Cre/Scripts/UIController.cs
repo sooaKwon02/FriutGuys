@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour
     private Image UIHitImage;
     private TextMeshProUGUI UIHitText;
 
-    private int score = 0;
+    private int money = 0;
 
     public static UIController instance;
 
@@ -23,23 +23,24 @@ public class UIController : MonoBehaviour
         UIScore = GameObject.FindGameObjectWithTag("UI Panel");
         UIScoreText = UIScore.GetComponentInChildren<TextMeshProUGUI>();
         UIHit = GameObject.FindGameObjectWithTag("UI Panel Hit");
-        //UIHitImage = UIHit.GetComponentInChildren<Image>();
         UIHitText = UIHit.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void Update()
     {
-        UIScoreText.text = "Score : " + score;
+        UIScoreText.text = "GameMoney : " + money;
     }
 
     public void VRGameExit()
     {
+        SaveLoad.instance.player.cashMoney += money;
+        SaveLoad.instance.SaveData();
         SceneManager.LoadScene(2);
     }
 
     public IEnumerator HitRoutine()
     {
-        score -= 1;
+        money -= 1;
         //UIHitImage.enabled = true;
         UIHitText.enabled = true;
         yield return new WaitForSeconds(0.25f);
@@ -49,11 +50,11 @@ public class UIController : MonoBehaviour
 
     public void CivilianScore()
     {
-        score += 10;
+        money += 10;
     }
 
     public void PoliceOfficerScore()
     {
-        score += 100;
+        money += 100;
     }
 }
