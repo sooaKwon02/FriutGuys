@@ -87,19 +87,19 @@ public class GameEndManager : MonoBehaviour
     }
     IEnumerator GameSet()
     {
-        if (PhotonNetwork.IsMasterClient && count != 1)
+        int num = count;
+        count = 0;
+        if (PhotonNetwork.IsMasterClient && num != 1)
         {
-            count = 0;
             SceneManager.LoadScene(6);
         }
-        else if (PhotonNetwork.IsMasterClient && count == 1)
+        else if (PhotonNetwork.IsMasterClient && num == 1)
         {
             PlayerCtrl pc = FindObjectOfType<PlayerCtrl>();
             cam.transform.position = pc.transform.position + new Vector3(0, 1, -5);
             cam.transform.LookAt(pc.transform.position);
             yield return new WaitForSeconds(0.5f);
             pc.anim.SetTrigger("Victory");
-            count = 0;
             yield return new WaitForSeconds(3f);
             pc.GameOver(1);
         }
