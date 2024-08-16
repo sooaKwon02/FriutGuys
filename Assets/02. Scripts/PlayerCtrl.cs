@@ -97,7 +97,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-        if (!isAlive && isGoalin && Input.GetMouseButtonDown(0)&&pv.IsMine)
+        if (isGoalin && Input.GetMouseButtonDown(0)&&pv.IsMine)
         {
             Watching();
         }
@@ -139,7 +139,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             int index = (startIndex + i) % pv.Length;
 
-            if (!pv[index].GetComponent<PlayerCtrl>().isGoalin || pv[index].GetComponent<PlayerCtrl>().isAlive)
+            if (!pv[index].GetComponent<PlayerCtrl>().isGoalin)
             {
                 PlayerCtrl nextPlayer = pv[index];
                 if (nextPlayer.GetComponent<PlayerCtrl>().cam != null)
