@@ -61,22 +61,39 @@ public class ScenesManager : MonoBehaviour
         if(SceneManager.GetActiveScene().buildIndex!=0|| SceneManager.GetActiveScene().buildIndex!=1)
         SaveLoad.instance.SaveData();
     }
+    int lastScene = 0;
     public void LoadRandomScene()
     {
-        List<int> sceneList = new List<int>(sceneIndex);
+        //List<int> sceneList = new List<int>(sceneIndex);
         
-        foreach (int index in loadScenes)
-        {
-            sceneList.Remove(index);
-        }
+        //foreach (int index in loadScenes)
+        //{
+        //    sceneList.Remove(index);
+        //}
      
 
-        int randomIndex = Random.Range(0, sceneList.Count);
-        int selectScene = sceneList[randomIndex];
+        //int randomIndex = Random.Range(0, sceneList.Count);
+        //int selectScene = sceneList[randomIndex];
 
-        loadScenes.Add(selectScene);
-        count++;
-        PhotonNetwork.LoadLevel(selectScene);
+        //loadScenes.Add(selectScene);
+        //count++;
+        //PhotonNetwork.LoadLevel(selectScene);
+
+        int nextScene;
+
+        if (lastScene == 6)
+        {
+            nextScene = 7;
+        }
+        else
+        {
+            nextScene = 6;
+        }
+
+        PhotonNetwork.LoadLevel(nextScene);
+
+        // 마지막 씬 번호 업데이트
+        lastScene = nextScene;
     }
     IEnumerator ScoreMoneySet()
     {
