@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectsBullet : MonoBehaviour
 {
-    private readonly float moveSpeed = 10.0f;
+    private readonly float moveSpeed = 3.0f;
 
     private void Update()
     {

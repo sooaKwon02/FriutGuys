@@ -7,11 +7,11 @@ using TMPro;
 
 public class UIController : MonoBehaviour
 {
-    private GameObject UIScore;
-    private TextMeshProUGUI UIScoreText;
-    private GameObject UIHit;
-    private Image UIHitImage;
-    private TextMeshProUGUI UIHitText;
+    public GameObject UIScore;
+    public TextMeshProUGUI UIScoreText;
+    public GameObject UIHit;
+    public Image UIHitImage;
+    public Text UIHitText;
 
     private int money = 0;
 
