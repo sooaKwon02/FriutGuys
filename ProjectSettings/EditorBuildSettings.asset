@@ -27,11 +27,11 @@ EditorBuildSettings:
     path: Assets/01. Scenes/Map A.unity
     guid: d08f8340f7eb2314fb4af6d7026c68f0
   - enabled: 1
-    path: Assets/01. Scenes/Map B.unity
-    guid: d1e483d18e3ee2641b503087618c1aed
-  - enabled: 1
     path: Assets/01. Scenes/Map C.unity
     guid: 0177f17d4d5458a4cbdba1621e47c849
+  - enabled: 1
+    path: Assets/01. Scenes/Map B.unity
+    guid: d1e483d18e3ee2641b503087618c1aed
   - enabled: 1
     path: Assets/01. Scenes/Map D.unity
     guid: 9de40880408d12e44803194f4f28c6d0
