@@ -78,9 +78,9 @@ public class ScenesManager : MonoBehaviour
         //int selectScene = sceneList[randomIndex];
 
         //loadScenes.Add(selectScene);
-        //count++;
-        //PhotonNetwork.LoadLevel(selectScene);
 
+        //PhotonNetwork.LoadLevel(selectScene);
+        count++;
         nextScene++;
 
         PhotonNetwork.LoadLevel(nextScene);
