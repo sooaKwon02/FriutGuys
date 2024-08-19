@@ -11,7 +11,7 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI UIScoreText;
     public GameObject UIHit;
     public Image UIHitImage;
-    public Text UIHitText;
+    public TextMeshProUGUI UIHitText;
 
     private int money = 0;
 
