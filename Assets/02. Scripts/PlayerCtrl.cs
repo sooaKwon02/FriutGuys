@@ -433,7 +433,7 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
     {
         if (num == 1)
         {
-            FindObjectOfType<ScenesManager>().count++;
+            ScenesManager.instance.count++;
         }
 
         FindObjectOfType<ScenesManager>().nextScene = 5;
