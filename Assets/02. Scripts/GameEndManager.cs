@@ -26,14 +26,12 @@ public class GameEndManager : MonoBehaviour
     }
     private void InitializeTiles()
     {
-        // Initialize spawn tiles
         for (int i = 0; i < 16; i++)
         {
             Vector3 position = i < 8 ? new Vector3(i * 3, 0, 0) : new Vector3((i * 3) - 24, 3, 0);
             pos[i] = Instantiate(spawnTile, position, Quaternion.identity);
         }
 
-        // Initialize ground tiles
         for (int i = -1; i < 9; i++)
         {
             for (int j = 0; j < 3; j++)
