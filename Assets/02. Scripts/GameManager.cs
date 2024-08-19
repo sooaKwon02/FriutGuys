@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public GameObject settingPanel;
     public GameObject audioPanel;
     public GameObject keyboardPanel;
+    public GameObject vrButtonPanel;
 
     public Text nicknamePanelText;
     public Text CashPanelText;
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         playButtonPanel.SetActive(active);
         menuPanel.SetActive(active);
         idPanel.SetActive(active);
+        vrButtonPanel.SetActive(active);
     }
     public void CustomItemOnOff(bool check)
     {

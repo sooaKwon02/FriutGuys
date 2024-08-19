@@ -37172,6 +37172,7 @@ MonoBehaviour:
   settingPanel: {fileID: 2720869797206603471}
   audioPanel: {fileID: 2720869796994742127}
   keyboardPanel: {fileID: 2720869797938206122}
+  vrButtonPanel: {fileID: 1784188149}
   nicknamePanelText: {fileID: 37003409}
   CashPanelText: {fileID: 676369638}
   GameMoneyPanelText: {fileID: 1172709641}
