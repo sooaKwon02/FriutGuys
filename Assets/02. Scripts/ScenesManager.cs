@@ -14,7 +14,7 @@ public class ScenesManager : MonoBehaviour
     public GameObject tooltipPrefab;
     public List<int> loadScenes = new List<int>();
     public int[] sceneIndex = new int[] { 6, 7 };
-    public int count=-1;
+    public int count=0;
 
     public int nextScene;
     private void Awake()
