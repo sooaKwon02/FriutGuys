@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour
         UIScoreText = UIScore.GetComponentInChildren<TextMeshProUGUI>();
         UIHit = GameObject.FindGameObjectWithTag("UI Panel Hit");
         UIHitImage = UIHit.GetComponentInChildren<Image>();
-        UIHitText = UIHit.GetComponentInChildren<TextMeshProUGUI>();
+        UIHitText = UIHit.GetComponentInChildren<Text>();
     }
 
     private void Start()
