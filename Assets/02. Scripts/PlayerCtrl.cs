@@ -435,7 +435,8 @@ public class PlayerCtrl : MonoBehaviourPun, IPunObservable
         {
             FindObjectOfType<ScenesManager>().count++;
         }
-        
+
+        FindObjectOfType<ScenesManager>().nextScene = 5;
         ScenesManager.instance.ScoreSet();
         yield return new WaitForSeconds(5f);
         PhotonNetwork.LeaveRoom();
